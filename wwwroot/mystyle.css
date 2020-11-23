@@ -13,9 +13,10 @@ img {
 
 @keyframes example {
     99% {
-        top: 120%;
+        display:block;
     }
     100% {
-        display:none;
+        top: 120%;
+        display: none;
     }
 }
