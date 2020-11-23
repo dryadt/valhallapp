@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -10,6 +7,40 @@ namespace Valhallapp.Modules
 {
     public class Commands : ModuleBase<SocketCommandContext>
     {
+        [Command("help")]
+        public async Task Help()
+        {
+            var embed = new EmbedBuilder();
+            string prefix = "&";
+            embed.WithTitle("Commands list:")
+                .WithAuthor(Context.Client.CurrentUser)
+                .AddField(prefix + "help", "Displays help related to the bot!")
+                .AddField(prefix + "femboy", "Display the seeded percentage rating of the a user. Can accept one paramater.")
+                .AddField(prefix + "website", "Display the website of the [application](https://valhallapp.herokuapp.com/)!")
+                .WithFooter(footer => footer.Text = "Page 1 out of 1.")
+                .WithColor(Color.Blue)
+                .WithCurrentTimestamp()
+                .Build();
+            await ReplyAsync(embed: embed.Build());
+        }
+        [Command("website")]
+        public async Task Website()
+        {
+            Console.WriteLine("Website command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("https://valhallapp.herokuapp.com/");
+        }
+        [Command("github")]
+        public async Task Github()
+        {
+            Console.WriteLine("Github command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("https://github.com/dryadt/valhallapp");
+        }
+        [Command("heroku")]
+        public async Task Heroku()
+        {
+            Console.WriteLine("Heroku command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("https://dashboard.heroku.com/apps/valhallapp");
+        }
         [Command("Wubbadubadub is that true?")]
         public async Task Wubbadubadub()
         {
