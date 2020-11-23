@@ -27,6 +27,12 @@ namespace Valhallapp.Modules
             Console.WriteLine("Pose command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
             await ReplyAsync("AAAAUGH!");
         }
+        [Command("hi")]
+        public async Task Reggie()
+        {
+            Console.WriteLine("Reggie command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("My name is reggie");
+        }
         [Command("costro")]
         public async Task Costro()
         {
@@ -114,15 +120,13 @@ namespace Valhallapp.Modules
                 Description = "I am a description set by initializer."
             };
             // Or with methods
-            embed.AddField("Field title",
-                "Field value. I also support [hyperlink markdown](https://example.com)!")
-                .WithAuthor(Context.Client.CurrentUser)
-                .WithFooter(footer => footer.Text = "I am a footer.")
+            embed.WithAuthor(Context.User)
                 .WithColor(Color.Blue)
                 .WithTitle("I overwrote \"Hello world!\"")
                 .WithDescription("I am a description.")
                 .WithUrl("https://example.com")
                 .WithCurrentTimestamp()
+                .WithImageUrl("https://cdn.discordapp.com/attachments/658791767168122923/780413149114400808/Untitled1263_20201123204303.png")
                 .Build();
             await ReplyAsync(embed: embed.Build());
         }
