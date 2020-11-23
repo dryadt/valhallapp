@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 
 namespace Valhallapp.Modules
@@ -92,11 +93,26 @@ namespace Valhallapp.Modules
         }
 
         [Command("embed")]
-        public async Task Embed()
+        public async Task SendRichEmbedAsync()
         {
-            Console.WriteLine("Femboy command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
-            Random rnd = new Random((int)(Context.User.Id % 10000000));
-            await ReplyAsync("<@" + Context.User.Id + "> is " + rnd.Next(101) + "% femboy");
+            var embed = new EmbedBuilder
+            {
+                // Embed property can be set within object initializer
+                Title = "Hello world!",
+                Description = "I am a description set by initializer."
+            };
+            // Or with methods
+            embed.AddField("Field title",
+                "Field value. I also support [hyperlink markdown](https://example.com)!")
+                .WithAuthor(Context.Client.CurrentUser)
+                .WithFooter(footer => footer.Text = "I am a footer.")
+                .WithColor(Color.Blue)
+                .WithTitle("I overwrote \"Hello world!\"")
+                .WithDescription("I am a description.")
+                .WithUrl("https://example.com")
+                .WithCurrentTimestamp()
+                .Build();
+            await ReplyAsync(embed: embed.Build());
         }
     }
 }
