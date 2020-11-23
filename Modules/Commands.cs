@@ -15,6 +15,18 @@ namespace Valhallapp.Modules
             Console.WriteLine("Wubbadubadub command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
             await ReplyAsync("Yes.");
         }
+        [Command("Oh! You go big guy!")]
+        public async Task BigGuy()
+        {
+            Console.WriteLine("BigGuy command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("Hmph Umph!");
+        }
+        [Command("Pose for the fans!")]
+        public async Task Pose()
+        {
+            Console.WriteLine("Pose command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("AAAAUGH!");
+        }
         [Command("costro")]
         public async Task Costro()
         {
