@@ -31,7 +31,7 @@ namespace valhallappweb
 
                 return WebHost.CreateDefaultBuilder(args)
                     .UseStartup<Startup>()
-                    .UseUrls("http://*:"+port);
+                    .UseUrls($"http://*:{port}");
             }
 
         private DiscordSocketClient _client;
@@ -104,7 +104,7 @@ namespace valhallappweb
         }
         public void MessageChannel(string messageContent, ulong channelId)
         {
-            Console.WriteLine("url of image:" + messageContent);
+            Console.WriteLine($"url of image: {messageContent}");
             var chnl = _client.GetChannel(channelId) as IMessageChannel; 
             chnl.SendMessageAsync(messageContent);
         }
