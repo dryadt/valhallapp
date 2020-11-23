@@ -18,7 +18,7 @@ namespace Valhallapp.Modules
                 .AddField(prefix + "help", "Displays help related to the bot!")
                 .AddField(prefix + "github", "Display the github repo of the [application](https://github.com/dryadt/valhallapp)!")
                 .AddField(prefix + "heroku", "Display the app hosting site of the [application](https://dashboard.heroku.com/apps/valhallapp)!")
-                .AddField(prefix + "ping", "")
+                .AddField(prefix + "ping", "Replies with the ping of the bot")
                 .AddField(prefix + "website", "Display the website of the [application](https://valhallapp.herokuapp.com/)!")
                 .WithFooter(footer => footer.Text = "Page 1 out of 1.")
                 .WithColor(Color.Blue)
@@ -90,8 +90,8 @@ namespace Valhallapp.Modules
         [Command("ping")]
         public async Task Ping()
         {
-            Console.WriteLine("Ping command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name + " " + DateTime.Now + " " + Context.Message.CreatedAt.Date);
-            TimeSpan ping = DateTime.Now - Context.Message.CreatedAt.Date;
+            Console.WriteLine("Ping command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name + " " + DateTime.Now + " " + Context.Message.Timestamp);
+            TimeSpan ping = DateTime.Now - Context.Message.Timestamp;
             await ReplyAsync("Pong : " + ping + "ms");
         }
 
