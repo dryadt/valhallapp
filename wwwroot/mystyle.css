@@ -7,12 +7,15 @@ img {
     position: fixed;
     top: -50%;
     animation-name: example;
-    animation-duration: 10s;
+    animation-duration: 20s;
 }
 
 
 @keyframes example {
+    99% {
+        top: 120%;
+    }
     100% {
-        top: 80%;
+        display:none;
     }
 }
