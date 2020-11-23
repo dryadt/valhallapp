@@ -49,8 +49,8 @@ namespace valhallappweb
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
 
-            string token = File.ReadAllText(@"./Modules/Token.txt");
-            //string token = "Nzc5NjQ4NTY2MDU3NzYyODI2.X7jmTw._1LTu2i7Lp30CXjCmVTHu4IGvtw";
+            var token = Environment.GetEnvironmentVariable("TOKEN");
+            //string token = File.ReadAllText(@"./Modules/Token.txt");
 
             _client.Log += Client_Log;
             await RegisterCommandsAsync();
@@ -80,8 +80,11 @@ namespace valhallappweb
             var message = arg as SocketUserMessage;
             var context = new SocketCommandContext(_client, message);
 
+            // if the message is from bot then ignore
             if (message.Author.IsBot) return;
+            // does something with message
             CheckImageArtChannel(message);
+            // command prompt
             int argPos = 0;
             if (message.HasStringPrefix("&", ref argPos))
             {
