@@ -14,10 +14,11 @@ namespace Valhallapp.Modules
             string prefix = "&";
             embed.WithTitle("Commands list:")
                 .WithAuthor(Context.Client.CurrentUser)
+                .AddField(prefix + "femboy", "Display the seeded percentage rating of the a user. Can accept one paramater.")
                 .AddField(prefix + "help", "Displays help related to the bot!")
                 .AddField(prefix + "github", "Display the github repo of the [application](https://github.com/dryadt/valhallapp)!")
                 .AddField(prefix + "heroku", "Display the app hosting site of the [application](https://dashboard.heroku.com/apps/valhallapp)!")
-                .AddField(prefix + "femboy", "Display the seeded percentage rating of the a user. Can accept one paramater.")
+                .AddField(prefix + "ping", "")
                 .AddField(prefix + "website", "Display the website of the [application](https://valhallapp.herokuapp.com/)!")
                 .WithFooter(footer => footer.Text = "Page 1 out of 1.")
                 .WithColor(Color.Blue)
@@ -90,7 +91,8 @@ namespace Valhallapp.Modules
         public async Task Ping()
         {
             Console.WriteLine("Ping command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
-            await ReplyAsync("Pong");
+            TimeSpan ping = DateTime.Now - Context.Message.CreatedAt.Date;
+            await ReplyAsync("Pong : " + ping + "ms");
         }
 
         [Command("pong")]
