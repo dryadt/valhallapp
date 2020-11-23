@@ -50,7 +50,7 @@ namespace Valhallapp.Modules
         public async Task Starless()
         {
             Console.WriteLine("Starless command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
-            await ReplyAsync(File.ReadAllText(@"./Modules/Starless.txt"));
+            await ReplyAsync(":dress::dress::dress::dress::dress::dress::dress::dress::dress::bikini::bikini::bikini::bikini::bikini::bikini::kimono::kimono::kimono:");
         }
 
         [Command("ping")]
@@ -109,27 +109,6 @@ namespace Valhallapp.Modules
             }
 
             return true;
-        }
-
-        [Command("embed")]
-        public async Task SendRichEmbedAsync()
-        {
-            var embed = new EmbedBuilder
-            {
-                // Embed property can be set within object initializer
-                Title = "Hello world!",
-                Description = "I am a description set by initializer."
-            };
-            // Or with methods
-            embed.WithAuthor(Context.User)
-                .WithColor(Color.Blue)
-                .WithTitle("I overwrote \"Hello world!\"")
-                .WithDescription("I am a description.")
-                .WithUrl("https://example.com")
-                .WithCurrentTimestamp()
-                .WithImageUrl("https://cdn.discordapp.com/attachments/658791767168122923/780413149114400808/Untitled1263_20201123204303.png")
-                .Build();
-            await ReplyAsync(embed: embed.Build());
         }
     }
 }

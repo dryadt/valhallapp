@@ -113,7 +113,7 @@ namespace valhallappweb
         {
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, url)
-                .WithColor(Color.Blue)
+                .WithColor(Color.Purple)
                 .WithImageUrl(url)
                 .WithCurrentTimestamp()
                 .Build();
