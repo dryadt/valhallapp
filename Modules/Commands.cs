@@ -100,7 +100,6 @@ namespace Valhallapp.Modules
         public async Task Pong()
         {
             DisplayCommandLine("Pong");
-            Console.WriteLine($"Pong command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
             await ReplyAsync("Ping");
         }
         
@@ -108,7 +107,6 @@ namespace Valhallapp.Modules
         public async Task Femboy()
         {
             DisplayCommandLine("Femboy");
-            Console.WriteLine($"Femboy command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
             Random rnd = new Random((int)(Context.User.Id % 10000000));
             await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% femboy");
         }
