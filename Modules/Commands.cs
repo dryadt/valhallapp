@@ -8,6 +8,12 @@ namespace Valhallapp.Modules
 {
     public class Commands : ModuleBase<SocketCommandContext>
     {
+        [Command("Wubbadubadub is that true?")]
+        public async Task Wubbadubadub()
+        {
+            Console.WriteLine("Wubbadubadub command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("Yes.");
+        }
         [Command("costro")]
         public async Task Costro()
         {
@@ -83,6 +89,14 @@ namespace Valhallapp.Modules
             }
 
             return true;
+        }
+
+        [Command("embed")]
+        public async Task Embed()
+        {
+            Console.WriteLine("Femboy command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            Random rnd = new Random((int)(Context.User.Id % 10000000));
+            await ReplyAsync("<@" + Context.User.Id + "> is " + rnd.Next(101) + "% femboy");
         }
     }
 }
