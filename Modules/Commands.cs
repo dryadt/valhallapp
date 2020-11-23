@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Discord;
@@ -37,7 +38,7 @@ namespace Valhallapp.Modules
         public async Task Costro()
         {
             Console.WriteLine("Costro command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
-            await ReplyAsync("Costro is a hella gay stag. <3 <3 <3 <3 <3");
+            await ReplyAsync("Costro is a hella cute stag. <3 <3 <3 <3 <3");
         }
         [Command("astral")]
         public async Task Astral()
@@ -49,7 +50,7 @@ namespace Valhallapp.Modules
         public async Task Starless()
         {
             Console.WriteLine("Starless command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
-            await ReplyAsync("👗👗👗👗👗👗👗👗👗👙👙👙👙👙👙👘👘👘");
+            await ReplyAsync(File.ReadAllText(@"./Starless.txt"));
         }
 
         [Command("ping")]

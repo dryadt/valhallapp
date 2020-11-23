@@ -50,7 +50,6 @@ namespace valhallappweb
                 .BuildServiceProvider();
 
             var token = Environment.GetEnvironmentVariable("TOKEN");
-            //string token = File.ReadAllText(@"./Modules/Token.txt");
 
             _client.Log += Client_Log;
             await RegisterCommandsAsync();
@@ -116,6 +115,7 @@ namespace valhallappweb
             embed.WithAuthor(username, userURL, url)
                 .WithColor(Color.Blue)
                 .WithImageUrl(url)
+                .WithCurrentTimestamp()
                 .Build();
             var chnl = _client.GetChannel(channelID) as IMessageChannel;
             chnl.SendMessageAsync(embed: embed.Build());
