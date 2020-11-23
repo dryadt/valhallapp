@@ -90,7 +90,7 @@ namespace Valhallapp.Modules
         [Command("ping")]
         public async Task Ping()
         {
-            Console.WriteLine("Ping command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            Console.WriteLine("Ping command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name + " " + DateTime.Now + " " + Context.Message.CreatedAt.Date);
             TimeSpan ping = DateTime.Now - Context.Message.CreatedAt.Date;
             await ReplyAsync("Pong : " + ping + "ms");
         }
