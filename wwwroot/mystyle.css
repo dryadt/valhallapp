@@ -4,6 +4,15 @@
 }
 
 img {
-    position:fixed;
-    top:-20%;
+    position: fixed;
+    top: -50%;
+    animation-name: example;
+    animation-duration: 10s;
+}
+
+
+@keyframes example {
+    100% {
+        top: 80%;
+    }
 }
