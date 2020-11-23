@@ -72,7 +72,6 @@ namespace valhallappweb
         public async Task RegisterCommandsAsync()
         {
             _client.MessageReceived += HandleCommandAsync;
-            MessageChannel("Bot is starting...", 779779716482727996);
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
