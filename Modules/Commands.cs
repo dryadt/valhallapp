@@ -138,7 +138,7 @@ namespace Valhallapp.Modules
         }
         void DisplayCommandLine(string CommandName)
         {
-            Console.WriteLine($"{CommandName} with Param command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
+            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
         }
         bool IsDigitsOnly(string str)
         {
