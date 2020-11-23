@@ -5,7 +5,7 @@
 
 img {
     position: fixed;
-    display: none;
+    opacity:0;
     top: -50%;
     animation-name: example;
     animation-duration: 20s;
@@ -14,9 +14,14 @@ img {
 
 @keyframes example {
     0% {
-        display:block;
+        opacity: 1;
+    }
+    99% {
+        top: 120%;
+        opacity: 1;
     }
     100% {
+        opacity: 0;
         top: 120%;
     }
 }
