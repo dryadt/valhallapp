@@ -15,6 +15,8 @@ namespace Valhallapp.Modules
             embed.WithTitle("Commands list:")
                 .WithAuthor(Context.Client.CurrentUser)
                 .AddField(prefix + "help", "Displays help related to the bot!")
+                .AddField(prefix + "github", "Display the github repo of the [application](https://github.com/dryadt/valhallapp)!")
+                .AddField(prefix + "heroku", "Display the app hosting site of the [application](https://dashboard.heroku.com/apps/valhallapp)!")
                 .AddField(prefix + "femboy", "Display the seeded percentage rating of the a user. Can accept one paramater.")
                 .AddField(prefix + "website", "Display the website of the [application](https://valhallapp.herokuapp.com/)!")
                 .WithFooter(footer => footer.Text = "Page 1 out of 1.")
