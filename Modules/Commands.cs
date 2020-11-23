@@ -32,7 +32,7 @@ namespace Valhallapp.Modules
         public async Task Reggie()
         {
             Console.WriteLine("Reggie command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
-            await ReplyAsync("My name is reggie");
+            await ReplyAsync("My name is reggie.");
         }
         [Command("costro")]
         public async Task Costro()
@@ -50,7 +50,7 @@ namespace Valhallapp.Modules
         public async Task Starless()
         {
             Console.WriteLine("Starless command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
-            await ReplyAsync(File.ReadAllText(@"./Starless.txt"));
+            await ReplyAsync(File.ReadAllText(@"./Modules/Starless.txt"));
         }
 
         [Command("ping")]
