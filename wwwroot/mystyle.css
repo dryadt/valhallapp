@@ -13,7 +13,7 @@ img {
 
 
 @keyframes example {
-    99% {
+    0% {
         display:block;
     }
     100% {
