@@ -14,6 +14,12 @@ namespace Valhallapp.Modules
             Console.WriteLine("Costro command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
             await ReplyAsync("Costro is a hella gay stag. <3 <3 <3 <3 <3");
         }
+        [Command("astral")]
+        public async Task Astral()
+        {
+            Console.WriteLine("Astral command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name);
+            await ReplyAsync("A\nA\nA\nA\nA\nA\nA\n");
+        }
         [Command("starless")]
         public async Task Starless()
         {
