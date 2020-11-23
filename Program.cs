@@ -100,14 +100,25 @@ namespace valhallappweb
             // if the message has no attachments and no embed as well isn't in the art channel, return
             //Console.WriteLine("Message has " + message.Attachments.Count + " attachment(s) and " + message.Embeds.Count + " embed(s)");
             if (message.Channel.Id != artChannelId || (message.Attachments.Count == 0 && message.Embeds.Count == 0)) return;
-            foreach (var attachment in message.Attachments) MessageChannel(attachment.Url, artTalkChannelId);
-            foreach (var embed in message.Embeds) MessageChannel(embed.Url, artTalkChannelId);
+            foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
+            foreach (var embed in message.Embeds) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, embed.Url);
         }
         public void MessageChannel(string messageContent, ulong channelId)
         {
             Console.WriteLine("url of image:" + messageContent);
             var chnl = _client.GetChannel(channelId) as IMessageChannel; 
             chnl.SendMessageAsync(messageContent);
+        }
+
+        public void PostEmbedImage(string username, string userURL, ulong channelID, string url)
+        {
+            var embed = new EmbedBuilder();
+            embed.WithAuthor(username, userURL, url)
+                .WithColor(Color.Blue)
+                .WithImageUrl(url)
+                .Build();
+            var chnl = _client.GetChannel(channelID) as IMessageChannel;
+            chnl.SendMessageAsync(embed: embed.Build());
         }
     }
 }
