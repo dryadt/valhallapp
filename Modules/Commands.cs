@@ -92,7 +92,7 @@ namespace Valhallapp.Modules
         {
             Console.WriteLine("Ping command executed by user: " + Context.User.Username + " on channel: " + Context.Channel.Name + " " + DateTime.Now + " " + Context.Message.Timestamp);
             TimeSpan ping = DateTime.Now - Context.Message.Timestamp;
-            await ReplyAsync("Pong : " + ping + "ms");
+            await ReplyAsync("Pong : " + ping.TotalMilliseconds + "ms");
         }
 
         [Command("pong")]
