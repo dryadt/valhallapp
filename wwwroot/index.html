@@ -6,6 +6,29 @@
     <link rel="icon" href="https://cdn.discordapp.com/emojis/750294190067286047.png?v=1">
     <link rel="stylesheet" href="mystyle.css">
     <script type="text/javascript">
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var img = document.getElementById("myImg");
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        //js image dropdown
+        window.onload = initCommand;
         function initCommand() {
             setInterval(generateImage, 1000);
         }
@@ -39,9 +62,16 @@
             ]
             return imageUrl[Math.floor(Math.random() * imageUrl.length)];
         }
-        window.onload = initCommand;
     </script>
 </head>
 <body>
+    <img id="myImg" src="img_snow.jpg" alt="Snow" style="width:100%;max-width:300px">
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
 </body>
 </html>
