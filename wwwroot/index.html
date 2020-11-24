@@ -31,6 +31,11 @@
         span.onclick = function () {
             modal.style.display = "none";
         }
+        document.addEventListener('keyup', function (e) {
+            if (e.keyCode == 27) {
+                modal.style.display = "none";
+            }
+        });
         //-- js image dropdown --
         window.onload = initCommand;
         function initCommand() {
