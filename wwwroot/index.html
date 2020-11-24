@@ -89,7 +89,7 @@
             if (isPageLoaded == false) return
             var x = document.createElement("IMG");
             let randomImageID = Math.floor(Math.random() * imageUrl.length);
-            x.setAttribute("src", RandomImage());
+            x.setAttribute("src", imageUrl[randomImageID]);
             x.setAttribute("width", "20%");
             x.setAttribute("class", "dropdownImage");
             x.setAttribute("style", `margin-left: ${imageUrl[randomImageID]}%`);
