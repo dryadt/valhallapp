@@ -92,7 +92,7 @@
             x.setAttribute("src", imageUrl[randomImageID]);
             x.setAttribute("width", "20%");
             x.setAttribute("class", "dropdownImage");
-            x.setAttribute("style", `margin-left: ${imageUrl[randomImageID]}%`);
+            x.setAttribute("style", `margin-left: ${Math.floor(Math.random() * 100)}%`);
             x.onclick = function () {
                 modal.style.display = "block";
                 modalImg.src = this.src;
