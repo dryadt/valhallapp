@@ -2,6 +2,7 @@
 
 html {
     background: url(https://cdn.discordapp.com/attachments/482894390570909706/773571481573130290/Starless.png) no-repeat center center fixed;
+    font-family: Arial;
     background-size: cover;
 }
 
@@ -19,9 +20,7 @@ html {
 .dropdownImage:hover {
     opacity: 0.7;
 }
-
-#caption {
-    font-family: Helvetica Neue;
+ue;
 }
 
 @keyframes example {
