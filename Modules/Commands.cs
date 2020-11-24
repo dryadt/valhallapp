@@ -103,12 +103,19 @@ namespace Valhallapp.Modules
             await ReplyAsync("Ping");
         }
         
-        [Command("femboy")]
-        public async Task Femboy()
+        
+        [Command("furry")]
+        public async Task Furry()
         {
-            DisplayCommandLine("Femboy");
-            Random rnd = new Random((int)(Context.User.Id % 10000000));
-            await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% femboy");
+            DisplayCommandLine("Furry");
+            await ReplyAsync($"<@{Context.User.Id}> is 100% furry");
+        }
+
+        [Command("furry")]
+        public async Task Furry([Remainder]string param)
+        {
+            DisplayCommandLine("Furry with param");
+            await ReplyAsync($"{param} is 100% furry");
         }
         
         [Command("femboy")]
