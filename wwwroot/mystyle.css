@@ -13,7 +13,13 @@ html {
     left: -10%;
     animation-name: example;
     animation-duration: 20s;
+    cursor: pointer;
 }
+
+.dropdownImage:hover {
+    opacity: 0.7;
+}
+
 
 
 @keyframes example {
@@ -35,15 +41,6 @@ html {
 
 /*Image modal*/
 
-.myImg {
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-    #myImg:hover {
-        opacity: 0.7;
-    }
 
 /* The Modal (background) */
 .modal {
