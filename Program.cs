@@ -104,7 +104,9 @@ namespace valhallappweb
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
             // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
-            foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
+            // post every attachment as an embed
+            foreach (var attachment in message.Attachments) PostEmbedImage($"<@{message.Author.Username}>", message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
+            // post every attachment as an embed
             foreach (var url in urlList) {
                 bool isEmbedable = false;
                 foreach (var extensionItem in extensionList)
