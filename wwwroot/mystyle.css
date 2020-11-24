@@ -9,7 +9,7 @@ html {
 .dropdownImage {
     position: fixed;
     opacity: 0;
-    top: -50%;
+    top: -100%;
     animation-name: example;
     animation-duration: 20s;
 }
@@ -18,6 +18,9 @@ html {
 @keyframes example {
     0% {
         opacity: 1;
+    }
+    10% {
+        top: -20%;
     }
     99% {
         top: 120%;
