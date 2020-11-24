@@ -12,19 +12,20 @@ html {
     opacity: 0;
     top: -100%;
     left: -10%;
-    animation-name: example;
+    animation-name: dropdown;
     animation-duration: 20s;
     cursor: pointer;
 }
 
 .dropdownImage:hover {
-    opacity: 0.7;
-    font-size:200%;
+    animation-name: dropdownHover;
+    animation-duration: 20s;
+    opacity: 0;
 }
 
 
 
-@keyframes example {
+@keyframes dropdown {
     0% {
         opacity: 1;
     }
@@ -44,6 +45,15 @@ html {
     }
 }
 
+
+@keyframes dropdownHover {
+    0% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0.7;
+    }
+}
 /*Image modal*/
 
 
