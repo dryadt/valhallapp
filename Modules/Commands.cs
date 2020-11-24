@@ -1,140 +1,228 @@
-﻿/*background css*/
+﻿using System;
+using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
 
-html
+namespace Valhallapp.Modules
 {
-background: url(https://cdn.discordapp.com/attachments/482894390570909706/773571481573130290/Starless.png) no-repeat center center fixed;
-background - size: cover;
-}
-
-/*image dropdown css animation*/
-.dropdownImage
-{
-position: fixed;
-    opacity: 0;
-top: -100 %;
-left: -10 %;
-    animation - name: example;
-    animation - duration: 20s;
-cursor: pointer;
-}
-
-.dropdownImage: hover {
-opacity: 0.7;
-}
-
-
-
-@keyframes example
-{
-    0% {
-    opacity: 1;
-    }
-    10% {
-    top: -20 %;
-    }
-    99% {
-    top: 120 %;
-    opacity: 1;
-    }
-    100% {
-    opacity: 0;
-    top: 120 %;
-    }
-}
-
-/*Image modal*/
-
-
-/* The Modal (background) */
-.modal
-{
-display: none; /* Hidden by default */
-position: fixed; /* Stay in place */
-    z - index: 1; /* Sit on top */
-    padding - top: 100px; /* Location of the box */
-left: 0;
-top: 0;
-width: 100 %; /* Full width */
-height: 100 %; /* Full height */
-overflow: auto; /* Enable scroll if needed */
-    background - color: rgb(0, 0, 0); /* Fallback color */
-    background - color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
-}
-
-/* Modal Content (image) */
-.modal - content {
-margin: auto;
-display: block;
-width: 80 %;
-    max - width: 700px;
-}
-
-/* Caption of Modal Image */
-# caption {
-margin: auto;
-display: block;
-width: 80 %;
-max - width: 700px;
-text - align: center;
-color: #ccc;
-    padding: 10px 0;
-height: 150px;
-}
-
-/* Add Animation */
-.modal - content, #caption {
-    -webkit - animation - name: zoom;
--webkit - animation - duration: 0.6s;
-animation - name: zoom;
-animation - duration: 0.6s;
-}
-
-@-webkit - keyframes zoom
-{
-    from {
-        -webkit - transform: scale(0)
-    }
-
-    to {
-        -webkit - transform: scale(1)
-    }
-}
-
-@keyframes zoom
-{
-    from
+    public class Commands : ModuleBase<SocketCommandContext>
     {
-    transform: scale(0)
-    }
 
-    to
-    {
-    transform: scale(1)
-    }
-}
+        [Command("help")]
+        public async Task Help()
+        {
+            DisplayCommandLine("Help");
+            var embed = new EmbedBuilder();
+            string prefix = "&";
+            embed.WithTitle("Commands list:")
+                .WithAuthor(Context.Client.CurrentUser)
+                .AddField($"{prefix}femboy", "Display the seeded percentage rating of the a user. Can accept one paramater.")
+                .AddField($"{prefix}furry", "Display the seeded percentage rating of the a user. Can accept one paramater.")
+                .AddField($"{prefix}gay", "Display the seeded percentage rating of the a user. Can accept one paramater.")
+                .AddField($"{prefix}heroku", "Display the app hosting site of the [application](https://dashboard.heroku.com/apps/valhallapp)!")
+                .AddField($"{prefix}github", "Display the github repo of the [application](https://github.com/dryadt/valhallapp)!")
+                .AddField($"{prefix}help", "Displays help related to the bot!")
+                .AddField($"{prefix}ping", "Replies with the ping of the bot")
+                .AddField($"{prefix}website", "Display the website of the [application](https://valhallapp.herokuapp.com/)!")
+                .WithFooter(footer => footer.Text = "Page 1 out of 1.")
+                .WithColor(Color.Blue)
+                .WithCurrentTimestamp()
+                .Build();
+            await ReplyAsync(embed: embed.Build());
+        }
+        [Command("femboy")]
+        public async Task Femboy()
+        {
+            DisplayCommandLine("Femboy");
+            Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 20000000));
+            await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% femboy");
+        }
+        [Command("femboy")]
+        public async Task Femboy([Remainder] string param)
+        {
+            DisplayCommandLine("Femboy with params");
+            Random rnd;
+            string text = param;
+            if (param.Contains("<@!"))
+            {
+                Console.WriteLine("userping");
+                text = text.Remove(text.Length - 1);
+                text = text.Substring(3, text.Length - 3);
+                rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
+                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
+            }
+            else if (IsDigitsOnly(text))
+            {
+                Console.WriteLine("id");
+                rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
+                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
+            }
+            else
+            {
+                Console.WriteLine("Nothing");
+                rnd = new Random();
+                await ReplyAsync($"{text} is {rnd.Next(101)}% femboy");
+            }
+        }
+        [Command("furry")]
+        public async Task Furry()
+        {
+            DisplayCommandLine("Furry");
+            await ReplyAsync($"<@{Context.User.Id}> is 100% furry");
+        }
 
-/* The Close Button */
-.close
-{
-position: absolute;
-top: 15px;
-right: 35px;
-color: #f1f1f1;
-    font - size: 40px;
-    font - weight: bold;
-transition: 0.3s;
-}
+        [Command("furry")]
+        public async Task Furry([Remainder] string param)
+        {
+            DisplayCommandLine("Furry with param");
+            await ReplyAsync($"{param} is 100% furry");
+        }
 
-    .close: hover,
-    .close: focus {
-color: #bbb;
-        text - decoration: none;
-cursor: pointer;
-}
+        [Command("gay")]
+        public async Task Gay()
+        {
+            DisplayCommandLine("Gay");
+            Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 20000000));
+            await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% gay");
+        }
 
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px) {
-    .modal - content {
-    width: 100 %;
+
+        [Command("gay")]
+        public async Task Gay([Remainder] string param)
+        {
+            DisplayCommandLine("Gay with params");
+            Random rnd;
+            string text = param;
+            if (param.Contains("<@!"))
+            {
+                Console.WriteLine("userping");
+                text = text.Remove(text.Length - 1);
+                text = text.Substring(3, text.Length - 3);
+                rnd = new Random((int)(Convert.ToUInt64(text) % 20000000));
+                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
+            }
+            else if (IsDigitsOnly(text))
+            {
+                Console.WriteLine("id");
+                rnd = new Random((int)(Convert.ToUInt64(text) % 20000000));
+                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
+            }
+            else
+            {
+                Console.WriteLine("Nothing");
+                rnd = new Random();
+                await ReplyAsync($"{text} is {rnd.Next(101)}% gay");
+            }
+        }
+        [Command("github")]
+        public async Task Github()
+        {
+            DisplayCommandLine("Github");
+            await ReplyAsync("https://github.com/dryadt/valhallapp");
+        }
+        [Command("heroku")]
+        public async Task Heroku()
+        {
+            DisplayCommandLine("Heroku");
+            await ReplyAsync("https://dashboard.heroku.com/apps/valhallapp");
+        }
+
+        [Command("ping")]
+        public async Task Ping()
+        {
+            DisplayCommandLine("Ping");
+            TimeSpan ping = DateTime.Now - Context.Message.Timestamp;
+            await ReplyAsync($"Pong: {ping.TotalMilliseconds} ms");
+        }
+
+        [Command("pong")]
+        public async Task Pong()
+        {
+            DisplayCommandLine("Pong");
+            await ReplyAsync("Ping");
+        }
+
+        [Command("website")]
+        public async Task Website()
+        {
+            DisplayCommandLine("Website");
+            await ReplyAsync("https://valhallapp.herokuapp.com/");
+        }
+
+        [Command("help meme")]
+        public async Task HelpMeme()
+        {
+            DisplayCommandLine("Help meme");
+            var embed = new EmbedBuilder();
+            string prefix = "&";
+            embed.WithTitle("Meme commands list:")
+                .WithAuthor(Context.Client.CurrentUser)
+                .AddField($"{prefix}astral", "A.")
+                .AddField($"{prefix}costro", "Gay stag.")
+                .AddField($"{prefix}hi", "He likes guys")
+                .AddField($"{prefix}Oh! You go big guy!\n"+ $"{prefix}Pose for the fans!\n"+ $"{prefix}Wubbadubadub is that true?", "Do i need to say anything about the GOTY?")
+                .AddField($"{prefix}starless", "Mega Bi stag.")
+                .WithFooter(footer => footer.Text = "Page 1 out of 1.")
+                .WithColor(Color.Blue)
+                .WithCurrentTimestamp()
+                .Build();
+            await ReplyAsync(embed: embed.Build());
+        }
+        [Command("astral")]
+        public async Task Astral()
+        {
+            DisplayCommandLine("Astral");
+            await ReplyAsync("A\nA\nA\nA\nA\nA\nA\n");
+        }
+        [Command("costro")]
+        public async Task Costro()
+        {
+            DisplayCommandLine("Costro");
+            await ReplyAsync("Costro is a hella cute stag. <3 <3 <3 <3 <3");
+        }
+        [Command("hi")]
+        public async Task Reggie()
+        {
+            DisplayCommandLine("Reggie");
+            await ReplyAsync("My name is reggie.");
+        }
+        [Command("Oh! You go big guy!")]
+        public async Task BigGuy()
+        {
+            DisplayCommandLine("BigGuy");
+            await ReplyAsync("Hmph Umph!");
+        }
+        [Command("Pose for the fans!")]
+        public async Task Pose()
+        {
+            DisplayCommandLine("Pose");
+            await ReplyAsync("AAAAUGH!");
+        }
+        [Command("starless")]
+        public async Task Starless()
+        {
+            DisplayCommandLine("Starless");
+            await ReplyAsync(":dress::dress::dress::dress::dress::dress::dress::dress::dress::bikini::bikini::bikini::bikini::bikini::bikini::kimono::kimono::kimono:");
+        }
+        [Command("Wubbadubadub is that true?")]
+        public async Task Wubbadubadub()
+        {
+            DisplayCommandLine("Wubbadubadub");
+            await ReplyAsync("Yes.");
+        }
+        void DisplayCommandLine(string CommandName)
+        {
+            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
+        }
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

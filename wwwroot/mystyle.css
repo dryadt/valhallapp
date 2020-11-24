@@ -16,23 +16,26 @@ html {
     cursor: pointer;
 }
 
-.dropdownImage:hover {
-    opacity: 0.7;
-}
-ue;
-}
+    .dropdownImage:hover {
+        opacity: 0.7;
+    }
+
+
 
 @keyframes example {
     0% {
         opacity: 1;
     }
+
     10% {
         top: -20%;
     }
+
     99% {
         top: 120%;
         opacity: 1;
     }
+
     100% {
         opacity: 0;
         top: 120%;
