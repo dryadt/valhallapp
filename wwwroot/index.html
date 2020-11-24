@@ -21,14 +21,15 @@
         var imgList = document.getElementsByTagName("dropdownImage");
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
-        imgList.forEach(imageObject => 
-            imageObject.onclick = function () {
+        for (var i = 0; i < imgList.length; i++) {
+            var imgObect = imgList[i];
+            imgObect.onclick = function () {
                 console.log("test")
                 modal.style.display = "block";
                 modalImg.src = this.src;
                 captionText.innerHTML = this.alt;
             }
-        );
+        }
 
         
 
