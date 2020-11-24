@@ -96,9 +96,11 @@ namespace valhallappweb
         {
             const ulong artChannelId = 482894390570909706;
             const ulong artTalkChannelId = 561322620931538944;
-            // if the message has no attachments and no embed as well isn't in the art channel, return
-            //Console.WriteLine("Message has " + message.Attachments.Count + " attachment(s) and " + message.Embeds.Count + " embed(s)");
-            if (message.Channel.Id != artChannelId || (message.Attachments.Count == 0 && message.Embeds.Count == 0)) return;
+            // if the message isn't in the art channel, return
+            if (message.Channel.Id != artChannelId) return;
+            // if the message has no attachments and no embed as well
+            Console.WriteLine($"{message.Attachments.Count} attachment and {message.Embeds.Count} embeds");
+            if ((message.Attachments.Count == 0 && message.Embeds.Count == 0)) return;
             foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
             foreach (var embed in message.Embeds) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, embed.Url);
         }
