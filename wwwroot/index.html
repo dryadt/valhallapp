@@ -11,7 +11,7 @@
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
-        <div id="caption"></div>
+        Art by: <div id="caption"></div>
     </div>
     <script type="text/javascript">
         // Get the modal
@@ -21,8 +21,52 @@
         var imgList = document.getElementsByTagName("dropdownImage");
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
+        let imageUrl = [
+            'https://cdn.discordapp.com/attachments/575393068065226782/666199147782733846/Dryad.png',
+            'https://media.discordapp.net/attachments/482894390570909706/695172636258336809/Untitled421_20200402152414.png?width=300&height=300',
+            'https://cdn.discordapp.com/attachments/482894390570909706/702707248811606026/femboyyyyy.png',
+            'https://media.discordapp.net/attachments/467635425553547307/720005811602063452/Starless.png?width=225&height=300',
+            'https://cdn.discordapp.com/attachments/482894390570909706/742330962423185469/starless-1.png',
+            'https://media.discordapp.net/attachments/601614220575899648/733139015825489940/calebhug.png',
+            'https://media.discordapp.net/attachments/601614220575899648/733139013371953240/calebboop.png',
+            'https://cdn.discordapp.com/attachments/482894390570909706/751013108142702652/unknown.png',
+            'https://cdn.discordapp.com/attachments/561322361878609944/758667197165600788/Untitled1080_20200924203127.png',
+            'https://cdn.discordapp.com/attachments/482894390570909706/767748604689383464/Untitled1131_20201019215438_1.jpg',
+            'https://cdn.discordapp.com/attachments/577586063967518826/769582547604340747/unknown-71.png',
+            'https://cdn.discordapp.com/attachments/598604322623848458/689494198591946874/dryadnuzzles.png',
+            'https://cdn.discordapp.com/attachments/577586063967518826/780774843330199612/unknown.png',
+            'https://media.discordapp.net/attachments/658791767168122923/775336227943612436/Untitled1215_20201109202914.png?width=349&height=330',
+            'https://cdn.discordapp.com/attachments/663505369313706004/780106277056413706/Untitled.png',
+            'https://cdn.discordapp.com/attachments/658791767168122923/780413149114400808/Untitled1263_20201123204303.png',
+            'https://cdn.discordapp.com/attachments/658791767168122923/780704114979635231/Untitled1264_20201124155900.png'
+        ]
 
-        
+        let creditImage = [
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            3,
+            4,
+            0,
+            0,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+        ]
+
+        let artistList = [
+            "Astral https://twitter.com/sc_astral",
+            "Glum https://twitter.com/RockAddictGlum",
+            "Spaz https://twitter.com/Spaztiqe",
+            "Meg",
+            "Mewdusa",
+        ]
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
@@ -44,39 +88,19 @@
         function generateImage() {
             if (isPageLoaded == false) return
             var x = document.createElement("IMG");
+            let randomImageID = Math.floor(Math.random() * imageUrl.length);
             x.setAttribute("src", RandomImage());
             x.setAttribute("width", "20%");
             x.setAttribute("class", "dropdownImage");
-            x.setAttribute("style", `margin-left: ${Math.floor(Math.random() * 100)}%`);
+            x.setAttribute("style", `margin-left: ${imageUrl[randomImageID]}%`);
             x.onclick = function () {
-                console.log("test")
                 modal.style.display = "block";
                 modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
+                captionText.innerHTML = artistList[creditImage[randomImageID]];
             }
             document.body.appendChild(x);
         }
         function RandomImage() {
-            let imageUrl = [
-                'https://cdn.discordapp.com/attachments/575393068065226782/666199147782733846/Dryad.png',
-                'https://media.discordapp.net/attachments/482894390570909706/695172636258336809/Untitled421_20200402152414.png?width=300&height=300',
-                'https://cdn.discordapp.com/attachments/482894390570909706/702707248811606026/femboyyyyy.png',
-                'https://media.discordapp.net/attachments/467635425553547307/720005811602063452/Starless.png?width=225&height=300',
-                'https://cdn.discordapp.com/attachments/482894390570909706/742330962423185469/starless-1.png',
-                'https://media.discordapp.net/attachments/601614220575899648/733139015825489940/calebhug.png',
-                'https://media.discordapp.net/attachments/601614220575899648/733139013371953240/calebboop.png',
-                'https://cdn.discordapp.com/attachments/482894390570909706/751013108142702652/unknown.png',
-                'https://cdn.discordapp.com/attachments/561322361878609944/758667197165600788/Untitled1080_20200924203127.png',
-                'https://cdn.discordapp.com/attachments/482894390570909706/767748604689383464/Untitled1131_20201019215438_1.jpg',
-                'https://cdn.discordapp.com/attachments/577586063967518826/769582547604340747/unknown-71.png',
-                'https://cdn.discordapp.com/attachments/598604322623848458/689494198591946874/dryadnuzzles.png',
-                'https://cdn.discordapp.com/attachments/577586063967518826/780774843330199612/unknown.png',
-                'https://media.discordapp.net/attachments/658791767168122923/775336227943612436/Untitled1215_20201109202914.png?width=349&height=330',
-                'https://cdn.discordapp.com/attachments/663505369313706004/780106277056413706/Untitled.png',
-                'https://cdn.discordapp.com/attachments/658791767168122923/780413149114400808/Untitled1263_20201123204303.png',
-                'https://cdn.discordapp.com/attachments/658791767168122923/780704114979635231/Untitled1264_20201124155900.png'
-            ]
-            return imageUrl[Math.floor(Math.random() * imageUrl.length)];
         }
         // -- test if page is loaded --
         function handleVisibilityChange() {
