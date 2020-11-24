@@ -136,12 +136,13 @@ namespace valhallappweb
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, url)
+                .WithDescription($"<@{userId}> posted:")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
                 .WithCurrentTimestamp()
                 .Build();
             var chnl = _client.GetChannel(channelID) as IMessageChannel;
-            chnl.SendMessageAsync($"<@{userId}> posted:",embed: embed.Build());
+            chnl.SendMessageAsync(embed: embed.Build());
         }
     }
 }
