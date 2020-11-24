@@ -105,7 +105,7 @@ namespace valhallappweb
             // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             // post every attachment as an embed
-            foreach (var attachment in message.Attachments) PostEmbedImage($"<@{message.Author.Username}>", message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
+            foreach (var attachment in message.Attachments) PostEmbedImage($"<@{message.Author.Id}>", message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
             // post every attachment as an embed
             foreach (var url in urlList) {
                 bool isEmbedable = false;
