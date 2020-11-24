@@ -96,17 +96,23 @@ namespace valhallappweb
         public void CheckImageArtChannel(SocketUserMessage message)
         {
             const ulong artChannelId = 482894390570909706;
-            const ulong artTalkChannelId = 561322620931538944;
             // if the message isn't in the art channel, return
             if (message.Channel.Id != artChannelId) return;
-            // if the message has no attachments and no embed as well
+            const ulong artTalkChannelId = 561322620931538944;
+            string[] extensionList = { ".mp4", ".mp3", ".png", ".jpeg", ".gif" };
             List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
+            // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
-            foreach (var url in urlList) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, url);
+            foreach (var url in urlList) {
+                bool isEmbedable = false;
+                foreach (var extensionItem in extensionList)
+                    if (isEmbedable = url.EndsWith(extensionItem)) break;
+                if (isEmbedable) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, url);
+                else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
+            };
         }
-
         public List<string> GetAllUrlFromString(string stringToAnalyse)
         {
             List<string> strList = new List<string>();
@@ -125,6 +131,7 @@ namespace valhallappweb
 
         public void PostEmbedImage(string username, string userURL, ulong channelID, string url)
         {
+            Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, url)
                 .WithColor(Color.Purple)
