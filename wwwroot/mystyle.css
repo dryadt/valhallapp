@@ -20,7 +20,9 @@ html {
     opacity: 0.7;
 }
 
-
+#caption {
+    font-family: Helvetica Neue;
+}
 
 @keyframes example {
     0% {
