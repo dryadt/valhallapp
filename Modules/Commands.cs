@@ -15,6 +15,8 @@ namespace Valhallapp.Modules
             string prefix = "&";
             embed.WithTitle("Commands list:")
                 .WithAuthor(Context.Client.CurrentUser)
+                .AddField(prefix + "gay", "Display the seeded percentage rating of the a user. Can accept one paramater.")
+                .AddField(prefix + "furry", "Display the seeded percentage rating of the a user. Can accept one paramater.")
                 .AddField(prefix + "femboy", "Display the seeded percentage rating of the a user. Can accept one paramater.")
                 .AddField(prefix + "help", "Displays help related to the bot!")
                 .AddField(prefix + "github", "Display the github repo of the [application](https://github.com/dryadt/valhallapp)!")
@@ -103,7 +105,6 @@ namespace Valhallapp.Modules
             await ReplyAsync("Ping");
         }
         
-        
         [Command("furry")]
         public async Task Furry()
         {
@@ -117,21 +118,31 @@ namespace Valhallapp.Modules
             DisplayCommandLine("Furry with param");
             await ReplyAsync($"{param} is 100% furry");
         }
-        
+
         [Command("femboy")]
-        public async Task Femboy([Remainder]string param)
+        public async Task Femboy()
+        {
+            DisplayCommandLine("Femboy");
+            await ReplyAsync($"<@{Context.User.Id}> is 100% femboy");
+        }
+
+
+        [Command("femboy")]
+        public async Task Femboy([Remainder] string param)
         {
             DisplayCommandLine("Femboy with params");
             Random rnd;
             string text = param;
-            if(param.Contains("<@!")) {
+            if (param.Contains("<@!"))
+            {
                 Console.WriteLine("userping");
                 text = text.Remove(text.Length - 1);
-                text = text.Substring(3, text.Length-3);
+                text = text.Substring(3, text.Length - 3);
                 rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
             }
-            else if (IsDigitsOnly(text)) {
+            else if (IsDigitsOnly(text))
+            {
                 Console.WriteLine("id");
                 rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
@@ -141,6 +152,43 @@ namespace Valhallapp.Modules
                 Console.WriteLine("Nothing");
                 rnd = new Random();
                 await ReplyAsync($"{text} is {rnd.Next(101)}% femboy");
+            }
+        }
+
+        [Command("gay")]
+        public async Task Gay()
+        {
+            DisplayCommandLine("Gay");
+            Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 20000000));
+            await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% gay");
+        }
+
+
+        [Command("gay")]
+        public async Task Gay([Remainder] string param)
+        {
+            DisplayCommandLine("Gay with params");
+            Random rnd;
+            string text = param;
+            if (param.Contains("<@!"))
+            {
+                Console.WriteLine("userping");
+                text = text.Remove(text.Length - 1);
+                text = text.Substring(3, text.Length - 3);
+                rnd = new Random((int)(Convert.ToUInt64(text) % 20000000));
+                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
+            }
+            else if (IsDigitsOnly(text))
+            {
+                Console.WriteLine("id");
+                rnd = new Random((int)(Convert.ToUInt64(text) % 20000000));
+                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
+            }
+            else
+            {
+                Console.WriteLine("Nothing");
+                rnd = new Random();
+                await ReplyAsync($"{text} is {rnd.Next(101)}% gay");
             }
         }
         void DisplayCommandLine(string CommandName)
