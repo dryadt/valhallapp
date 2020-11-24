@@ -17,9 +17,10 @@ html {
     cursor: pointer;
 }
 
-    .dropdownImage:hover {
-        opacity: 0.7;
-    }
+.dropdownImage:hover {
+    opacity: 0.7;
+    font-size:200%;
+}
 
 
 
