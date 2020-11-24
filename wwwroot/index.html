@@ -21,15 +21,6 @@
         var imgList = document.getElementsByTagName("dropdownImage");
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
-        for (var i = 0; i < imgList.length; i++) {
-            var imgObect = imgList[i];
-            imgObect.onclick = function () {
-                console.log("test")
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
-            }
-        }
 
         
 
@@ -52,6 +43,12 @@
             x.setAttribute("width", "20%");
             x.setAttribute("class", "dropdownImage");
             x.setAttribute("style", `margin-left: ${Math.floor(Math.random() * 100)}%`);
+            x.onclick = function () {
+                console.log("test")
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
             document.body.appendChild(x);
         }
         function RandomImage() {
