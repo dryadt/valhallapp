@@ -105,13 +105,13 @@ namespace valhallappweb
             // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             // post every attachment as an embed
-            foreach (var attachment in message.Attachments) PostEmbedImage($"<@{message.Author.Id}>", message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
+            foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.Id, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
             // post every attachment as an embed
             foreach (var url in urlList) {
                 bool isEmbedable = false;
                 foreach (var extensionItem in extensionList)
                     if (isEmbedable = url.EndsWith(extensionItem)) break;
-                if (isEmbedable) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, url);
+                if (isEmbedable) PostEmbedImage(message.Author.Username, message.Author.Id, message.Author.GetAvatarUrl(), artTalkChannelId, url);
                 else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
             };
         }
@@ -131,7 +131,7 @@ namespace valhallappweb
             chnl.SendMessageAsync(messageContent);
         }
 
-        public void PostEmbedImage(string username, string userURL, ulong channelID, string url)
+        public void PostEmbedImage(string username, ulong userId, string userURL, ulong channelID, string url)
         {
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
@@ -141,7 +141,7 @@ namespace valhallappweb
                 .WithCurrentTimestamp()
                 .Build();
             var chnl = _client.GetChannel(channelID) as IMessageChannel;
-            chnl.SendMessageAsync(embed: embed.Build());
+            chnl.SendMessageAsync($"<@{userId}> posted:",embed: embed.Build());
         }
     }
 }
