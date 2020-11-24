@@ -13,6 +13,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace valhallappweb
 {
@@ -99,10 +100,21 @@ namespace valhallappweb
             // if the message isn't in the art channel, return
             if (message.Channel.Id != artChannelId) return;
             // if the message has no attachments and no embed as well
-            Console.WriteLine($"{message.Attachments.Count} attachment and {message.Embeds.Count} embeds");
-            if ((message.Attachments.Count == 0 && message.Embeds.Count == 0)) return;
+            List<string> urlList = GetAllUrlFromString(message.Content);
+            Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
+            if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
-            foreach (var embed in message.Embeds) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, embed.Url);
+            foreach (var url in urlList) PostEmbedImage(message.Author.Username, message.Author.GetAvatarUrl(), artTalkChannelId, url);
+        }
+
+        public List<string> GetAllUrlFromString(string stringToAnalyse)
+        {
+            List<string> strList = new List<string>();
+            var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (Match m in linkParser.Matches(stringToAnalyse)) {
+                strList.Add(m.ToString());
+            }
+            return strList;
         }
         public void MessageChannel(string messageContent, ulong channelId)
         {
