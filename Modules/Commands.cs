@@ -82,7 +82,7 @@ namespace Valhallapp.Modules
         public async Task Gay()
         {
             DisplayCommandLine("Gay");
-            Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 20000000));
+            Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id)+1 % 10000000));
             await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% gay");
         }
 
@@ -98,13 +98,13 @@ namespace Valhallapp.Modules
                 Console.WriteLine("userping");
                 text = text.Remove(text.Length - 1);
                 text = text.Substring(3, text.Length - 3);
-                rnd = new Random((int)(Convert.ToUInt64(text) % 20000000));
+                rnd = new Random((int)(Convert.ToUInt64(text) + 1 % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
             }
             else if (IsDigitsOnly(text))
             {
                 Console.WriteLine("id");
-                rnd = new Random((int)(Convert.ToUInt64(text) % 20000000));
+                rnd = new Random((int)(Convert.ToUInt64(text) + 1 % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
             }
             else
