@@ -99,6 +99,10 @@
                 modalImg.src = this.src;
                 captionText.innerHTML = artistList[creditImage[randomImageID]];
             }
+            x.oncontextmenu = function () {
+                console.log("test")
+                return false;     // cancel default menu
+            }
             document.body.appendChild(x);
         }
         function RandomImage() {
