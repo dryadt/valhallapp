@@ -41,7 +41,7 @@ namespace Valhallapp.Modules
         [Command("femboy")]
         public async Task Femboy([Remainder] string param)
         {
-            DisplayCommandLine("Femboy with params");
+            DisplayCommandLine($"Femboy with params{param}");
             Random rnd;
             string text = param;
             if (param.Contains("<@!"))
