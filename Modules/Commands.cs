@@ -34,6 +34,7 @@ namespace Valhallapp.Modules
         public async Task Femboy()
         {
             DisplayCommandLine("Femboy");
+            Console.WriteLine($"id user: {Context.User.Id}");
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 10000000));
             await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% femboy");
         }
@@ -48,12 +49,14 @@ namespace Valhallapp.Modules
                 Console.WriteLine("userping");
                 text = text.Remove(text.Length - 1);
                 text = text.Substring(3, text.Length - 3);
+                Console.WriteLine($"id user: {text}");
                 rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
             }
             else if (IsDigitsOnly(text))
             {
                 Console.WriteLine("id");
+                Console.WriteLine($"id user: {text}");
                 rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
             }
