@@ -100,6 +100,7 @@
                 captionText.innerHTML = artistList[creditImage[randomImageID]];
             }
             x.addEventListener('mouseup', handleMouseUp);
+
             document.body.appendChild(x);
         }
         function handleMouseUp(e) {
@@ -107,6 +108,9 @@
                 console.log("BOOM");
             }
         }
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
         // -- test if page is loaded --
         function handleVisibilityChange() {
             if (document.hidden) {
