@@ -99,20 +99,15 @@
                 modalImg.src = this.src;
                 captionText.innerHTML = artistList[creditImage[randomImageID]];
             }
-            x.body.onclick = function (e) {
-                var isRightMB;
-                e = e || window.event;
-
-                if ("which" in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
-                    isRightMB = e.which == 3;
-                else if ("button" in e)  // IE, Opera 
-                    isRightMB = e.button == 2;
-
-                alert("Right mouse button " + (isRightMB ? "" : " was not") + "clicked!");
-            } 
+            x.addEventListener('mouseup', handleMouseUp);
             document.body.appendChild(x);
         }
-        function RandomImage() {
+        var rightMouseClicked = false;
+        function handleMouseUp(e) {
+            if (e.button === 2) {
+                rightMouseClicked = false;
+            }
+            console.log(rightMouseClicked);
         }
         // -- test if page is loaded --
         function handleVisibilityChange() {
