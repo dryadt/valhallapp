@@ -41,22 +41,21 @@ namespace Valhallapp.Modules
         [Command("femboy")]
         public async Task Femboy([Remainder] string param)
         {
-            DisplayCommandLine($"Femboy with params{param}");
+            DisplayCommandLine($"Femboy with params");
             Random rnd;
             string text = param;
-            if (param.Contains("<@!"))
+            if (param.Contains("<@"))
             {
                 Console.WriteLine("userping");
                 text = text.Remove(text.Length - 1);
-                text = text.Substring(3, text.Length - 3);
-                Console.WriteLine($"id user: {text}");
+                text = text.Substring(2, text.Length - 2);
+                if(text[0]=='!') text = text.Substring(1, text.Length - 1);
                 rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
             }
             else if (IsDigitsOnly(text))
             {
                 Console.WriteLine("id");
-                Console.WriteLine($"id user: {text}");
                 rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
                 await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
             }
