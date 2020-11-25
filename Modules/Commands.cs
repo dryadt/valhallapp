@@ -34,7 +34,7 @@ namespace Valhallapp.Modules
         public async Task Femboy()
         {
             DisplayCommandLine("Femboy");
-            Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 20000000));
+            Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 10000000));
             await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% femboy");
         }
         [Command("femboy")]

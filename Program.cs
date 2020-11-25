@@ -124,12 +124,6 @@ namespace valhallappweb
             }
             return strList;
         }
-        public void MessageChannel(string messageContent, ulong channelId)
-        {
-            Console.WriteLine($"url of image: {messageContent}");
-            var chnl = _client.GetChannel(channelId) as IMessageChannel; 
-            chnl.SendMessageAsync(messageContent);
-        }
 
         public void PostEmbedImage(string username, ulong userId, string userURL, ulong channelID, string url)
         {
@@ -143,6 +137,12 @@ namespace valhallappweb
                 .Build();
             var chnl = _client.GetChannel(channelID) as IMessageChannel;
             chnl.SendMessageAsync(embed: embed.Build());
+        }
+        public void MessageChannel(string messageContent, ulong channelId)
+        {
+            Console.WriteLine($"url of image: {messageContent}");
+            var chnl = _client.GetChannel(channelId) as IMessageChannel;
+            chnl.SendMessageAsync(messageContent);
         }
     }
 }
