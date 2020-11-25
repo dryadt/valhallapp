@@ -102,12 +102,10 @@
             x.addEventListener('mouseup', handleMouseUp);
             document.body.appendChild(x);
         }
-        var rightMouseClicked = false;
         function handleMouseUp(e) {
             if (e.button === 2) {
-                rightMouseClicked = false;
+                console.log("BOOM");
             }
-            console.log(rightMouseClicked);
         }
         // -- test if page is loaded --
         function handleVisibilityChange() {
