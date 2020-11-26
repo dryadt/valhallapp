@@ -86,6 +86,7 @@
         function initCommand() {
             setInterval(generateImage, 1000);
         }
+
         function generateImage() {
             if (isPageLoaded == false) return
             var x = document.createElement("IMG");
@@ -104,11 +105,11 @@
             x.addEventListener('contextmenu', function (ev) {
                 console.log(ev);
                 ev.target.setAttribute("src", "https://i.gyazo.com/744f273507c54b2a0a8b0518113c4479.gif")
-                setTimeout(x.remove(), 1000)
+                setTimeout(x.remove, 1000)
                 return false;
             }, { once: true });
             document.body.appendChild(x);
-            //setTimeout(x.remove(), 20000);
+            setTimeout(x.remove, 20000);
         }
 
         // removes rightclick
