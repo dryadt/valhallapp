@@ -37,7 +37,7 @@ namespace Valhallapp.Modules
             Console.WriteLine($"id user: {Context.User.Id}");
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 10000000));
             await ReplyAsync(embed: 
-                PostEmbedPercent(Context.User.Username,Context.User.Id, Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
+                PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
         }
         [Command("femboy")]
         public async Task Femboy([Remainder] string param)
@@ -55,20 +55,22 @@ namespace Valhallapp.Modules
                 // rng creation
                 rnd = new Random((int)(Convert.ToUInt64(userID) % 10000000));
                 await ReplyAsync(embed:
-                    PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
+                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
             }
             // id function
             else if (IsDigitsOnly(userID))
             {
                 rnd = new Random((int)(Convert.ToUInt64(userID) % 10000000));
-                await ReplyAsync($"<@{userID}> is {rnd.Next(101)}% femboy");
+                await ReplyAsync(embed:
+                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
             }
             // TODO: username function
             // random string function
             else
             {
                 rnd = new Random();
-                await ReplyAsync($"{userID} is {rnd.Next(101)}% femboy");
+                await ReplyAsync(embed:
+                    PostEmbedPercent(Context.User.Username, param, Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
             }
         }
         [Command("furry")]
@@ -76,7 +78,7 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Furry");
             await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), 100, "furry"));
+                PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), 100, "furry"));
         }
 
         [Command("furry")]
@@ -84,7 +86,7 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Furry with param");
             await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), 100, "furry"));
+                PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), 100, "furry"));
         }
 
         [Command("gay")]
@@ -93,7 +95,7 @@ namespace Valhallapp.Modules
             DisplayCommandLine("Gay");
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id)+1 % 10000000));
             await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
+                PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
         }
 
 
@@ -111,14 +113,16 @@ namespace Valhallapp.Modules
                 userID = userID.Substring(2, userID.Length - 2);
                 if (userID[0] == '!') userID = userID.Substring(1, userID.Length - 1);
                 rnd = new Random((int)(Convert.ToUInt64(userID) + 1 % 10000000));
-                await ReplyAsync($"<@{userID}> is {rnd.Next(101)}% gay");
+                await ReplyAsync(embed:
+                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
             }
             // id function
             else if (IsDigitsOnly(userID))
             {
                 Console.WriteLine("id");
                 rnd = new Random((int)(Convert.ToUInt64(userID) + 1 % 10000000));
-                await ReplyAsync($"<@{userID}> is {rnd.Next(101)}% gay");
+                await ReplyAsync(embed:
+                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
             }
             // TODO: username function
             // random string function
@@ -126,7 +130,8 @@ namespace Valhallapp.Modules
             {
                 Console.WriteLine("Nothing");
                 rnd = new Random();
-                await ReplyAsync($"{userID} is {rnd.Next(101)}% gay");
+                await ReplyAsync(embed:
+                    PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
             }
         }
         [Command("github")]
@@ -239,7 +244,7 @@ namespace Valhallapp.Modules
 
             return true;
         }
-        Embed PostEmbedPercent(string username, ulong userIdToPing, string userIconURL,int percent,string commandType)
+        Embed PostEmbedPercent(string username, string userIdToPing, string userIconURL,int percent,string commandType)
         {
             // removes all urls
             var embed = new EmbedBuilder();
