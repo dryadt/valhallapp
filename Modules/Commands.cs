@@ -244,12 +244,12 @@ namespace Valhallapp.Modules
 
             return true;
         }
-        Embed PostEmbedPercent(string username, string userIdToPing, string userIconURL,int percent,string commandType)
+        Embed PostEmbedPercent(string username, string selectedUser, string userIconURL,int percent,string commandType)
         {
             // removes all urls
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userIconURL)
-                .WithDescription($"<@{userIdToPing}> is {percent}% {commandType}")
+                .WithDescription($"{selectedUser} is {percent}% {commandType}")
                 .WithColor(Color.DarkBlue)
                 .Build();
             return embed.Build();
