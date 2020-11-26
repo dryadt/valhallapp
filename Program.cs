@@ -105,13 +105,13 @@ namespace valhallappweb
             // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             // post every attachment as an embed
-            foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.Id, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
+            foreach (var attachment in message.Attachments) PostEmbedImage(message.Author.Username, message.Author.Id,message.Content, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url);
             // post every attachment as an embed
             foreach (var url in urlList) {
                 bool isEmbedable = false;
                 foreach (var extensionItem in extensionList)
                     if (isEmbedable = url.EndsWith(extensionItem)) break;
-                if (isEmbedable) PostEmbedImage(message.Author.Username, message.Author.Id, message.Author.GetAvatarUrl(), artTalkChannelId, url);
+                if (isEmbedable) PostEmbedImage(message.Author.Username, message.Author.Id, message.Content, message.Author.GetAvatarUrl(), artTalkChannelId, url);
                 else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
             };
         }
@@ -125,12 +125,14 @@ namespace valhallappweb
             return strList;
         }
 
-        public void PostEmbedImage(string username, ulong userId, string userURL, ulong channelID, string url)
+        public void PostEmbedImage(string username, ulong userId,string description, string userURL, ulong channelID, string url)
         {
+            // removes all urls
+            string cleanDescription = Regex.Replace(description, @"http[^\s]+", "");
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, url)
-                .WithDescription($"<@{userId}> posted:")
+                .AddField($"<@{userId}> posted:", cleanDescription)
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
                 .WithCurrentTimestamp()
