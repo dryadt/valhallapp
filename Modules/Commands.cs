@@ -44,41 +44,47 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine($"Femboy with params");
             Random rnd;
-            string text = param;
+            string userID = param;
+            // ping function
             if (param.Contains("<@"))
             {
-                Console.WriteLine("userping");
-                text = text.Remove(text.Length - 1);
-                text = text.Substring(2, text.Length - 2);
-                if(text[0]=='!') text = text.Substring(1, text.Length - 1);
-                rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
-                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
+                // gets only the id
+                userID = userID.Remove(userID.Length - 1);
+                userID = userID.Substring(2, userID.Length - 2);
+                if (userID[0] == '!') userID = userID.Substring(1, userID.Length - 1);
+                // rng creation
+                rnd = new Random((int)(Convert.ToUInt64(userID) % 10000000));
+                await ReplyAsync(embed:
+                    PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
             }
-            else if (IsDigitsOnly(text))
+            // id function
+            else if (IsDigitsOnly(userID))
             {
-                Console.WriteLine("id");
-                rnd = new Random((int)(Convert.ToUInt64(text) % 10000000));
-                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% femboy");
+                rnd = new Random((int)(Convert.ToUInt64(userID) % 10000000));
+                await ReplyAsync($"<@{userID}> is {rnd.Next(101)}% femboy");
             }
+            // TODO: username function
+            // random string function
             else
             {
-                Console.WriteLine("Nothing");
                 rnd = new Random();
-                await ReplyAsync($"{text} is {rnd.Next(101)}% femboy");
+                await ReplyAsync($"{userID} is {rnd.Next(101)}% femboy");
             }
         }
         [Command("furry")]
         public async Task Furry()
         {
             DisplayCommandLine("Furry");
-            await ReplyAsync($"<@{Context.User.Id}> is 100% furry");
+            await ReplyAsync(embed:
+                PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), 100, "furry"));
         }
 
         [Command("furry")]
         public async Task Furry([Remainder] string param)
         {
             DisplayCommandLine("Furry with param");
-            await ReplyAsync($"{param} is 100% furry");
+            await ReplyAsync(embed:
+                PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), 100, "furry"));
         }
 
         [Command("gay")]
@@ -86,7 +92,8 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Gay");
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id)+1 % 10000000));
-            await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% gay");
+            await ReplyAsync(embed:
+                PostEmbedPercent(Context.User.Username, Context.User.Id, Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
         }
 
 
@@ -95,27 +102,31 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Gay with params");
             Random rnd;
-            string text = param;
+            string userID = param;
+            // userping function
             if (param.Contains("<@"))
             {
                 Console.WriteLine("userping");
-                text = text.Remove(text.Length - 1);
-                text = text.Substring(2, text.Length - 2);
-                if (text[0] == '!') text = text.Substring(1, text.Length - 1);
-                rnd = new Random((int)(Convert.ToUInt64(text) + 1 % 10000000));
-                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
+                userID = userID.Remove(userID.Length - 1);
+                userID = userID.Substring(2, userID.Length - 2);
+                if (userID[0] == '!') userID = userID.Substring(1, userID.Length - 1);
+                rnd = new Random((int)(Convert.ToUInt64(userID) + 1 % 10000000));
+                await ReplyAsync($"<@{userID}> is {rnd.Next(101)}% gay");
             }
-            else if (IsDigitsOnly(text))
+            // id function
+            else if (IsDigitsOnly(userID))
             {
                 Console.WriteLine("id");
-                rnd = new Random((int)(Convert.ToUInt64(text) + 1 % 10000000));
-                await ReplyAsync($"<@{text}> is {rnd.Next(101)}% gay");
+                rnd = new Random((int)(Convert.ToUInt64(userID) + 1 % 10000000));
+                await ReplyAsync($"<@{userID}> is {rnd.Next(101)}% gay");
             }
+            // TODO: username function
+            // random string function
             else
             {
                 Console.WriteLine("Nothing");
                 rnd = new Random();
-                await ReplyAsync($"{text} is {rnd.Next(101)}% gay");
+                await ReplyAsync($"{userID} is {rnd.Next(101)}% gay");
             }
         }
         [Command("github")]
@@ -233,9 +244,8 @@ namespace Valhallapp.Modules
             // removes all urls
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userIconURL)
-                .WithDescription($"<@{userIdToPing}> is{percent}% {commandType}")
+                .WithDescription($"<@{userIdToPing}> is {percent}% {commandType}")
                 .WithColor(Color.DarkBlue)
-                .WithCurrentTimestamp()
                 .Build();
             return embed.Build();
         }
