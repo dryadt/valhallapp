@@ -36,7 +36,8 @@ namespace Valhallapp.Modules
             DisplayCommandLine("Femboy");
             Console.WriteLine($"id user: {Context.User.Id}");
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 10000000));
-            await ReplyAsync($"<@{Context.User.Id}> is {rnd.Next(101)}% femboy");
+            await ReplyAsync(embed: 
+                PostEmbedPercent(Context.User.Username,Context.User.Id, Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
         }
         [Command("femboy")]
         public async Task Femboy([Remainder] string param)
@@ -226,6 +227,17 @@ namespace Valhallapp.Modules
             }
 
             return true;
+        }
+        Embed PostEmbedPercent(string username, ulong userIdToPing, string userIconURL,int percent,string commandType)
+        {
+            // removes all urls
+            var embed = new EmbedBuilder();
+            embed.WithAuthor(username, userIconURL)
+                .WithDescription($"<@{userIdToPing}> is{percent}% {commandType}")
+                .WithColor(Color.DarkBlue)
+                .WithCurrentTimestamp()
+                .Build();
+            return embed.Build();
         }
     }
 }
