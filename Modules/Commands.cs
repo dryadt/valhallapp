@@ -86,7 +86,8 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Furry with param");
             if (IsDigitsOnly(param)) await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), 100, "furry"));
+                PostEmbedPercent(Context.User.Username, $"<@{param}>", Context.User.GetAvatarUrl(), 100, "furry"));
+            // TODO: username function
             else await ReplyAsync(embed:
                 PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), 100, "furry"));
         }
