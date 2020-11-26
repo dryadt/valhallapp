@@ -94,21 +94,21 @@
             x.setAttribute("width", "20%");
             x.setAttribute("class", "dropdownImage");
             x.setAttribute("style", `margin-left: ${Math.floor(Math.random() * 100)}%`);
+            //left click
             x.onclick = function () {
                 modal.style.display = "block";
                 modalImg.src = this.src;
                 captionText.innerHTML = artistList[creditImage[randomImageID]];
             }
-            x.addEventListener('mouseup', handleMouseUp(x));
+            //right click
+            x.addEventListener('contextmenu', function (ev) {
+                alert('success!');
+                return false;
+            }, false);
             document.body.appendChild(x);
         }
-        function handleMouseUp(e,image) {
-            if (e.button === 2) {
-                console.log("BOOM")
-                //image.setAttribute("src", "https://i.gyazo.com/282de2f0a65f46734e6dd21e34c6c4a6.gif");
-                //image.setAttribute("loop", "1");
-            }
-        }
+
+        // removes rightclick
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
