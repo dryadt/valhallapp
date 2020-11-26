@@ -101,7 +101,7 @@
                 captionText.innerHTML = artistList[creditImage[randomImageID]];
             }
             //right click
-            x.addEventListener('contextmenu', function (ev) {
+            x.addEventListener('contextmenu', function (ev), { once: true }) {
                 console.log(ev);
                 ev.target.setAttribute("src", "https://i.gyazo.com/744f273507c54b2a0a8b0518113c4479.gif")
                 ev.target.setAttribute("loop", "1")
