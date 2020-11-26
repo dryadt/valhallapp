@@ -132,7 +132,7 @@ namespace valhallappweb
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, url)
-                .AddField($"<@{userId}> posted:", cleanDescription)
+                .WithDescription($"<@{userId}> posted:\n{cleanDescription}")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
                 .WithCurrentTimestamp()
