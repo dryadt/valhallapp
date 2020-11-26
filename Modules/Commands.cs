@@ -85,7 +85,9 @@ namespace Valhallapp.Modules
         public async Task Furry([Remainder] string param)
         {
             DisplayCommandLine("Furry with param");
-            await ReplyAsync(embed:
+            if (IsDigitsOnly(param)) await ReplyAsync(embed:
+                PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), 100, "furry"));
+            else await ReplyAsync(embed:
                 PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), 100, "furry"));
         }
 
