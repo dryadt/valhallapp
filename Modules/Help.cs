@@ -11,7 +11,7 @@ namespace Valhallapp.Modules
         [Command("help")]
         public async Task HelpCommand()
         {
-            DisplayCommandLine("help");
+            SimpleCommands.DisplayCommandLine("help", Context);
             var embed = new EmbedBuilder();
             string prefix = "&";
             embed.WithTitle("Commands list:")
@@ -34,7 +34,7 @@ namespace Valhallapp.Modules
         [Command("help meme")]
         public async Task HelpMeme()
         {
-            DisplayCommandLine("Help meme");
+            SimpleCommands.DisplayCommandLine("Help meme", Context);
             var embed = new EmbedBuilder();
             string prefix = "&";
             embed.WithTitle("Meme commands list:")
@@ -49,10 +49,6 @@ namespace Valhallapp.Modules
                 .WithCurrentTimestamp()
                 .Build();
             await ReplyAsync(embed: embed.Build());
-        }
-        void DisplayCommandLine(string CommandName)
-        {
-            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
         }
     }
 }

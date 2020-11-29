@@ -10,25 +10,20 @@ namespace Valhallapp.Modules
         [Command("Oh! You go big guy!")]
         public async Task BigGuy()
         {
-            DisplayCommandLine("BigGuy");
+            SimpleCommands.DisplayCommandLine("BigGuy", Context);
             await ReplyAsync("Hmph Umph!");
         }
         [Command("Pose for the fans!")]
         public async Task Pose()
         {
-            DisplayCommandLine("Pose");
+            SimpleCommands.DisplayCommandLine("Pose", Context);
             await ReplyAsync("AAAAUGH!");
         }
         [Command("Wubbadubadub is that true?")]
         public async Task Wubbadubadub()
         {
-            DisplayCommandLine("Wubbadubadub");
+            SimpleCommands.DisplayCommandLine("Wubbadubadub", Context);
             await ReplyAsync("Yes.");
-        }
-
-        void DisplayCommandLine(string CommandName)
-        {
-            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
         }
     }
 }

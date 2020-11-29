@@ -10,17 +10,17 @@ namespace Valhallapp.Modules
         [Command("gay")]
         public async Task GayCommand()
         {
-            DisplayCommandLine("Gay");
+            SimpleCommands.DisplayCommandLine("Gay", Context);
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) + 1 % 10000000));
             await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
+                SimpleCommands.PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
         }
 
 
         [Command("gay")]
         public async Task GayCommand([Remainder] string param)
         {
-            DisplayCommandLine("Gay with params");
+            SimpleCommands.DisplayCommandLine("Gay with params", Context);
             Random rnd;
             string userID = param;
             // userping function
@@ -32,15 +32,15 @@ namespace Valhallapp.Modules
                 if (userID[0] == '!') userID = userID.Substring(1, userID.Length - 1);
                 rnd = new Random((int)(Convert.ToUInt64(userID) + 1 % 10000000));
                 await ReplyAsync(embed:
-                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
+                    SimpleCommands.PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
             }
             // id function
-            else if (IsDigitsOnly(userID))
+            else if (SimpleCommands.IsDigitsOnly(userID))
             {
                 Console.WriteLine("id");
                 rnd = new Random((int)(Convert.ToUInt64(userID) + 1 % 10000000));
                 await ReplyAsync(embed:
-                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
+                    SimpleCommands.PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
             }
             // TODO: username function
             // random string function
@@ -49,33 +49,8 @@ namespace Valhallapp.Modules
                 Console.WriteLine("Nothing");
                 rnd = new Random();
                 await ReplyAsync(embed:
-                    PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
+                    SimpleCommands.PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
             }
-        }
-
-        void DisplayCommandLine(string CommandName)
-        {
-            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
-        }
-        bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
-        }
-        Embed PostEmbedPercent(string username, string selectedUser, string userIconURL, int percent, string commandType)
-        {
-            // removes all urls
-            var embed = new EmbedBuilder();
-            embed.WithAuthor(username, userIconURL)
-                .WithDescription($"{selectedUser} is {percent}% {commandType}")
-                .WithColor(Color.DarkBlue)
-                .Build();
-            return embed.Build();
         }
     }
 }

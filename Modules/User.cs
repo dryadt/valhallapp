@@ -10,25 +10,20 @@ namespace Valhallapp.Modules
         [Command("astral")]
         public async Task Astral()
         {
-            DisplayCommandLine("Astral");
+            SimpleCommands.DisplayCommandLine("Astral",Context); 
             await ReplyAsync("A\nA\nA\nA\nA\nA\nA\n");
         }
         [Command("costro")]
         public async Task Costro()
         {
-            DisplayCommandLine("Costro");
+            SimpleCommands.DisplayCommandLine("Costro", Context);
             await ReplyAsync("Costro is a hella cute stag. <3 <3 <3 <3 <3");
         }
         [Command("starless")]
         public async Task Starless()
         {
-            DisplayCommandLine("Starless");
+            SimpleCommands.DisplayCommandLine("Starless",Context);
             await ReplyAsync(":dress::dress::dress::dress::dress::dress::dress::dress::dress::bikini::bikini::bikini::bikini::bikini::bikini::kimono::kimono::kimono:");
-        }
-
-        void DisplayCommandLine(string CommandName)
-        {
-            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
         }
     }
 }
