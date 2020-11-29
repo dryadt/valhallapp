@@ -11,7 +11,7 @@ namespace Valhallapp.Modules
         [Command("help")]
         public async Task HelpCommand()
         {
-            DisplayCommandLine("Help");
+            DisplayCommandLine("help");
             var embed = new EmbedBuilder();
             string prefix = "&";
             embed.WithTitle("Commands list:")
@@ -24,6 +24,26 @@ namespace Valhallapp.Modules
                 .AddField($"{prefix}help", "Displays help related to the bot!")
                 .AddField($"{prefix}ping", "Replies with the ping of the bot")
                 .AddField($"{prefix}website", "Display the website of the [application](https://valhallapp.herokuapp.com/)!")
+                .WithFooter(footer => footer.Text = "Page 1 out of 1.")
+                .WithColor(Color.Blue)
+                .WithCurrentTimestamp()
+                .Build();
+            await ReplyAsync(embed: embed.Build());
+        }
+
+        [Command("help meme")]
+        public async Task HelpMeme()
+        {
+            DisplayCommandLine("Help meme");
+            var embed = new EmbedBuilder();
+            string prefix = "&";
+            embed.WithTitle("Meme commands list:")
+                .WithAuthor(Context.Client.CurrentUser)
+                .AddField($"{prefix}astral", "A.")
+                .AddField($"{prefix}costro", "Gay stag.")
+                .AddField($"{prefix}hi", "He likes guys")
+                .AddField($"{prefix}Oh! You go big guy!\n" + $"{prefix}Pose for the fans!\n" + $"{prefix}Wubbadubadub is that true?", "Do i need to say anything about the GOTY?")
+                .AddField($"{prefix}starless", "Mega Bi stag.")
                 .WithFooter(footer => footer.Text = "Page 1 out of 1.")
                 .WithColor(Color.Blue)
                 .WithCurrentTimestamp()
