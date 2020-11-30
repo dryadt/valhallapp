@@ -170,6 +170,7 @@ namespace valhallappweb
                 .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageID})\n{cleanDescription}")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
+                .WithUrl($"https://discord.com/channels/{serverId}/{artChannelId}/{messageID}")
                 .WithCurrentTimestamp()
                 .Build();
             var chnl = _client.GetChannel(channelID) as IMessageChannel;
