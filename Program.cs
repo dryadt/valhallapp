@@ -80,9 +80,28 @@ namespace valhallappweb
         // Command init
         public async Task RegisterCommandsAsync()
         {
-            _client.MessageReceived += HandleCommandAsync;
             _client.ReactionAdded += HandleReactionAsync;
+            _client.ReactionRemoved += HandleReactionAsync;
+            _client.ReactionsCleared += HandleReactionClearAsync;
+            _client.MessageReceived += HandleCommandAsync;
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
+        }
+
+        private async Task HandleReactionClearAsync(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel channel)
+        {
+            await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
+            Console.WriteLine($"Message ID of reaction: {arg1.Id}");
+            Console.WriteLine($"Channel of reaction: {channel.Name}");
+        }
+
+        // Handle each reaction recieved
+        private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> arg, ISocketMessageChannel channel, SocketReaction reaction)
+        {
+            await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
+            Console.WriteLine($"Message ID of reaction: {arg.Id}");
+            Console.WriteLine($"Channel of reaction: {channel.Name}");
+            Console.WriteLine($"Emote of reaction: {reaction.Emote.Name}");
+            return;
         }
 
         // Handle each message recieved into the right command (if it exists)
@@ -102,16 +121,6 @@ namespace valhallappweb
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
             }
-        }
-
-        // Handle each reaction recieved
-        private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> arg, ISocketMessageChannel channel, SocketReaction reaction)
-        {
-            await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
-            Console.WriteLine($"Message ID of reaction: {arg.Id}");
-            Console.WriteLine($"Channel of reaction: {channel.Name}");
-            Console.WriteLine($"Emote of reaction: {reaction.Emote.Name}");
-            return;
         }
 
         /*SIMPLE REUSABLE COMMANDS */
