@@ -19,12 +19,16 @@ namespace valhallappweb
 {
     public class Program
     {
+
+        /*APP INIT */
         static void Main(string[] args)
         {
             Console.WriteLine("Valhalla application start");
             Task.Run(() => new Program().RunBotAsync().GetAwaiter().GetResult());
             CreateWebHostBuilder(args).Build().Run();
         }
+
+        /*WEB APP INIT*/
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
             {
             Console.WriteLine("Valhalla webpage start");
@@ -35,6 +39,7 @@ namespace valhallappweb
                     .UseUrls($"http://*:{port}");
             }
 
+        /*DISCORD BOT INIT*/
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IServiceProvider _services;
@@ -44,37 +49,43 @@ namespace valhallappweb
             Console.WriteLine("Valhalla bot start");
             _client = new DiscordSocketClient();
             _commands = new CommandService();
-
             _services = new ServiceCollection()
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
 
-            var token = Environment.GetEnvironmentVariable("TOKEN");
-
+            // Logging
             _client.Log += Client_Log;
+
+            // Command init
             await RegisterCommandsAsync();
 
-
+            // Bot Authentification init
+            var token = Environment.GetEnvironmentVariable("TOKEN");
             await _client.LoginAsync(TokenType.Bot, token);
 
+            // Start Discord bot
             await _client.StartAsync();
 
             await Task.Delay(-1);
         }
 
+        // Logging
         private Task Client_Log(LogMessage arg)
         {
             Console.WriteLine(arg);
             return Task.CompletedTask;
         }
 
+        // Command init
         public async Task RegisterCommandsAsync()
         {
             _client.MessageReceived += HandleCommandAsync;
+            _client.ReactionAdded += HandleReactionAsync;
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
+        // Handle each message recieved into the right command (if it exists)
         private async Task HandleCommandAsync(SocketMessage arg)
         {
             var message = arg as SocketUserMessage;
@@ -93,6 +104,17 @@ namespace valhallappweb
             }
         }
 
+        // Handle each reaction recieved
+        private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> arg, ISocketMessageChannel channel, SocketReaction reaction)
+        {
+            await Task.Delay(2000);
+            Console.WriteLine(arg);
+            Console.WriteLine(channel.Name);
+            Console.WriteLine(reaction.Emote.Name);
+            return;
+        }
+
+        /*SIMPLE REUSABLE COMMANDS */
         public void CheckImageArtChannel(SocketUserMessage message)
         {
             const ulong artChannelId = 482894390570909706;
