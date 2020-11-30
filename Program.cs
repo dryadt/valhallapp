@@ -91,7 +91,7 @@ namespace valhallappweb
         {
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
             Console.WriteLine($"Message ID of reaction: {arg1.Id}");
-            Console.WriteLine($"Channel of reaction: {channel.Name}");
+            Console.WriteLine($"Channel of reaction: {channel.Name} {channel.Id}");
         }
 
         // Handle each reaction recieved
@@ -99,7 +99,7 @@ namespace valhallappweb
         {
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
             Console.WriteLine($"Message ID of reaction: {arg.Id}");
-            Console.WriteLine($"Channel of reaction: {channel.Name}");
+            Console.WriteLine($"Channel of reaction: {channel.Name} {channel.Id}");
             Console.WriteLine($"Emote of reaction: {reaction.Emote.Name}");
             return;
         }
@@ -166,7 +166,7 @@ namespace valhallappweb
             const ulong artChannelId = 482894390570909706;
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
-            embed.WithAuthor(username, userURL, url)
+            embed.WithAuthor(username, userURL, $"https://discord.com/channels/{serverId}/{artChannelId}/{messageID}")
                 .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageID})\n{cleanDescription}")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
