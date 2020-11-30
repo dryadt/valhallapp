@@ -166,11 +166,10 @@ namespace valhallappweb
             const ulong artChannelId = 482894390570909706;
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
-            embed.WithAuthor(username, userURL, $"https://discord.com/channels/{serverId}/{artChannelId}/{messageID}")
+            embed.WithAuthor(username, userURL, $"{url}")
                 .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageID})\n{cleanDescription}")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
-                .WithUrl($"https://discord.com/channels/{serverId}/{artChannelId}/{messageID}")
                 .WithCurrentTimestamp()
                 .Build();
             var chnl = _client.GetChannel(channelID) as IMessageChannel;
