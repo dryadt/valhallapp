@@ -109,7 +109,7 @@ namespace valhallappweb
         {
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
             Console.WriteLine($"Message ID of reaction: {arg.Id}");
-            Console.WriteLine($"of reaction: {channel.Name}");
+            Console.WriteLine($"Channel of reaction: {channel.Name}");
             Console.WriteLine($"Emote of reaction: {reaction.Emote.Name}");
             return;
         }
