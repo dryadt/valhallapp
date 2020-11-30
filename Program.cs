@@ -107,10 +107,10 @@ namespace valhallappweb
         // Handle each reaction recieved
         private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> arg, ISocketMessageChannel channel, SocketReaction reaction)
         {
-            await Task.Delay(2000);
-            Console.WriteLine(arg);
-            Console.WriteLine(channel.Name);
-            Console.WriteLine(reaction.Emote.Name);
+            await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
+            Console.WriteLine($"Message ID of reaction: {arg.Id}");
+            Console.WriteLine($"of reaction: {channel.Name}");
+            Console.WriteLine($"Emote of reaction: {reaction.Emote.Name}");
             return;
         }
 
