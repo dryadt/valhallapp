@@ -122,7 +122,7 @@ namespace valhallappweb
                 var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
                 // get 100 message around the timeperiod of the original message from the other channel
                 Console.WriteLine($"IsArtReaction {messageId}");
-                var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
+                var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
                 IMessage messageToEdit = null;
                 Console.WriteLine(messageList.Count);
                 foreach (var item in messageList)
@@ -152,7 +152,7 @@ namespace valhallappweb
             MessageProperties editedMessage = messageItem;
             Embed oldEmbed = messageItem.Embed.Value;
             ulong userId;
-            string footer = "",username,description,userUrl,url,messageId, messageLink;
+            string footer = "", username, description, userUrl, url, messageId, messageLink;
             //get some values in the embed
             username = oldEmbed.Author.Value.Name;
             userUrl = oldEmbed.Author.Value.IconUrl;
