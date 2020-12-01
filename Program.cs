@@ -152,7 +152,7 @@ namespace valhallappweb
             MessageProperties editedMessage = messageItem;
             Embed oldEmbed = messageItem.Embed.Value;
             ulong userId;
-            string footer = ""; 
+            string footer; 
             string username;
             string description;
             string userUrl;
@@ -183,9 +183,10 @@ namespace valhallappweb
             messageId = messageId.Remove(0, 1);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
             description = description.Remove(0, messageLink.Length+ 12);
-            foreach (var item in emoteList)
+            if ( emoteList.Count > 0 )
             {
-                footer +=$"{item.Key.Name}x{item.Value.ReactionCount}";
+                footer = "";
+                foreach (var item in emoteList) footer += $"{item.Key.Name}x{item.Value.ReactionCount}";
             }
             Embed embed = PostEmbedImage(username,userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
             editedMessage.Embed = embed;
