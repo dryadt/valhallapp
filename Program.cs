@@ -107,16 +107,15 @@ namespace valhallappweb
         public async void UpdateBotMessage(ulong messageId)
         {
             // get message by id and channel id
+            ITextChannel artChannel = (ITextChannel)_client.GetChannel(artChannelId);
             ITextChannel artTalkChannel = (ITextChannel)_client.GetChannel(artTalkChannelId);
             if (artTalkChannel is null) return;
+            if (!(artTalkChannel is ITextChannel)) return;
             IMessage message;
-            if (artTalkChannel is ITextChannel textChannel)
-                message = await textChannel.GetMessageAsync(messageId);
-            else
-                return;
+            message = await artChannel.GetMessageAsync(messageId);
             // get emote list
             IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList;
-            Console.WriteLine(message==null);
+            if (message == null) return;
             if (message.Reactions.Count > 0 )
             {
                 emoteList = message.Reactions;
