@@ -116,6 +116,7 @@ namespace valhallappweb
                 return;
             // get emote list
             IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList;
+            Console.WriteLine(message==null);
             if (message.Reactions.Count > 0 )
             {
                 emoteList = message.Reactions;
