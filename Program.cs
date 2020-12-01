@@ -125,7 +125,7 @@ namespace valhallappweb
                 var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
                 IMessage messageToEdit = null;
                 Console.WriteLine(messageList.Count);
-                foreach (var item in messageList)
+                foreach (var item in messageList.Reverse())
                 {
                     Console.WriteLine(item.Content);
                     // only tests message with the bot
@@ -152,7 +152,13 @@ namespace valhallappweb
             MessageProperties editedMessage = messageItem;
             Embed oldEmbed = messageItem.Embed.Value;
             ulong userId;
-            string footer = "", username, description, userUrl, url, messageId, messageLink;
+            string footer = ""; 
+            string username;
+            string description;
+            string userUrl;
+            string url;
+            string messageId;
+            string messageLink;
             //get some values in the embed
             username = oldEmbed.Author.Value.Name;
             userUrl = oldEmbed.Author.Value.IconUrl;
