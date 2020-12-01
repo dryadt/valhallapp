@@ -93,13 +93,14 @@ namespace valhallappweb
 
         private async Task HandleReactionClearAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel)
         {
+            if (artChannelId == channel.Id) UpdateBotMessage(message.Id);
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
         }
 
         // Handle each reaction recieved
         private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel, SocketReaction reaction)
         {
-            if (artChannelId == message.Id) UpdateBotMessage(message.Id);
+            if (artChannelId == channel.Id) UpdateBotMessage(message.Id);
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
         }
 
@@ -113,6 +114,7 @@ namespace valhallappweb
                 message = await textChannel.GetMessageAsync(messageId);
             else
                 return;
+            Console.WriteLine("IsArtReaction");
             // get emote list
             var emoteList = message.Reactions;
             var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
