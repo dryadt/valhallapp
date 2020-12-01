@@ -116,33 +116,35 @@ namespace valhallappweb
                 return;
             // get emote list
             IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList;
-            if(message.Reactions.Count>0) emoteList = message.Reactions;
-            var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
-            // get 100 message around the timeperiod of the original message from the other channel
-            Console.WriteLine($"IsArtReaction {messageId}");
-            var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
-            IMessage messageToEdit = null;
-            Console.WriteLine(messageList.Count);
-            foreach (var item in messageList)
+            if (message.Reactions.Count > 0 )
             {
-                Console.WriteLine(item.Content);
-                // only tests message with the bot
-                if (item.Author.IsBot == false) continue;
-                // if no embed return
-                if (item.Embeds.Count == 0) continue;
-                //test if the embed contains 
-                if (item.Embeds.First().Description.Contains(messageLinkUrl))
+                emoteList = message.Reactions;
+                var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
+                // get 100 message around the timeperiod of the original message from the other channel
+                Console.WriteLine($"IsArtReaction {messageId}");
+                var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
+                IMessage messageToEdit = null;
+                Console.WriteLine(messageList.Count);
+                foreach (var item in messageList)
                 {
-                    messageToEdit = item;
-                    break;
+                    Console.WriteLine(item.Content);
+                    // only tests message with the bot
+                    if (item.Author.IsBot == false) continue;
+                    // if no embed return
+                    if (item.Embeds.Count == 0) continue;
+                    //test if the embed contains 
+                    if (item.Embeds.First().Description.Contains(messageLinkUrl))
+                    {
+                        messageToEdit = item;
+                        break;
+                    }
                 }
+                //  if no message fits returns
+                if (messageToEdit == null) return;
+                //  edit the message
+                IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
+                await userMessageToEdit.ModifyAsync(messageItem => messageItem = ModifyFooter(messageItem, emoteList));
             }
-            //  if no message fits returns
-            if (messageToEdit == null) return;
-            //  edit the message
-            IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
-            await userMessageToEdit.ModifyAsync(messageItem => messageItem = ModifyFooter(messageItem, emoteList));
-
         }
 
         private MessageProperties ModifyFooter(MessageProperties messageItem, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
