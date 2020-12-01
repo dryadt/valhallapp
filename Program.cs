@@ -123,6 +123,7 @@ namespace valhallappweb
             IMessage messageToEdit = null;
             foreach (var item in messageList)
             {
+                Console.WriteLine(item.Content);
                 // only tests message with the bot
                 if (item.Author.IsBot == false) continue;
                 // if no embed return
