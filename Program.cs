@@ -44,6 +44,10 @@ namespace valhallappweb
         private CommandService _commands;
         private IServiceProvider _services;
 
+        const ulong artChannelId = 482894390570909706;
+        const ulong artTalkChannelId = 561322620931538944;
+        const ulong serverId = 482631363233710106;
+
         public async Task RunBotAsync()
         {
             Console.WriteLine("Valhalla bot start");
@@ -87,21 +91,92 @@ namespace valhallappweb
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
-        private async Task HandleReactionClearAsync(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel channel)
+        private async Task HandleReactionClearAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel)
         {
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
-            Console.WriteLine($"Message ID of reaction: {arg1.Id}");
-            Console.WriteLine($"Channel of reaction: {channel.Name} {channel.Id}");
         }
 
         // Handle each reaction recieved
-        private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> arg, ISocketMessageChannel channel, SocketReaction reaction)
+        private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel, SocketReaction reaction)
         {
+            if (artChannelId == message.Id) UpdateBotMessage(message.Id);
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
-            Console.WriteLine($"Message ID of reaction: {arg.Id}");
-            Console.WriteLine($"Channel of reaction: {channel.Name} {channel.Id}");
-            Console.WriteLine($"Emote of reaction: {reaction.Emote.Name}");
-            return;
+        }
+
+        public async void UpdateBotMessage(ulong messageId)
+        {
+            // get message by id and channel id
+            ITextChannel channel = (ITextChannel)_client.GetChannel(artChannelId);
+            if (channel is null) return;
+            IMessage message;
+            if (channel is ITextChannel textChannel)
+                message = await textChannel.GetMessageAsync(messageId);
+            else
+                return;
+            // get emote list
+            var emoteList = message.Reactions;
+            var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
+            // get 100 message around the timeperiod of the original message from the other channel
+            var messageList = await channel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
+            IMessage messageToEdit = null;
+            foreach (var item in messageList)
+            {
+                // only tests message with the bot
+                if (item.Author.IsBot == false) continue;
+                // if no embed return
+                if (item.Embeds.Count == 0) continue;
+                //test if the embed contains 
+                if (item.Embeds.First().Description.Contains(messageLinkUrl))
+                {
+                    messageToEdit = item;
+                    break;
+                }
+            }
+            //  if no message fits returns
+            if (messageToEdit == null) return;
+            //  edit the message
+            IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
+            await userMessageToEdit.ModifyAsync(messageItem => messageItem = ModifyFooter(messageItem, emoteList));
+
+        }
+
+        private MessageProperties ModifyFooter(MessageProperties messageItem, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
+        {
+            MessageProperties editedMessage = messageItem;
+            Embed oldEmbed = messageItem.Embed.Value;
+            ulong userId;
+            string footer = "",username,description,userUrl,url,messageId, messageLink;
+            //get some values in the embed
+            username = oldEmbed.Author.Value.Name;
+            userUrl = oldEmbed.Author.Value.IconUrl;
+            url = oldEmbed.Url;
+            description = oldEmbed.Description;
+            //removes the "<@" at the start of the messages
+            description = description.Remove(0, 2);
+            //get values based on the Description
+            userId = Convert.ToUInt64(GetUntilOrEmpty(description, '>'));
+            // removes the userID AND the > from the description
+            description = description.Remove(0, (int)(Math.Floor(Math.Log10(userId) + 1)+1));
+            // get the messageId
+            messageLink = GetAllUrlFromString(description).First();
+            messageId = messageLink;
+            //removes "https://discord.com/channels/"
+            messageId = GetUntilOrEmpty(messageId.Remove(0, 29), '/');
+            //removes serverId
+            messageId = GetUntilOrEmpty(messageId, '/');
+            messageId = messageId.Remove(0, 1);
+            //removes artChannelId
+            messageId = GetUntilOrEmpty(messageId, '/');
+            messageId = messageId.Remove(0, 1);
+            // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
+            description = description.Remove(0, messageLink.Length+ 12);
+            foreach (var item in emoteList)
+            {
+                footer +=$"{item.Key.Name}x{item.Value.ReactionCount}";
+            }
+            Embed embed = PostEmbedImage(username,userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
+            editedMessage.Embed = embed;
+            return editedMessage;
         }
 
         // Handle each message recieved into the right command (if it exists)
@@ -124,27 +199,39 @@ namespace valhallappweb
         }
 
         /*SIMPLE REUSABLE COMMANDS */
+
+        public string GetUntilOrEmpty(string text,char charToStopAt)
+        {
+            string stringToReturn="";
+            foreach (char character in text)
+            {
+                if (character == charToStopAt) break;
+                stringToReturn += character;
+            }
+            return stringToReturn;
+        }
         public void CheckImageArtChannel(SocketUserMessage message)
         {
-            const ulong artChannelId = 482894390570909706;
             // if the message isn't in the art channel, return
             if (message.Channel.Id != artChannelId) return;
-            const ulong artTalkChannelId = 561322620931538944;
             string[] extensionList = { ".mp4", ".mp3", ".png", ".jpeg", ".gif" };
             List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
             // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             // post every attachment as an embed
-            foreach (var attachment in message.Attachments) 
-                PostEmbedImage(message.Author.Username, message.Author.Id,message.Content, message.Author.GetAvatarUrl(), artTalkChannelId, attachment.Url,message.Id);
+            var chnl = _client.GetChannel(artTalkChannelId) as IMessageChannel;
+            foreach (var attachment in message.Attachments)
+                chnl.SendMessageAsync(embed: 
+                    PostEmbedImage(message.Author.Username, message.Author.Id, message.Content, message.Author.GetAvatarUrl(), attachment.Url, message.Id, ""));
             // post every attachment as an embed
             foreach (var url in urlList) {
                 bool isEmbedable = false;
                 foreach (var extensionItem in extensionList)
                     if (isEmbedable = url.EndsWith(extensionItem)) break;
-                if (isEmbedable) 
-                    PostEmbedImage(message.Author.Username, message.Author.Id, message.Content, message.Author.GetAvatarUrl(), artTalkChannelId, url, message.Id);
+                if (isEmbedable)
+                    chnl.SendMessageAsync(embed:
+                        PostEmbedImage(message.Author.Username, message.Author.Id, message.Content, message.Author.GetAvatarUrl(), url, message.Id,""));
                 else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
             };
         }
@@ -158,22 +245,19 @@ namespace valhallappweb
             return strList;
         }
 
-        public void PostEmbedImage(string username, ulong userId,string description, string userURL, ulong channelID, string url, ulong messageID)
+        public Embed PostEmbedImage(string username, ulong userId,string description, string userURL, string url, ulong messageId,string footer)
         {
             // removes all urls
             string cleanDescription = Regex.Replace(description, @"http[^\s]+", "");
-            const ulong serverId = 482631363233710106;
-            const ulong artChannelId = 482894390570909706;
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, $"{url}")
-                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageID})\n{cleanDescription}")
+                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n{cleanDescription}")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
-                .WithCurrentTimestamp()
+                .WithFooter(footer)
                 .Build();
-            var chnl = _client.GetChannel(channelID) as IMessageChannel;
-            chnl.SendMessageAsync(embed: embed.Build());
+            return embed.Build(); 
         }
         public void MessageChannel(string messageContent, ulong channelId)
         {
