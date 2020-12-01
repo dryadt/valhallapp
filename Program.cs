@@ -183,12 +183,15 @@ namespace valhallappweb
             messageId = messageId.Remove(0, 1);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
             description = description.Remove(0, messageLink.Length+ 12);
+            Embed embed;
             if ( emoteList.Count > 0 )
             {
                 footer = "";
                 foreach (var item in emoteList) footer += $"{item.Key.Name}x{item.Value.ReactionCount}";
+                embed = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
             }
-            Embed embed = PostEmbedImage(username,userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
+            else
+                embed = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), "");
             editedMessage.Embed = embed;
             return editedMessage;
         }
