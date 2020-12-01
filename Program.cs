@@ -121,6 +121,7 @@ namespace valhallappweb
             // get 100 message around the timeperiod of the original message from the other channel
             var messageList = await channel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
             IMessage messageToEdit = null;
+            Console.WriteLine(messageList.Count);
             foreach (var item in messageList)
             {
                 Console.WriteLine(item.Content);
