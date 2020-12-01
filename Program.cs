@@ -84,10 +84,10 @@ namespace valhallappweb
         // Command init
         public async Task RegisterCommandsAsync()
         {
-            _client.ReactionAdded += HandleReactionAsync;
-            _client.ReactionRemoved += HandleReactionAsync;
-            _client.ReactionsCleared += HandleReactionClearAsync;
-            _client.MessageReceived += HandleCommandAsync;
+            //_client.ReactionAdded += HandleReactionAsync;
+            //_client.ReactionRemoved += HandleReactionAsync;
+            //_client.ReactionsCleared += HandleReactionClearAsync;
+            //_client.MessageReceived += HandleCommandAsync; FIX
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
