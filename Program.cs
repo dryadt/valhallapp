@@ -107,10 +107,10 @@ namespace valhallappweb
         public async void UpdateBotMessage(ulong messageId)
         {
             // get message by id and channel id
-            ITextChannel channel = (ITextChannel)_client.GetChannel(artChannelId);
-            if (channel is null) return;
+            ITextChannel artTalkChannel = (ITextChannel)_client.GetChannel(artTalkChannelId);
+            if (artTalkChannel is null) return;
             IMessage message;
-            if (channel is ITextChannel textChannel)
+            if (artTalkChannel is ITextChannel textChannel)
                 message = await textChannel.GetMessageAsync(messageId);
             else
                 return;
@@ -119,7 +119,7 @@ namespace valhallappweb
             var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
             // get 100 message around the timeperiod of the original message from the other channel
             Console.WriteLine($"IsArtReaction {messageId}");
-            var messageList = await channel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
+            var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
             IMessage messageToEdit = null;
             Console.WriteLine(messageList.Count);
             foreach (var item in messageList)
