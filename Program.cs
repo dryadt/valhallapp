@@ -115,7 +115,8 @@ namespace valhallappweb
             else
                 return;
             // get emote list
-            var emoteList = message.Reactions;
+            IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList;
+            if(message.Reactions.Count>0) emoteList = message.Reactions;
             var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
             // get 100 message around the timeperiod of the original message from the other channel
             Console.WriteLine($"IsArtReaction {messageId}");
