@@ -114,11 +114,11 @@ namespace valhallappweb
                 message = await textChannel.GetMessageAsync(messageId);
             else
                 return;
-            Console.WriteLine("IsArtReaction");
             // get emote list
             var emoteList = message.Reactions;
             var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
             // get 100 message around the timeperiod of the original message from the other channel
+            Console.WriteLine($"IsArtReaction {messageId}");
             var messageList = await channel.GetMessagesAsync(messageId, Direction.After, 10).FirstOrDefaultAsync();
             IMessage messageToEdit = null;
             Console.WriteLine(messageList.Count);
