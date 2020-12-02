@@ -183,16 +183,17 @@ namespace valhallappweb
             messageId = messageId.Remove(0, 1);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
             description = description.Remove(0, messageLink.Length+ 12);
-            Embed embed;
+            Embed embedReturn;
             if (emoteList.Count > 0)
             {
                 footer = "";
                 foreach (var item in emoteList) footer += $"{item.Key.Name}x{item.Value.ReactionCount}";
-                embed = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
+                embedReturn = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
+                Console.WriteLine($"{embedReturn.Footer.Value.Text}");
             }
             else
-                embed = embedMessage;
-            return embed;
+                embedReturn = embedMessage;
+            return embedReturn;
         }
 
         // Handle each message recieved into the right command (if it exists)
