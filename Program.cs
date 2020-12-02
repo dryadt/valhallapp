@@ -141,7 +141,7 @@ namespace valhallappweb
             if (messageToEdit == null) return;
             //  edit the message
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
-            await userMessageToEdit.ModifyAsync(messageItem => messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList));$
+            await userMessageToEdit.ModifyAsync(messageItem => messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList));
         }
 
         private Embed ModifyFooter(Embed embedMessage, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
