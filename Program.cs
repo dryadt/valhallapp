@@ -147,24 +147,11 @@ namespace valhallappweb
                 messageItem.Embed = ModifyFooter(userMessageToEdit.Embeds, emoteList);
             });
         }
-
         private Optional<Embed> ModifyFooter(IReadOnlyCollection<IEmbed> embeds, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
         {
-            throw new NotImplementedException();
-        }
-
-        private Embed ModifyFooter(Embed embedMessage, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
-        {
-            Console.WriteLine($"is messageItem null? : {embedMessage == null}");
-            if (embedMessage == null) return embedMessage;
+            Embed embedMessage = (Embed)embeds;
             ulong userId;
-            string footer; 
-            string username;
-            string description;
-            string userUrl;
-            string url;
-            string messageId;
-            string messageLink;
+            string footer,username,description,userUrl,url,messageId,messageLink;
             //get some values in the embed
             username = embedMessage.Author.Value.Name;
             userUrl = embedMessage.Author.Value.IconUrl;
