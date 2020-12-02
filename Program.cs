@@ -143,14 +143,14 @@ namespace valhallappweb
                 if (messageToEdit == null) return;
                 //  edit the message
                 IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
-                await userMessageToEdit.ModifyAsync(messageItem => messageItem = ModifyFooter(messageItem, emoteList));
+                await userMessageToEdit.ModifyAsync(messageItem => messageItem.Embed = ModifyFooter(messageItem, emoteList));
             }
         }
 
-        private MessageProperties ModifyFooter(MessageProperties messageItem, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
+        private Embed ModifyFooter(MessageProperties messageItem, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
         {
             Console.WriteLine($"is messageItem null? : {messageItem==null}");
-            if (messageItem == null) return messageItem;
+            if (messageItem == null) return messageItem.Embed.Value;
             Embed oldEmbed = messageItem.Embed.Value;
             ulong userId;
             string footer; 
@@ -193,8 +193,7 @@ namespace valhallappweb
             }
             else
                 embed = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), "");
-            messageItem.Embed = embed;
-            return messageItem;
+            return embed;
         }
 
         // Handle each message recieved into the right command (if it exists)
