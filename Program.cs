@@ -84,9 +84,9 @@ namespace valhallappweb
         // Command init
         public async Task RegisterCommandsAsync()
         {
-            _client.ReactionAdded += HandleReactionAsync;
-            _client.ReactionRemoved += HandleReactionAsync;
-            _client.ReactionsCleared += HandleReactionClearAsync;
+            //_client.ReactionAdded += HandleReactionAsync;
+            //_client.ReactionRemoved += HandleReactionAsync;
+            //_client.ReactionsCleared += HandleReactionClearAsync;
             _client.MessageReceived += HandleCommandAsync;
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
@@ -116,35 +116,32 @@ namespace valhallappweb
             // get emote list
             IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList;
             if (message == null) return;
-            if (message.Reactions.Count > 0 )
+            emoteList = message.Reactions;
+            var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
+            // get 100 message around the timeperiod of the original message from the other channel
+            Console.WriteLine($"IsArtReaction {messageId}");
+            var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
+            IMessage messageToEdit = null;
+            Console.WriteLine(messageList.Count);
+            foreach (var item in messageList.Reverse())
             {
-                emoteList = message.Reactions;
-                var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
-                // get 100 message around the timeperiod of the original message from the other channel
-                Console.WriteLine($"IsArtReaction {messageId}");
-                var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
-                IMessage messageToEdit = null;
-                Console.WriteLine(messageList.Count);
-                foreach (var item in messageList.Reverse())
+                Console.WriteLine(item.Content);
+                // only tests message with the bot
+                if (item.Author.IsBot == false) continue;
+                // if no embed return
+                if (item.Embeds.Count == 0) continue;
+                //test if the embed contains 
+                if (item.Embeds.First().Description.Contains(messageLinkUrl))
                 {
-                    Console.WriteLine(item.Content);
-                    // only tests message with the bot
-                    if (item.Author.IsBot == false) continue;
-                    // if no embed return
-                    if (item.Embeds.Count == 0) continue;
-                    //test if the embed contains 
-                    if (item.Embeds.First().Description.Contains(messageLinkUrl))
-                    {
-                        messageToEdit = item;
-                        break;
-                    }
+                    messageToEdit = item;
+                    break;
                 }
-                //  if no message fits returns
-                if (messageToEdit == null) return;
-                //  edit the message
-                IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
-                await userMessageToEdit.ModifyAsync(messageItem => messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList));
             }
+            //  if no message fits returns
+            if (messageToEdit == null) return;
+            //  edit the message
+            IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
+            await userMessageToEdit.ModifyAsync(messageItem => messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList));$
         }
 
         private Embed ModifyFooter(Embed embedMessage, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
