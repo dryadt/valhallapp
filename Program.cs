@@ -150,7 +150,7 @@ namespace valhallappweb
         private MessageProperties ModifyFooter(MessageProperties messageItem, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
         {
             Console.WriteLine($"is messageItem null? : {messageItem==null}");
-            if (messageItem == null) return;
+            if (messageItem == null) return messageItem;
             Embed oldEmbed = messageItem.Embed.Value;
             ulong userId;
             string footer; 
