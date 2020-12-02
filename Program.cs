@@ -143,7 +143,7 @@ namespace valhallappweb
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
             await userMessageToEdit.ModifyAsync(messageItem => {
                 messageItem.Content = "";
-                messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList)
+                messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList);
             });
         }
 
