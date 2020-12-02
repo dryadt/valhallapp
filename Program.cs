@@ -142,10 +142,15 @@ namespace valhallappweb
             //  edit the message
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
             await userMessageToEdit.ModifyAsync(messageItem => {
+
                 messageItem.Content = "";
-                Console.WriteLine(messageItem.Embed.Value);
-                messageItem.Embed = ModifyFooter(messageItem.Embed.Value, emoteList);
+                messageItem.Embed = ModifyFooter(userMessageToEdit.Embeds, emoteList);
             });
+        }
+
+        private Optional<Embed> ModifyFooter(IReadOnlyCollection<IEmbed> embeds, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
+        {
+            throw new NotImplementedException();
         }
 
         private Embed ModifyFooter(Embed embedMessage, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
