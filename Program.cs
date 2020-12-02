@@ -147,9 +147,9 @@ namespace valhallappweb
                 messageItem.Embed = ModifyFooter(userMessageToEdit.Embeds, emoteList);
             });
         }
-        private Optional<Embed> ModifyFooter(IReadOnlyCollection<IEmbed> embeds, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
+        private Embed ModifyFooter(IReadOnlyCollection<IEmbed> embeds, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
         {
-            Embed embedMessage = (Embed)embeds;
+            IEmbed embedMessage = embeds.First();
             ulong userId;
             string footer,username,description,userUrl,url,messageId,messageLink;
             //get some values in the embed
@@ -185,7 +185,7 @@ namespace valhallappweb
                 Console.WriteLine($"{embedReturn.Footer.Value.Text}");
             }
             else
-                embedReturn = embedMessage;
+                embedReturn = (Embed)embedMessage;
             return embedReturn;
         }
 
