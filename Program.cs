@@ -84,9 +84,9 @@ namespace valhallappweb
         // Command init
         public async Task RegisterCommandsAsync()
         {
-            //_client.ReactionAdded += HandleReactionAsync;
-            //_client.ReactionRemoved += HandleReactionAsync;
-            //_client.ReactionsCleared += HandleReactionClearAsync;
+            _client.ReactionAdded += HandleReactionAsync;
+            _client.ReactionRemoved += HandleReactionAsync;
+            _client.ReactionsCleared += HandleReactionClearAsync;
             _client.MessageReceived += HandleCommandAsync;
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
@@ -141,7 +141,10 @@ namespace valhallappweb
             if (messageToEdit == null) return;
             //  edit the message
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
-            await userMessageToEdit.ModifyAsync(messageItem => messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList));
+            await userMessageToEdit.ModifyAsync(messageItem => {
+                messageItem.Content = "";
+                messageItem.Embed = ModifyFooter((Embed)messageItem.Embed, emoteList)
+            });
         }
 
         private Embed ModifyFooter(Embed embedMessage, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
