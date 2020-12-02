@@ -147,11 +147,10 @@ namespace valhallappweb
             }
         }
 
-        private Embed ModifyFooter(MessageProperties messageItem, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
+        private Embed ModifyFooter(Embed embedMessage, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
         {
-            Console.WriteLine($"is messageItem null? : {messageItem==null}");
-            if (messageItem == null) return messageItem.Embed.Value;
-            Embed oldEmbed = messageItem.Embed.Value;
+            Console.WriteLine($"is messageItem null? : {embedMessage == null}");
+            if (embedMessage == null) return embedMessage;
             ulong userId;
             string footer; 
             string username;
@@ -161,10 +160,10 @@ namespace valhallappweb
             string messageId;
             string messageLink;
             //get some values in the embed
-            username = oldEmbed.Author.Value.Name;
-            userUrl = oldEmbed.Author.Value.IconUrl;
-            url = oldEmbed.Url;
-            description = oldEmbed.Description;
+            username = embedMessage.Author.Value.Name;
+            userUrl = embedMessage.Author.Value.IconUrl;
+            url = embedMessage.Url;
+            description = embedMessage.Description;
             //removes the "<@" at the start of the messages
             description = description.Remove(0, 2);
             //get values based on the Description
@@ -185,14 +184,14 @@ namespace valhallappweb
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
             description = description.Remove(0, messageLink.Length+ 12);
             Embed embed;
-            if ( emoteList.Count > 0 )
+            if (emoteList.Count > 0)
             {
                 footer = "";
                 foreach (var item in emoteList) footer += $"{item.Key.Name}x{item.Value.ReactionCount}";
                 embed = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
             }
             else
-                embed = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), "");
+                embed = embedMessage;
             return embed;
         }
 
