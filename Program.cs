@@ -149,7 +149,6 @@ namespace valhallappweb
 
         private MessageProperties ModifyFooter(MessageProperties messageItem, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
         {
-            MessageProperties editedMessage = messageItem;
             Embed oldEmbed = messageItem.Embed.Value;
             ulong userId;
             string footer; 
@@ -192,8 +191,8 @@ namespace valhallappweb
             }
             else
                 embed = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), "");
-            editedMessage.Embed = embed;
-            return editedMessage;
+            messageItem.Embed = embed;
+            return messageItem;
         }
 
         // Handle each message recieved into the right command (if it exists)
