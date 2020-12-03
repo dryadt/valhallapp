@@ -176,8 +176,9 @@ namespace valhallappweb
             messageId = GetUntilOrEmpty(messageId, '/');
             messageId = messageId.Remove(0, 1);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
-            Console.WriteLine(description+" "+ messageLink.Length + 12);
-            description = description.Remove(0, messageLink.Length+ 12);
+            int headerLenght = messageLink.Length + 12;
+            Console.WriteLine(description+" "+ headerLenght);
+            description = description.Remove(0, headerLenght);
             Embed embedReturn;
             if (emoteList.Count > 0)
             {
