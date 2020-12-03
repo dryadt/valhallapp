@@ -99,6 +99,8 @@ namespace valhallappweb
         private async Task HandleReactionClearAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel)
         {
             if (artChannelId == channel.Id) UpdateBotMessage(message.Id);
+            if (artTalkChannelId == channel.Id) AddreactionToArt(message.Id);
+            Console.WriteLine("all clear");
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
         }
 
@@ -107,6 +109,7 @@ namespace valhallappweb
         {
             if (artChannelId == channel.Id) UpdateBotMessage(message.Id);
             if (artTalkChannelId == channel.Id) AddreactionToArt(message.Id);
+            Console.WriteLine("add/remove reaction");
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
         }
 
@@ -213,11 +216,15 @@ namespace valhallappweb
                 foreach (var emoteItem in emoteList)
                     // For basic Emojis
                     if (emoteItem.Key is Emoji)
+                    {
                         cleanDescription += $"\n{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
+                        Console.WriteLine(emoteItem.Key);
+                    }
                     //for Custom Emojis.
                     else
                     {
                         Emote customeEmoji = (Emote)emoteItem.Key;
+                        Console.WriteLine(customeEmoji.Name);
                         if (customeEmoji.Animated)
                             cleanDescription += $"\n<a:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
                         else
