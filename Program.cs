@@ -209,7 +209,7 @@ namespace valhallappweb
         {
             // if the message isn't in the art channel, return
             if (message.Channel.Id != artChannelId) return;
-            string[] extensionList = { ".mp4", ".mp3", ".png", ".jpeg", ".gif" };
+            string[] extensionList = { ".mp4", ".mp3", ".png", ".jpeg", ".gif",".jpg" };
             List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
             // if the message has no attachments and no url
