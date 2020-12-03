@@ -55,11 +55,8 @@ namespace Valhallapp.Modules
         public static bool IsDigitsOnly(string str)
         {
             foreach (char c in str)
-            {
                 if (c < '0' || c > '9')
                     return false;
-            }
-
             return true;
         }
         public static Embed PostEmbedPercent(string username, string selectedUser, string userIconURL, int percent, string commandType)

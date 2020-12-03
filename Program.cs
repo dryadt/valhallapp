@@ -124,11 +124,12 @@ namespace valhallappweb
             Console.WriteLine(messageList.Count);
             foreach (var item in messageList.Reverse())
             {
-                Console.WriteLine(item.Content);
+                Console.WriteLine("Message content for the loop : "+item.Content);
                 // only tests message with the bot
                 if (item.Author.IsBot == false) continue;
                 // if no embed return
                 if (item.Embeds.Count == 0) continue;
+                Console.WriteLine("Message content for the loop : " + item.Embeds.First().Description);
                 //test if the embed contains 
                 if (item.Embeds.First().Description.Contains(messageLinkUrl))
                 {
