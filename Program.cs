@@ -182,7 +182,14 @@ namespace valhallappweb
             {
                 footer = "";
                 foreach (var emoteItem in emoteList)
-                    footer += $"{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
+                    // For basic Emojis
+                    if (emoteItem.Key is Emoji)
+                        footer += $"{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
+                    //for Custom Emojis.
+                    else
+                    {
+                        footer += $":{emoteItem.Key.Name}:x{emoteItem.Value.ReactionCount} ";
+                    }
                 embedReturn = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
             }
             else
