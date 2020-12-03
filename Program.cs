@@ -175,15 +175,12 @@ namespace valhallappweb
             // get 100 message around the timeperiod of the original message from the other channel
             var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
             IMessage messageToEdit = null;
-            Console.WriteLine(messageList.Count);
             foreach (var item in messageList.Reverse())
             {
-                Console.WriteLine("Message content for the loop : "+item.Content);
                 // only tests message with the bot
                 if (item.Author.IsBot == false) continue;
                 // if no embed return
                 if (item.Embeds.Count == 0) continue;
-                Console.WriteLine("Embed content for the loop : " + item.Embeds.First().Description);
                 //test if the embed contains 
                 if (item.Embeds.First().Description.Contains(messageLinkUrl))
                 {
@@ -193,7 +190,7 @@ namespace valhallappweb
             }
             //  if no message fits returns
             if (messageToEdit == null) return;
-            Console.WriteLine("edited message: "+messageId);
+            Console.WriteLine("edited message: " + messageId);
             //  edit the message
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
             await userMessageToEdit.ModifyAsync(messageItem => {
@@ -211,26 +208,30 @@ namespace valhallappweb
             url = embedMessage.Image.Value.Url;
             Embed embedReturn;
             string cleanDescription = Regex.Replace(originalMessage, @"http[^\s]+", "");
+            Console.WriteLine($"{emoteList.Count}");
             if (emoteList.Count > 0)
             {
                 foreach (var emoteItem in emoteList)
+                {
+
+                    Console.WriteLine("Name of emoji: "+emoteItem.Key);
+
                     // For basic Emojis
                     if (emoteItem.Key is Emoji)
                     {
                         cleanDescription += $"\n{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
-                        Console.WriteLine(emoteItem.Key);
                     }
                     //for Custom Emojis.
                     else
                     {
                         Emote customeEmoji = (Emote)emoteItem.Key;
-                        Console.WriteLine(customeEmoji.Name);
                         if (customeEmoji.Animated)
                             cleanDescription += $"\n<a:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
                         else
                             cleanDescription += $"\n<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
                     }
-                embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
+                    embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
+                }
             }
             else
                 embedReturn = (Embed)embedMessage;
