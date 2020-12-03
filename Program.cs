@@ -157,7 +157,6 @@ namespace valhallappweb
             username = embedMessage.Author.Value.Name;
             userUrl = embedMessage.Author.Value.IconUrl;
             url = embedMessage.Image.Value.Url;
-            Console.WriteLine("embedMessage.Url "+embedMessage.Url);
             Console.WriteLine("embedMessage.Image.Value.Url "+embedMessage.Image.Value.Url);
             description = embedMessage.Description;
             //removes the "[<@" at the start of the messages
@@ -171,14 +170,13 @@ namespace valhallappweb
             messageId = messageLink;
             //removes "https://discord.com/channels/"
             Console.WriteLine(messageId);
-            messageId = GetUntilOrEmpty(messageId.Remove(0, 29), '/');
+            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId.Remove(0, 29), '/').Length + 1);
             Console.WriteLine(messageId);
             //removes serverId
-            messageId = GetUntilOrEmpty(messageId, '/');
-            messageId = messageId.Remove(0, 1);
+            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId.Remove(0, 29), '/').Length + 1);
             Console.WriteLine(messageId);
             //removes artChannelId
-            messageId = GetUntilOrEmpty(messageId, '/');
+            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId.Remove(0, 29), '/').Length + 1);
             messageId = messageId.Remove(0, 1);
             Console.WriteLine(messageId);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
