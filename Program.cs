@@ -91,6 +91,10 @@ namespace valhallappweb
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
+        /*----------------------------*/
+        /*  MESSAGE REACTION HANDLER   */
+        /*----------------------------*/
+
         private async Task HandleReactionClearAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel)
         {
             if (artChannelId == channel.Id) UpdateBotMessage(message.Id);
@@ -168,7 +172,10 @@ namespace valhallappweb
                     else
                     {
                         Emote customeEmoji = (Emote)emoteItem.Key;
-                        cleanDescription += $"\n<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
+                        if (customeEmoji.Animated)
+                            cleanDescription += $"\n<a:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
+                        else
+                            cleanDescription += $"\n<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
                     }
                 embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
             }
@@ -176,6 +183,10 @@ namespace valhallappweb
                 embedReturn = (Embed)embedMessage;
             return embedReturn;
         }
+
+        /*----------------------------*/
+        /*  MESSAGE CONTENT HANDLER   */
+        /*----------------------------*/
 
         // Handle each message recieved into the right command (if it exists)
         private async Task HandleCommandAsync(SocketMessage arg)
@@ -195,19 +206,6 @@ namespace valhallappweb
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
             }
         }
-
-        /*SIMPLE REUSABLE COMMANDS */
-
-        public string GetUntilOrEmpty(string text,char charToStopAt)
-        {
-            string stringToReturn="";
-            foreach (char character in text)
-            {
-                if (character == charToStopAt) break;
-                stringToReturn += character;
-            }
-            return stringToReturn;
-        }
         public void CheckImageArtChannel(SocketUserMessage message)
         {
             // if the message isn't in the art channel, return
@@ -220,10 +218,11 @@ namespace valhallappweb
             // post every attachment as an embed
             var chnl = _client.GetChannel(artTalkChannelId) as IMessageChannel;
             foreach (var attachment in message.Attachments)
-                chnl.SendMessageAsync(embed: 
+                chnl.SendMessageAsync(embed:
                     PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), attachment.Url, message.Id));
             // post every attachment as an embed
-            foreach (var url in urlList) {
+            foreach (var url in urlList)
+            {
                 bool isEmbedable = false;
                 foreach (var extensionItem in extensionList)
                     if (isEmbedable = url.EndsWith(extensionItem)) break;
@@ -232,6 +231,19 @@ namespace valhallappweb
                         PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
                 else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
             };
+        }
+
+        /*SIMPLE REUSABLE COMMANDS */
+
+        public string GetUntilOrEmpty(string text,char charToStopAt)
+        {
+            string stringToReturn="";
+            foreach (char character in text)
+            {
+                if (character == charToStopAt) break;
+                stringToReturn += character;
+            }
+            return stringToReturn;
         }
         public List<string> GetAllUrlFromString(string stringToAnalyse)
         {
