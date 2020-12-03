@@ -44,6 +44,7 @@ namespace valhallappweb
         private CommandService _commands;
         private IServiceProvider _services;
 
+        const ulong botId = 779648566057762826;
         const ulong artChannelId = 482894390570909706;
         const ulong artTalkChannelId = 561322620931538944;
         const ulong serverId = 482631363233710106;
@@ -138,13 +139,20 @@ namespace valhallappweb
             IMessage originalMessage = await artChannel.GetMessageAsync(newMessageId);
             //  edit the message
             IUserMessage userMessageToEdit = originalMessage as IUserMessage;
+            // react with the emote if it's not on the message already
             foreach (var reaction in reactionList)
             {
-                Console.WriteLine(reaction.Key.Name);
                 // skip the sent message if it's already on the message
                 if (userMessageToEdit.Reactions.ContainsKey(reaction.Key)) continue;
-                // react with the emote if it's not on the message already
                 await userMessageToEdit.AddReactionAsync(reaction.Key);
+            }
+            // remove the react if it's on the message and not in the reaction list
+            foreach (var reaction in userMessageToEdit.Reactions)
+            {
+                // skip the sent message if it's already on the message
+                if (reactionList.ContainsKey(reaction.Key)) continue;
+                // react with the emote if it's not on the message already
+                await userMessageToEdit.RemoveReactionAsync(reaction.Key,botId);
             }
         }
 
