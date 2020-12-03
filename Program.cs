@@ -129,7 +129,7 @@ namespace valhallappweb
                 if (item.Author.IsBot == false) continue;
                 // if no embed return
                 if (item.Embeds.Count == 0) continue;
-                Console.WriteLine("Message content for the loop : " + item.Embeds.First().Description);
+                Console.WriteLine("Embed content for the loop : " + item.Embeds.First().Description);
                 //test if the embed contains 
                 if (item.Embeds.First().Description.Contains(messageLinkUrl))
                 {
@@ -170,13 +170,17 @@ namespace valhallappweb
             messageLink = GetAllUrlFromString(description).First();
             messageId = messageLink;
             //removes "https://discord.com/channels/"
+            Console.WriteLine(messageId);
             messageId = GetUntilOrEmpty(messageId.Remove(0, 29), '/');
+            Console.WriteLine(messageId);
             //removes serverId
             messageId = GetUntilOrEmpty(messageId, '/');
             messageId = messageId.Remove(0, 1);
+            Console.WriteLine(messageId);
             //removes artChannelId
             messageId = GetUntilOrEmpty(messageId, '/');
             messageId = messageId.Remove(0, 1);
+            Console.WriteLine(messageId);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
             int headerLenght = messageLink.Length + 11;
             description = description.Remove(0, headerLenght);
