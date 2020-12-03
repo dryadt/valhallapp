@@ -158,8 +158,8 @@ namespace valhallappweb
             url = embedMessage.Url;
             description = embedMessage.Description;
             Console.WriteLine(description);
-            //removes the "<@" at the start of the messages
-            description = description.Remove(0, 2);
+            //removes the "[<@" at the start of the messages
+            description = description.Remove(0, 3);
             //get values based on the Description
             Console.WriteLine($"userid : {GetUntilOrEmpty(description, '>')}");
             userId = Convert.ToUInt64(GetUntilOrEmpty(description, '>'));
