@@ -230,11 +230,11 @@ namespace valhallappweb
                         else
                             cleanDescription += $"\n<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
                     }
-                    embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
                 }
+                embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
             }
             else
-                embedReturn = (Embed)embedMessage;
+                embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
             return embedReturn;
         }
 
