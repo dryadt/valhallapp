@@ -170,7 +170,9 @@ namespace valhallappweb
             messageId = messageLink;
             //removes "https://discord.com/channels/"
             Console.WriteLine(messageId);
-            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId.Remove(0, 29), '/').Length + 1);
+            messageId = messageId.Remove(0, 29);
+            Console.WriteLine(messageId);
+            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
             Console.WriteLine(messageId);
             //removes serverId
             messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
