@@ -157,7 +157,6 @@ namespace valhallappweb
             userUrl = embedMessage.Author.Value.IconUrl;
             url = embedMessage.Url;
             description = embedMessage.Description;
-            Console.WriteLine(description);
             //removes the "[<@" at the start of the messages
             description = description.Remove(0, 3);
             //get values based on the Description
@@ -177,6 +176,7 @@ namespace valhallappweb
             messageId = GetUntilOrEmpty(messageId, '/');
             messageId = messageId.Remove(0, 1);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
+            Console.WriteLine(description+" "+ messageLink.Length + 12);
             description = description.Remove(0, messageLink.Length+ 12);
             Embed embedReturn;
             if (emoteList.Count > 0)
