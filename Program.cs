@@ -181,10 +181,10 @@ namespace valhallappweb
             if (emoteList.Count > 0)
             {
                 footer = "";
-                foreach (var emote in emoteList)
+                foreach ( var emoteItem in emoteList)
                 {
-                    
-                    footer += $":{emote.Key.Name}:x{emote.Value.ReactionCount} ";
+                    Emote emote = (Emote)emoteItem.Key;
+                    footer += $"<:{emote.Name}:{emote.Id}>x{emoteItem.Value.ReactionCount} ";
                     Console.WriteLine(emote);
                 }
                 embedReturn = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
