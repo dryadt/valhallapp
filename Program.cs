@@ -154,7 +154,6 @@ namespace valhallappweb
         private Embed ModifyFooter(IReadOnlyCollection<IEmbed> embeds, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList, string originalMessage, ulong originalMessageID, ulong userID)
         {
             IEmbed embedMessage = embeds.First();
-            ulong userId;
             string username,userUrl,url;
             //get some values in the embed
             username = embedMessage.Author.Value.Name;
@@ -248,7 +247,7 @@ namespace valhallappweb
         public List<string> GetAllUrlFromString(string stringToAnalyse)
         {
             List<string> strList = new List<string>();
-            var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var linkParser = new Regex(@"\b(?:https?://)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (Match m in linkParser.Matches(stringToAnalyse)) {
                 strList.Add(m.ToString());
             }
