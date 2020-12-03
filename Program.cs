@@ -186,7 +186,10 @@ namespace valhallappweb
                         cleanDescription += $"\n{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
                     //for Custom Emojis.
                     else
-                        cleanDescription += $"\n:{emoteItem.Key.Name}:x{emoteItem.Value.ReactionCount} ";
+                    {
+                        Emote customeEmoji = (Emote)emoteItem.Key;
+                        cleanDescription += $"\n:<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
+                    }
                 embedReturn = PostEmbedImage(username, userId, cleanDescription, userUrl, url, Convert.ToUInt64(messageId));
             }
             else
