@@ -119,7 +119,6 @@ namespace valhallappweb
             emoteList = message.Reactions;
             var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
             // get 100 message around the timeperiod of the original message from the other channel
-            Console.WriteLine($"IsArtReaction {messageId}");
             var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
             IMessage messageToEdit = null;
             Console.WriteLine(messageList.Count);
@@ -139,6 +138,7 @@ namespace valhallappweb
             }
             //  if no message fits returns
             if (messageToEdit == null) return;
+            Console.WriteLine("edited message: "+messageId);
             //  edit the message
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
             await userMessageToEdit.ModifyAsync(messageItem => {

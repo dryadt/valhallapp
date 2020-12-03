@@ -50,7 +50,7 @@ namespace Valhallapp.Modules
         }
         public static void DisplayCommandLine(string CommandName, SocketCommandContext Context)
         {
-            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
+            //Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
         }
         public static bool IsDigitsOnly(string str)
         {
