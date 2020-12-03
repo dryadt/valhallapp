@@ -105,7 +105,37 @@ namespace valhallappweb
         private async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel, SocketReaction reaction)
         {
             if (artChannelId == channel.Id) UpdateBotMessage(message.Id);
+            if (artTalkChannelId == channel.Id) AddreactionToArt(message.Id);
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
+        }
+
+        private async void AddreactionToArt(ulong messageId)
+        {
+            ITextChannel artChannel = (ITextChannel)_client.GetChannel(artChannelId);
+            ITextChannel artTalkChannel = (ITextChannel)_client.GetChannel(artTalkChannelId);
+            // verify neither of the channel aren't null
+            if (artChannel is null || artTalkChannel is null) return;
+            if (!(artChannel is ITextChannel)|| !(artTalkChannel is ITextChannel)) return;
+            // get original message
+            IMessage message;
+            message = await artTalkChannel.GetMessageAsync(messageId);
+            // get message ID
+            var reactionList = message.Reactions;
+            if (message.Embeds.Count == 0) return;
+            string oldDescription = message.Embeds.First().Description;
+            oldDescription = GetAllUrlFromString(oldDescription).First();
+            ulong newMessageId = Convert.ToUInt64(oldDescription);
+            // get original message
+            IMessage originalMessage = await artChannel.GetMessageAsync(newMessageId);
+            //  edit the message
+            IUserMessage userMessageToEdit = originalMessage as IUserMessage;
+            foreach (var reaction in reactionList)
+            {
+                // skip the sent message if it's already on the message
+                if (userMessageToEdit.Reactions.ContainsKey(reaction.Key)) continue;
+                // react with the emote if it's not on the message already
+                await userMessageToEdit.AddReactionAsync(reaction.Key);
+            }
         }
 
         public async void UpdateBotMessage(ulong messageId)
@@ -118,9 +148,8 @@ namespace valhallappweb
             IMessage message;
             message = await artChannel.GetMessageAsync(messageId);
             // get emote list
-            IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList;
             if (message == null) return;
-            emoteList = message.Reactions;
+            var emoteList = message.Reactions;
             var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
             // get 100 message around the timeperiod of the original message from the other channel
             var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
