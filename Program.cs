@@ -143,7 +143,6 @@ namespace valhallappweb
             //  edit the message
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
             await userMessageToEdit.ModifyAsync(messageItem => {
-
                 messageItem.Content = "";
                 messageItem.Embed = ModifyFooter(userMessageToEdit.Embeds, emoteList);
             });
@@ -152,7 +151,7 @@ namespace valhallappweb
         {
             IEmbed embedMessage = embeds.First();
             ulong userId;
-            string footer,username,description,userUrl,url,messageId,messageLink;
+            string username,description,userUrl,url,messageId,messageLink;
             //get some values in the embed
             username = embedMessage.Author.Value.Name;
             userUrl = embedMessage.Author.Value.IconUrl;
@@ -178,19 +177,17 @@ namespace valhallappweb
             int headerLenght = messageLink.Length + 11;
             description = description.Remove(0, headerLenght);
             Embed embedReturn;
+            string cleanDescription = Regex.Replace(description, @"http[^\s]+", "");
             if (emoteList.Count > 0)
             {
-                footer = "";
                 foreach (var emoteItem in emoteList)
                     // For basic Emojis
                     if (emoteItem.Key is Emoji)
-                        footer += $"{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
+                        cleanDescription += $"\n{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
                     //for Custom Emojis.
                     else
-                    {
-                        footer += $":{emoteItem.Key.Name}:x{emoteItem.Value.ReactionCount} ";
-                    }
-                embedReturn = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
+                        cleanDescription += $"\n:{emoteItem.Key.Name}:x{emoteItem.Value.ReactionCount} ";
+                embedReturn = PostEmbedImage(username, userId, cleanDescription, userUrl, url, Convert.ToUInt64(messageId));
             }
             else
                 embedReturn = (Embed)embedMessage;
@@ -241,7 +238,7 @@ namespace valhallappweb
             var chnl = _client.GetChannel(artTalkChannelId) as IMessageChannel;
             foreach (var attachment in message.Attachments)
                 chnl.SendMessageAsync(embed: 
-                    PostEmbedImage(message.Author.Username, message.Author.Id, message.Content, message.Author.GetAvatarUrl(), attachment.Url, message.Id, ""));
+                    PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), attachment.Url, message.Id));
             // post every attachment as an embed
             foreach (var url in urlList) {
                 bool isEmbedable = false;
@@ -249,7 +246,7 @@ namespace valhallappweb
                     if (isEmbedable = url.EndsWith(extensionItem)) break;
                 if (isEmbedable)
                     chnl.SendMessageAsync(embed:
-                        PostEmbedImage(message.Author.Username, message.Author.Id, message.Content, message.Author.GetAvatarUrl(), url, message.Id,""));
+                        PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
                 else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
             };
         }
@@ -263,17 +260,15 @@ namespace valhallappweb
             return strList;
         }
 
-        public Embed PostEmbedImage(string username, ulong userId,string description, string userURL, string url, ulong messageId,string footer)
+        public Embed PostEmbedImage(string username, ulong userId,string description, string userURL, string url, ulong messageId)
         {
             // removes all urls
-            string cleanDescription = Regex.Replace(description, @"http[^\s]+", "");
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, $"{url}")
-                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n{cleanDescription}")
+                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n{description}")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
-                .WithFooter(footer)
                 .Build();
             return embed.Build(); 
         }
