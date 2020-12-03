@@ -169,15 +169,11 @@ namespace valhallappweb
             messageLink = GetAllUrlFromString(description).First();
             messageId = messageLink;
             //removes "https://discord.com/channels/"
-            Console.WriteLine(messageId);
             messageId = messageId.Remove(0, 29);
-            Console.WriteLine(messageId);
             //removes serverId
             messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
-            Console.WriteLine(messageId);
             //removes artChannelId
             messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
-            Console.WriteLine(messageId);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
             int headerLenght = messageLink.Length + 11;
             description = description.Remove(0, headerLenght);
@@ -185,9 +181,12 @@ namespace valhallappweb
             if (emoteList.Count > 0)
             {
                 footer = "";
-                foreach (var item in emoteList) footer += $"{item.Key.Name}x{item.Value.ReactionCount}";
+                foreach (var item in emoteList)
+                {
+                    footer += $"{item}x{item.Value.ReactionCount} ";
+                    Console.WriteLine(item);
+                }
                 embedReturn = PostEmbedImage(username, userId, description, userUrl, url, Convert.ToUInt64(messageId), footer);
-                Console.WriteLine($"{embedReturn.Footer.Value.Text}");
             }
             else
                 embedReturn = (Embed)embedMessage;
