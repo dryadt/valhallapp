@@ -144,40 +144,20 @@ namespace valhallappweb
             IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
             await userMessageToEdit.ModifyAsync(messageItem => {
                 messageItem.Content = "";
-                messageItem.Embed = ModifyFooter(userMessageToEdit.Embeds, emoteList);
+                messageItem.Embed = ModifyFooter(userMessageToEdit.Embeds, emoteList, message.Content,message.Id,message.Author.Id);
             });
         }
-        private Embed ModifyFooter(IReadOnlyCollection<IEmbed> embeds, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList)
+        private Embed ModifyFooter(IReadOnlyCollection<IEmbed> embeds, IReadOnlyDictionary<IEmote, ReactionMetadata> emoteList, string originalMessage, ulong originalMessageID, ulong userID)
         {
             IEmbed embedMessage = embeds.First();
             ulong userId;
-            string username,description,userUrl,url,messageId,messageLink;
+            string username,userUrl,url;
             //get some values in the embed
             username = embedMessage.Author.Value.Name;
             userUrl = embedMessage.Author.Value.IconUrl;
             url = embedMessage.Image.Value.Url;
-            Console.WriteLine("embedMessage.Image.Value.Url "+embedMessage.Image.Value.Url);
-            description = embedMessage.Description;
-            //removes the "[<@" at the start of the messages
-            description = description.Remove(0, 3);
-            //get values based on the Description
-            userId = Convert.ToUInt64(GetUntilOrEmpty(description, '>'));
-            // removes the userID AND the > from the description
-            description = description.Remove(0, (int)(Math.Floor(Math.Log10(userId) + 1)+1));
-            // get the messageId
-            messageLink = GetAllUrlFromString(description).First();
-            messageId = messageLink;
-            //removes "https://discord.com/channels/"
-            messageId = messageId.Remove(0, 29);
-            //removes serverId
-            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
-            //removes artChannelId
-            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
-            // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
-            int headerLenght = messageLink.Length + 11;
-            description = description.Remove(0, headerLenght);
             Embed embedReturn;
-            string cleanDescription = Regex.Replace(description, @"http[^\s]+", "");
+            string cleanDescription = Regex.Replace(originalMessage, @"http[^\s]+", "");
             if (emoteList.Count > 0)
             {
                 foreach (var emoteItem in emoteList)
@@ -188,9 +168,9 @@ namespace valhallappweb
                     else
                     {
                         Emote customeEmoji = (Emote)emoteItem.Key;
-                        cleanDescription += $"\n:<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
+                        cleanDescription += $"\n<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
                     }
-                embedReturn = PostEmbedImage(username, userId, cleanDescription, userUrl, url, Convert.ToUInt64(messageId));
+                embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
             }
             else
                 embedReturn = (Embed)embedMessage;
