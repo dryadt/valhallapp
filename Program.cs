@@ -111,11 +111,13 @@ namespace valhallappweb
 
         private async void AddreactionToArt(ulong messageId)
         {
+            Console.WriteLine(messageId);
             ITextChannel artChannel = (ITextChannel)_client.GetChannel(artChannelId);
             ITextChannel artTalkChannel = (ITextChannel)_client.GetChannel(artTalkChannelId);
             // verify neither of the channel aren't null
             if (artChannel is null || artTalkChannel is null) return;
             if (!(artChannel is ITextChannel)|| !(artTalkChannel is ITextChannel)) return;
+            Console.WriteLine("channel isn't null");
             // get original message
             IMessage message;
             message = await artTalkChannel.GetMessageAsync(messageId);
@@ -124,6 +126,7 @@ namespace valhallappweb
             if (message.Embeds.Count == 0) return;
             string oldDescription = message.Embeds.First().Description;
             oldDescription = GetAllUrlFromString(oldDescription).First();
+            Console.WriteLine(oldDescription);
             ulong newMessageId = Convert.ToUInt64(oldDescription);
             // get original message
             IMessage originalMessage = await artChannel.GetMessageAsync(newMessageId);
@@ -131,6 +134,7 @@ namespace valhallappweb
             IUserMessage userMessageToEdit = originalMessage as IUserMessage;
             foreach (var reaction in reactionList)
             {
+                Console.WriteLine(reaction.Key.Name);
                 // skip the sent message if it's already on the message
                 if (userMessageToEdit.Reactions.ContainsKey(reaction.Key)) continue;
                 // react with the emote if it's not on the message already
