@@ -130,10 +130,6 @@ namespace valhallappweb
             oldDescription = oldDescription.Remove(0, 29);
             Console.WriteLine(oldDescription);
             oldDescription = GetUntilOrEmpty(oldDescription, '/');
-            oldDescription = oldDescription.Remove(0, 1);
-            Console.WriteLine(oldDescription);
-            oldDescription = GetUntilOrEmpty(oldDescription, '/');
-            oldDescription = oldDescription.Remove(0, 1);
             Console.WriteLine(oldDescription);
             ulong newMessageId = Convert.ToUInt64(oldDescription);
             // get original message
