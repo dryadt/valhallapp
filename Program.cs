@@ -173,10 +173,10 @@ namespace valhallappweb
             messageId = messageId.Remove(0, GetUntilOrEmpty(messageId.Remove(0, 29), '/').Length + 1);
             Console.WriteLine(messageId);
             //removes serverId
-            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId.Remove(0, 29), '/').Length + 1);
+            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
             Console.WriteLine(messageId);
             //removes artChannelId
-            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId.Remove(0, 29), '/').Length + 1);
+            messageId = messageId.Remove(0, GetUntilOrEmpty(messageId, '/').Length + 1);
             messageId = messageId.Remove(0, 1);
             Console.WriteLine(messageId);
             // removes  posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n
