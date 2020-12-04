@@ -57,8 +57,8 @@ namespace valhallappweb
             // Logging
             _client.Log += Client_Log;
 
-            // Command init
-            await RegisterCommandsAsync();
+            // Handlers init
+            await RegisterHandlersAsync();
 
             // Bot Authentification init
             var token = Environment.GetEnvironmentVariable("TOKEN");
@@ -78,7 +78,7 @@ namespace valhallappweb
         }
 
         // Command init
-        public async Task RegisterCommandsAsync()
+        public async Task RegisterHandlersAsync()
         {
             ReactionHandler reactionHandler = new ReactionHandler(_client);
             MessageHandler messageHandler = new MessageHandler(_client, _commands,_services);
