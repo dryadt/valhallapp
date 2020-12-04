@@ -19,9 +19,9 @@ namespace valhallappweb
             this._services = _services;
         }
 
-        DiscordSocketClient _client;
-        private CommandService _commands;
-        private IServiceProvider _services;
+        private readonly DiscordSocketClient _client;
+        private readonly CommandService _commands;
+        private readonly IServiceProvider _services;
 
         /*----------------------------*/
         /*  MESSAGE CONTENT HANDLER   */

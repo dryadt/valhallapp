@@ -16,7 +16,7 @@ namespace valhallappweb
             this._client = _client;
         }
 
-        DiscordSocketClient _client;
+        readonly DiscordSocketClient _client;
 
 
         /*----------------------------*/
@@ -33,6 +33,7 @@ namespace valhallappweb
         // Handle each reaction recieved
         public async Task HandleReactionAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel, SocketReaction reaction)
         {
+            Console.WriteLine($"reaction: {reaction}");
             await HandleReactionClearAsync(message, channel);
         }
 
