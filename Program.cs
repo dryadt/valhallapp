@@ -44,11 +44,6 @@ namespace valhallappweb
         private CommandService _commands;
         private IServiceProvider _services;
 
-        const ulong botId = 779648566057762826;
-        const ulong artChannelId = 482894390570909706;
-        const ulong artTalkChannelId = 561322620931538944;
-        const ulong serverId = 482631363233710106;
-
         public async Task RunBotAsync()
         {
             Console.WriteLine("Valhalla bot start");
