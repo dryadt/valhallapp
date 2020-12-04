@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static valhallappweb.PublicFunction;
 
 namespace valhallappweb
 {
@@ -16,10 +17,6 @@ namespace valhallappweb
         }
 
         DiscordSocketClient _client;
-        const ulong botId = 779648566057762826;
-        const ulong artChannelId = 482894390570909706;
-        const ulong artTalkChannelId = 561322620931538944;
-        const ulong serverId = 482631363233710106;
 
 
         /*----------------------------*/
@@ -159,42 +156,6 @@ namespace valhallappweb
                 // if no emoji just generate the embed with no emojis.
                 embedReturn = PostEmbedImage(username, userID, cleanDescription, userUrl, url, originalMessageID);
             return embedReturn;
-        }
-
-        /*SIMPLE REUSABLE COMMANDS */
-
-        private string GetUntilOrEmpty(string text, char charToStopAt)
-        {
-            string stringToReturn = "";
-            foreach (char character in text)
-            {
-                if (character == charToStopAt) break;
-                stringToReturn += character;
-            }
-            return stringToReturn;
-        }
-
-        private Embed PostEmbedImage(string username, ulong userId, string description, string userURL, string url, ulong messageId)
-        {
-            // removes all urls
-            Console.WriteLine($"url to post {url}");
-            var embed = new EmbedBuilder();
-            embed.WithAuthor(username, userURL, $"{url}")
-                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n{description}")
-                .WithColor(Color.Purple)
-                .WithImageUrl(url)
-                .Build();
-            return embed.Build();
-        }
-        public List<string> GetAllUrlFromString(string stringToAnalyse)
-        {
-            List<string> strList = new List<string>();
-            var linkParser = new Regex(@"\b(?:https?://)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            foreach (Match m in linkParser.Matches(stringToAnalyse))
-            {
-                strList.Add(m.ToString());
-            }
-            return strList;
         }
     }
 }

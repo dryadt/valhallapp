@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using static valhallappweb.PublicFunction;
+
 
 namespace Valhallapp.Modules
 {
@@ -10,16 +12,16 @@ namespace Valhallapp.Modules
         [Command("femboy")]
         public async Task FemboyCommand()
         {
-            SimpleCommands.DisplayCommandLine("Femboy", Context);
+            DisplayCommandLine("Femboy", Context);
             Console.WriteLine($"id user: {Context.User.Id}");
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) % 10000000));
             await ReplyAsync(embed:
-                SimpleCommands.PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
+                PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
         }
         [Command("femboy")]
         public async Task FemboyCommand([Remainder] string param)
         {
-            SimpleCommands.DisplayCommandLine($"Femboy with params", Context);
+            DisplayCommandLine($"Femboy with params", Context);
             Random rnd;
             string userID = param;
             // ping function
@@ -32,14 +34,14 @@ namespace Valhallapp.Modules
                 // rng creation
                 rnd = new Random((int)(Convert.ToUInt64(userID) % 10000000));
                 await ReplyAsync(embed:
-                    SimpleCommands.PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
+                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
             }
             // id function
-            else if (SimpleCommands.IsDigitsOnly(userID))
+            else if (IsDigitsOnly(userID))
             {
                 rnd = new Random((int)(Convert.ToUInt64(userID) % 10000000));
                 await ReplyAsync(embed:
-                    SimpleCommands.PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
+                    PostEmbedPercent(Context.User.Username, $"<@{userID}>", Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
             }
             // TODO: username function
             // random string function
@@ -47,7 +49,7 @@ namespace Valhallapp.Modules
             {
                 rnd = new Random();
                 await ReplyAsync(embed:
-                    SimpleCommands.PostEmbedPercent(Context.User.Username, param, Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
+                    PostEmbedPercent(Context.User.Username, param, Context.User.GetAvatarUrl(), rnd.Next(101), "femboy"));
             }
         }
     }

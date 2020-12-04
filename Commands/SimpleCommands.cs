@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using static valhallappweb.PublicFunction;
 
 namespace Valhallapp.Modules
 {
@@ -47,27 +48,6 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Reggie", Context);
             await ReplyAsync("My name is reggie.");
-        }
-        public static void DisplayCommandLine(string CommandName, SocketCommandContext Context)
-        {
-            //Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
-        }
-        public static bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-                if (c < '0' || c > '9')
-                    return false;
-            return true;
-        }
-        public static Embed PostEmbedPercent(string username, string selectedUser, string userIconURL, int percent, string commandType)
-        {
-            // removes all urls
-            var embed = new EmbedBuilder();
-            embed.WithAuthor(username, userIconURL)
-                .WithDescription($"{selectedUser} is {percent}% {commandType}")
-                .WithColor(Color.DarkBlue)
-                .Build();
-            return embed.Build();
         }
     }
 }

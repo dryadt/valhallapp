@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using static valhallappweb.PublicFunction;
 
 namespace Valhallapp.Modules
 {
@@ -10,19 +11,19 @@ namespace Valhallapp.Modules
         [Command("astral")]
         public async Task Astral()
         {
-            SimpleCommands.DisplayCommandLine("Astral",Context); 
+            DisplayCommandLine("Astral",Context); 
             await ReplyAsync("A\nA\nA\nA\nA\nA\nA\n");
         }
         [Command("costro")]
         public async Task Costro()
         {
-            SimpleCommands.DisplayCommandLine("Costro", Context);
+            DisplayCommandLine("Costro", Context);
             await ReplyAsync("Costro is a hella cute stag. <3 <3 <3 <3 <3");
         }
         [Command("starless")]
         public async Task Starless()
         {
-            SimpleCommands.DisplayCommandLine("Starless",Context);
+            DisplayCommandLine("Starless",Context);
             await ReplyAsync(":dress::dress::dress::dress::dress::dress::dress::dress::dress::bikini::bikini::bikini::bikini::bikini::bikini::kimono::kimono::kimono:");
         }
     }

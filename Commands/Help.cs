@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using static valhallappweb.PublicFunction;
 
 namespace Valhallapp.Modules
 {
@@ -11,7 +12,7 @@ namespace Valhallapp.Modules
         [Command("help")]
         public async Task HelpCommand()
         {
-            SimpleCommands.DisplayCommandLine("help", Context);
+            DisplayCommandLine("help", Context);
             var embed = new EmbedBuilder();
             string prefix = "&";
             embed.WithTitle("Commands list:")
@@ -34,7 +35,7 @@ namespace Valhallapp.Modules
         [Command("help meme")]
         public async Task HelpMeme()
         {
-            SimpleCommands.DisplayCommandLine("Help meme", Context);
+            DisplayCommandLine("Help meme", Context);
             var embed = new EmbedBuilder();
             string prefix = "&";
             embed.WithTitle("Meme commands list:")
