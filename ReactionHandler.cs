@@ -84,7 +84,7 @@ namespace valhallappweb
         }
 
         // gallery -> chat reaction transfert
-        public async void UpdateBotMessage(ulong messageId)
+        private async void UpdateBotMessage(ulong messageId)
         {
             // get message by id and channel id
             ITextChannel artChannel = (ITextChannel)_client.GetChannel(artChannelId);
@@ -163,7 +163,7 @@ namespace valhallappweb
 
         /*SIMPLE REUSABLE COMMANDS */
 
-        public string GetUntilOrEmpty(string text, char charToStopAt)
+        private string GetUntilOrEmpty(string text, char charToStopAt)
         {
             string stringToReturn = "";
             foreach (char character in text)
@@ -174,7 +174,7 @@ namespace valhallappweb
             return stringToReturn;
         }
 
-        public Embed PostEmbedImage(string username, ulong userId, string description, string userURL, string url, ulong messageId)
+        private Embed PostEmbedImage(string username, ulong userId, string description, string userURL, string url, ulong messageId)
         {
             // removes all urls
             Console.WriteLine($"url to post {url}");

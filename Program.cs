@@ -86,101 +86,12 @@ namespace valhallappweb
         public async Task RegisterCommandsAsync()
         {
             ReactionHandler reactionHandler = new ReactionHandler(_client);
+            MessageHandler messageHandler = new MessageHandler(_client, _commands,_services);
             _client.ReactionAdded += reactionHandler.HandleReactionAsync;
             _client.ReactionRemoved += reactionHandler.HandleReactionAsync;
             _client.ReactionsCleared += reactionHandler.HandleReactionClearAsync;
-            _client.MessageReceived += HandleCommandAsync;
+            _client.MessageReceived += messageHandler.HandleCommandAsync;
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
-        }
-
-        /*----------------------------*/
-        /*  MESSAGE CONTENT HANDLER   */
-        /*----------------------------*/
-
-        // Handle each message recieved into the right command (if it exists)
-        private async Task HandleCommandAsync(SocketMessage arg)
-        {
-            var message = arg as SocketUserMessage;
-            var context = new SocketCommandContext(_client, message);
-
-            // if the message is from bot then ignore
-            if (message.Author.IsBot) return;
-            // does something with message
-            CheckImageArtChannel(message);
-            // command prompt
-            int argPos = 0;
-            if (message.HasStringPrefix("&", ref argPos))
-            {
-                var result = await _commands.ExecuteAsync(context, argPos, _services);
-                if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
-            }
-        }
-        public void CheckImageArtChannel(SocketUserMessage message)
-        {
-            // if the message isn't in the art channel, return
-            if (message.Channel.Id != artChannelId) return;
-            string[] extensionList = { ".mp4", ".mp3", ".png", ".jpeg", ".gif",".jpg" };
-            List<string> urlList = GetAllUrlFromString(message.Content);
-            Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
-            // if the message has no attachments and no url
-            if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
-            // post every attachment as an embed
-            var chnl = _client.GetChannel(artTalkChannelId) as IMessageChannel;
-            foreach (var attachment in message.Attachments)
-                chnl.SendMessageAsync(embed:
-                    PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), attachment.Url, message.Id));
-            // post every attachment as an embed
-            foreach (var url in urlList)
-            {
-                bool isEmbedable = false;
-                foreach (var extensionItem in extensionList)
-                    if (isEmbedable = url.EndsWith(extensionItem)) break;
-                if (isEmbedable)
-                    chnl.SendMessageAsync(embed:
-                        PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
-                else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
-            };
-        }
-
-        /*SIMPLE REUSABLE COMMANDS */
-
-        public string GetUntilOrEmpty(string text,char charToStopAt)
-        {
-            string stringToReturn="";
-            foreach (char character in text)
-            {
-                if (character == charToStopAt) break;
-                stringToReturn += character;
-            }
-            return stringToReturn;
-        }
-        public List<string> GetAllUrlFromString(string stringToAnalyse)
-        {
-            List<string> strList = new List<string>();
-            var linkParser = new Regex(@"\b(?:https?://)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            foreach (Match m in linkParser.Matches(stringToAnalyse)) {
-                strList.Add(m.ToString());
-            }
-            return strList;
-        }
-
-        public Embed PostEmbedImage(string username, ulong userId,string description, string userURL, string url, ulong messageId)
-        {
-            // removes all urls
-            Console.WriteLine($"url to post {url}");
-            var embed = new EmbedBuilder();
-            embed.WithAuthor(username, userURL, $"{url}")
-                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n{description}")
-                .WithColor(Color.Purple)
-                .WithImageUrl(url)
-                .Build();
-            return embed.Build(); 
-        }
-        public void MessageChannel(string messageContent, ulong channelId)
-        {
-            Console.WriteLine($"url of image: {messageContent}");
-            var chnl = _client.GetChannel(channelId) as IMessageChannel;
-            chnl.SendMessageAsync(messageContent);
         }
     }
 }
