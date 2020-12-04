@@ -30,7 +30,6 @@ namespace Valhallapp.Modules
             // userping function
             if (param.Contains("<@"))
             {
-                Console.WriteLine("userping");
                 userID = userID.Remove(userID.Length - 1);
                 userID = userID.Substring(2, userID.Length - 2);
                 if (userID[0] == '!') userID = userID.Substring(1, userID.Length - 1);
@@ -44,7 +43,6 @@ namespace Valhallapp.Modules
             // id function
             else if (IsDigitsOnly(userID))
             {
-                Console.WriteLine("id");
                 rnd = new Random((int)(Convert.ToUInt64(userID) + 1 % 10000000));
                 if (Convert.ToUInt64(userID) == 156997866605248512)
                     await ReplyAsync(embed:
@@ -56,7 +54,6 @@ namespace Valhallapp.Modules
             // random string function
             else
             {
-                Console.WriteLine("Nothing");
                 rnd = new Random();
                 await ReplyAsync(embed:
                     PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), rnd.Next(101), "gay"));
