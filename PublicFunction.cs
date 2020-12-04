@@ -17,7 +17,7 @@ namespace valhallappweb
         public static readonly ulong serverId = 482631363233710106;
 
 
-        /*COMMANDS FOR COMMANDS*/
+        /*COMMANDS FOR COMMANDS HANDLERS*/
 
         public static void DisplayCommandLine(string CommandName, SocketCommandContext Context)
         {
