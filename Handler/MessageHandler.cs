@@ -15,6 +15,8 @@ namespace valhallappweb
         public MessageHandler(DiscordSocketClient _client, CommandService _commands, IServiceProvider _services)
         {
             this._client = _client;
+            this._commands = _commands;
+            this._services = _services;
         }
 
         DiscordSocketClient _client;
