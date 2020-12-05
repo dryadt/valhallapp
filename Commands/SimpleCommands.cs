@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Discord;
 using Discord.Commands;
 using static valhallappweb.PublicFunction;
 
@@ -43,12 +42,6 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Website", Context);
             await ReplyAsync("https://valhallapp.herokuapp.com/");
-        }
-        [Command("hi")]
-        public async Task Reggie()
-        {
-            DisplayCommandLine("Reggie", Context);
-            await ReplyAsync("My name is reggie.");
         }
 
         // RANDOM COMMAND BASIC FUNCTIONS

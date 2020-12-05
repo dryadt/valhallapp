@@ -26,5 +26,11 @@ namespace Valhallapp.Modules
             DisplayCommandLine("Starless",Context);
             await ReplyAsync(":dress::dress::dress::dress::dress::dress::dress::dress::dress::bikini::bikini::bikini::bikini::bikini::bikini::kimono::kimono::kimono:");
         }
+        [Command("hi")]
+        public async Task Reggie()
+        {
+            DisplayCommandLine("Reggie", Context);
+            await ReplyAsync("My name is reggie.");
+        }
     }
 }

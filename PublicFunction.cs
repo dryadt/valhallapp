@@ -61,6 +61,17 @@ namespace valhallappweb
             return stringToReturn;
         }
 
+        public static Embed PostEmbedText(string username, string userURL, string title, string description)
+        {
+            var embed = new EmbedBuilder();
+            embed.WithAuthor(username, userURL)
+                .WithTitle(title)
+                .WithDescription(description)
+                .WithColor(Color.Purple)
+                .Build();
+            return embed.Build();
+        }
+
         public static Embed PostEmbedImage(string username, ulong userId, string description, string userURL, string url, ulong messageId)
         {
             // removes all urls

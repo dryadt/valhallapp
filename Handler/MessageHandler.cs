@@ -45,7 +45,23 @@ namespace valhallappweb
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
             }
             //handle messages that are in the gallery channel
+            if (message.Channel.Id == galleryId) HandleGalleryMessage(message);
         }
+
+        private void HandleGalleryMessage(SocketUserMessage message)
+        {
+            ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
+            ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
+            // if the messsage doesn't contain any media
+            if ((message.Attachments.Count > 0) || (GetAllUrlFromString(message.Content).Count > 0)) return;
+            Embed embedMessage = PostEmbedText(message.Author.Username, message.Author.GetAvatarUrl(), "Deleted message content:", message.Content);
+            galleryTalkChannel.SendMessageAsync(
+            $"<@{message.Author.Id}> No posting in the gallery <#{message.Channel.Id}>"
+            ,embed: embedMessage
+            );
+            galleryChannel.DeleteMessageAsync(message);
+        }
+
         private void CheckImageArtChannel(SocketUserMessage message)
         {
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
