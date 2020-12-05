@@ -11,20 +11,15 @@ namespace Valhallapp.Modules
         [Command("furry")]
         public async Task FurryCommand()
         {
-            DisplayCommandLine("Furry", Context);
-            await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), 100, "furry"));
+            SimpleCommands command = new SimpleCommands();
+            await command.RandomCommand("furry", 1,100);
         }
 
         [Command("furry")]
         public async Task FurryCommand([Remainder] string param)
         {
-            DisplayCommandLine("Furry with param", Context);
-            if (IsDigitsOnly(param)) await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, $"<@{param}>", Context.User.GetAvatarUrl(), 100, "furry"));
-            // TODO: username function
-            else await ReplyAsync(embed:
-                PostEmbedPercent(Context.User.Username, $"{param}", Context.User.GetAvatarUrl(), 100, "furry"));
+            SimpleCommands command = new SimpleCommands();
+            await command.RandomCommand(param,"gay", 1,100);
         }
     }
 }

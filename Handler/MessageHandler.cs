@@ -44,7 +44,6 @@ namespace valhallappweb
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
             }
-
             //handle messages that are in the gallery channel
         }
         private void CheckImageArtChannel(SocketUserMessage message)
