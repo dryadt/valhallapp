@@ -8,6 +8,7 @@ namespace Valhallapp.Modules
 {
     public class SimpleCommands : ModuleBase<SocketCommandContext>
     {
+        public SimpleCommands () { }
 
         [Command("github")]
         public async Task Github()
@@ -53,6 +54,7 @@ namespace Valhallapp.Modules
         // RANDOM COMMAND BASIC FUNCTIONS
         public async Task RandomCommand(string name, ulong randomModifier, int isRigged)
         {
+            Console.WriteLine("No param");
             DisplayCommandLine(name, Context);
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) + randomModifier % 10000000));
             if (isRigged != -1)
@@ -63,7 +65,7 @@ namespace Valhallapp.Modules
                     PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), isRigged, name));
         }
 
-        public async Task RandomCommand([Remainder] string param, string name, ulong randomModifier,int isRigged)
+        public async Task RandomCommand([Remainder] string param, string name, ulong randomModifier, int isRigged)
         {
             DisplayCommandLine($"{name} with params", Context);
             Random rnd;
