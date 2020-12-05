@@ -10,8 +10,14 @@ namespace Valhallapp.Modules
     {
         private readonly SimpleCommands command = new SimpleCommands();
 
+        [Command("tomboy")]
+        public async Task TomboyCommand() => await command.RandomCommand(Context, "tomboy", 1, 0);
+
+        [Command("tomboy")]
+        public async Task TomboyCommand([Remainder] string param) => await command.RandomCommand(Context, param, "tomboy", 1, 0);
+
         [Command("furry")]
-        public async Task FurryCommand()=>await command.RandomCommand(Context,"furry", 1, 100);
+        public async Task FurryCommand() => await command.RandomCommand(Context, "furry", 1, 100);
 
         [Command("furry")]
         public async Task FurryCommand([Remainder] string param) => await command.RandomCommand(Context, param, "furry", 1, 100);

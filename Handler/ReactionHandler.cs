@@ -88,13 +88,12 @@ namespace valhallappweb
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (galleryTalkChannel is null) return;
             if (!(galleryTalkChannel is ITextChannel)) return;
-            IMessage message;
-            message = await galleryChannel.GetMessageAsync(messageId);
+            IMessage message = await galleryChannel.GetMessageAsync(messageId);
             // get emote list
             if (message == null) return;
             var emoteList = message.Reactions;
             var messageLinkUrl = $"https://discord.com/channels/{serverId}/{galleryId}/{messageId}";
-            // get 100 message around the timeperiod of the original message from the other channel
+            // get 10 message around the timeperiod of the original message from the other channel
             var messageList = await galleryTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
             IMessage messageToEdit = null;
             foreach (var item in messageList.Reverse())

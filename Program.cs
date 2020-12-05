@@ -81,11 +81,15 @@ namespace valhallappweb
         public async Task RegisterCommandsAsync()
         {
             ReactionHandler reactionHandler = new ReactionHandler(_client);
+            MessageEditedHandler editedHandler = new MessageEditedHandler(_client);
+            MessageDeleteHandler deleteHandler = new MessageDeleteHandler(_client);
             MessageHandler messageHandler = new MessageHandler(_client, _commands,_services);
             _client.ReactionAdded += reactionHandler.HandleReactionAsync;
             _client.ReactionRemoved += reactionHandler.HandleReactionAsync;
             _client.ReactionsCleared += reactionHandler.HandleReactionClearAsync;
             _client.MessageReceived += messageHandler.HandleCommandAsync;
+            _client.MessageDeleted += deleteHandler.HandleDeleteAsync;
+            _client.MessageUpdated += editedHandler.HandleEditAsync;
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
     }
