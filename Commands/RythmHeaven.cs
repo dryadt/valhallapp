@@ -11,19 +11,19 @@ namespace Valhallapp.Modules
         [Command("Oh! You go big guy!")]
         public async Task BigGuy()
         {
-            DisplayCommandLine("BigGuy", Context);
+            DisplayCommandLine("BigGuy", Context.Message.Author.Username, Context.Channel.Name);
             await ReplyAsync("Hmph Umph!");
         }
         [Command("Pose for the fans!")]
         public async Task Pose()
         {
-            DisplayCommandLine("Pose", Context);
+            DisplayCommandLine("Pose", Context.Message.Author.Username, Context.Channel.Name);
             await ReplyAsync("AAAAUGH!");
         }
         [Command("Wubbadubadub is that true?")]
         public async Task Wubbadubadub()
         {
-            DisplayCommandLine("Wubbadubadub", Context);
+            DisplayCommandLine("Wubbadubadub", Context.Message.Author.Username, Context.Channel.Name);
             await ReplyAsync("Yes.");
         }
     }

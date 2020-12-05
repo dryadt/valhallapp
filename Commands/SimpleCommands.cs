@@ -12,20 +12,20 @@ namespace Valhallapp.Modules
         [Command("github")]
         public async Task Github()
         {
-            DisplayCommandLine("Github", Context);
+            DisplayCommandLine("Github",Context.Message.Author.Username,Context.Channel.Name);
             await ReplyAsync("https://github.com/dryadt/valhallapp");
         }
         [Command("heroku")]
         public async Task Heroku()
         {
-            DisplayCommandLine("Heroku", Context);
+            DisplayCommandLine("Heroku", Context.Message.Author.Username, Context.Channel.Name);
             await ReplyAsync("https://dashboard.heroku.com/apps/valhallapp");
         }
 
         [Command("ping")]
         public async Task Ping()
         {
-            DisplayCommandLine("Ping", Context);
+            DisplayCommandLine("Ping", Context.Message.Author.Username, Context.Channel.Name);
             TimeSpan ping = DateTime.Now - Context.Message.Timestamp;
             await ReplyAsync($"Pong: {ping.TotalMilliseconds} ms");
         }
@@ -33,14 +33,14 @@ namespace Valhallapp.Modules
         [Command("pong")]
         public async Task Pong()
         {
-            DisplayCommandLine("Pong", Context);
+            DisplayCommandLine("Pong", Context.Message.Author.Username, Context.Channel.Name);
             await ReplyAsync("Ping");
         }
 
         [Command("website")]
         public async Task Website()
         {
-            DisplayCommandLine("Website", Context);
+            DisplayCommandLine("Website", Context.Message.Author.Username, Context.Channel.Name);
             await ReplyAsync("https://valhallapp.herokuapp.com/");
         }
 
@@ -48,7 +48,7 @@ namespace Valhallapp.Modules
         public async Task RandomCommand(string name, ulong randomModifier, int isRigged)
         {
             Console.WriteLine("No param");
-            DisplayCommandLine(name, Context);
+            DisplayCommandLine(name, Context.Message.Author.Username, Context.Channel.Name);
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) + randomModifier % 10000000));
             if (isRigged != -1)
                 await ReplyAsync(embed:
@@ -60,7 +60,7 @@ namespace Valhallapp.Modules
 
         public async Task RandomCommand([Remainder] string param, string name, ulong randomModifier, int isRigged)
         {
-            DisplayCommandLine($"{name} with params", Context);
+            DisplayCommandLine($"{name} with params", Context.Message.Author.Username, Context.Channel.Name);
             Random rnd;
             string userID = param;
             // userping function

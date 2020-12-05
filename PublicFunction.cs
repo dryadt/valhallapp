@@ -26,9 +26,9 @@ namespace valhallappweb
 
         /*COMMANDS FOR COMMANDS HANDLERS*/
 
-        public static void DisplayCommandLine(string CommandName, SocketCommandContext Context)
+        public static void DisplayCommandLine(string commandName, string username, string channel)
         {
-            Console.WriteLine($"{CommandName} command executed by user: {Context.User.Username} on channel: {Context.Channel.Name}");
+            Console.WriteLine($"{commandName} command executed by user: {username} on channel: {channel}");
         }
         public static bool IsDigitsOnly(string str)
         {

@@ -10,11 +10,7 @@ namespace Valhallapp.Modules
         private readonly SimpleCommands command = new SimpleCommands();
 
         [Command("furry")]
-        public async Task FurryCommand()
-        {
-            Console.WriteLine(command == null);
-            await command.RandomCommand("furry", 1, 100);
-        }
+        public async Task FurryCommand()=>await command.RandomCommand("furry", 1, 100);
 
         [Command("furry")]
         public async Task FurryCommand([Remainder] string param) => await command.RandomCommand(param, "furry", 1, 100);

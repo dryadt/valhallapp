@@ -12,7 +12,7 @@ namespace Valhallapp.Modules
         [Command("help")]
         public async Task HelpCommand()
         {
-            DisplayCommandLine("help", Context);
+            DisplayCommandLine("help", Context.Message.Author.Username, Context.Channel.Name);
             var embed = new EmbedBuilder();
             string prefix = "&";
             embed.WithTitle("Commands list:")
@@ -35,7 +35,7 @@ namespace Valhallapp.Modules
         [Command("help meme")]
         public async Task HelpMeme()
         {
-            DisplayCommandLine("Help meme", Context);
+            DisplayCommandLine("Help meme", Context.Message.Author.Username, Context.Channel.Name);
             var embed = new EmbedBuilder();
             string prefix = "&";
             embed.WithTitle("Meme commands list:")
