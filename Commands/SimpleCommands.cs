@@ -48,13 +48,12 @@ namespace Valhallapp.Modules
         public async Task RandomCommand(SocketCommandContext context, string name, ulong randomModifier, int isRigged)
         {
             DisplayCommandLine(name, context.Message.Author.Username, context.Channel.Name);
-            Console.WriteLine(context.User.Id);
             Random rnd = new Random((int)(Convert.ToUInt64(context.User.Id) + randomModifier % 10000000));
             if (isRigged != -1)
-                await ReplyAsync(embed:
+                await context.Channel.SendMessageAsync(embed:
                     PostEmbedPercent(context.User.Username, $"<@{context.User.Id}>", context.User.GetAvatarUrl(), rnd.Next(101), name));
             else
-                await ReplyAsync(embed:
+                await context.Channel.SendMessageAsync(embed:
                     PostEmbedPercent(context.User.Username, $"<@{context.User.Id}>", context.User.GetAvatarUrl(), isRigged, name));
         }
 
@@ -71,10 +70,10 @@ namespace Valhallapp.Modules
                 if (userID[0] == '!') userID = userID.Substring(1, userID.Length - 1);
                 rnd = new Random((int)(Convert.ToUInt64(userID) + randomModifier % 10000000));
                 if (isRigged != -1)
-                    await ReplyAsync(embed:
+                    await context.Channel.SendMessageAsync(embed:
                         PostEmbedPercent(context.User.Username, $"<@{userID}>", context.User.GetAvatarUrl(), rnd.Next(101), name));
                 else
-                    await ReplyAsync(embed:
+                    await context.Channel.SendMessageAsync(embed:
                         PostEmbedPercent(context.User.Username, $"<@{userID}>", context.User.GetAvatarUrl(), isRigged, name));
 
             }
@@ -85,10 +84,10 @@ namespace Valhallapp.Modules
                 if (Convert.ToUInt64(userID) == 156997866605248512) await ReplyAsync(embed:
                     PostEmbedPercent(context.User.Username, $"<@{userID}>", context.User.GetAvatarUrl(), 101, name));
                 if (isRigged != -1)
-                    await ReplyAsync(embed:
+                    await context.Channel.SendMessageAsync(embed:
                         PostEmbedPercent(context.User.Username, $"<@{userID}>", context.User.GetAvatarUrl(), rnd.Next(101), name));
                 else
-                    await ReplyAsync(embed:
+                    await context.Channel.SendMessageAsync(embed:
                         PostEmbedPercent(context.User.Username, $"<@{userID}>", context.User.GetAvatarUrl(), isRigged, name));
 
             }
@@ -98,10 +97,10 @@ namespace Valhallapp.Modules
             {
                 rnd = new Random();
                 if (isRigged != -1)
-                    await ReplyAsync(embed:
+                    await context.Channel.SendMessageAsync(embed:
                         PostEmbedPercent(context.User.Username, $"{param}", context.User.GetAvatarUrl(), rnd.Next(101), name));
                 else
-                    await ReplyAsync(embed:
+                    await context.Channel.SendMessageAsync(embed:
                         PostEmbedPercent(context.User.Username, $"{param}", context.User.GetAvatarUrl(), isRigged, name));
 
             }
