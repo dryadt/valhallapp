@@ -48,6 +48,7 @@ namespace Valhallapp.Modules
         public async Task RandomCommand(SocketCommandContext context, string name, ulong randomModifier, int isRigged)
         {
             DisplayCommandLine(name, context.Message.Author.Username, context.Channel.Name);
+            Console.WriteLine(context.User.Id);
             Random rnd = new Random((int)(Convert.ToUInt64(context.User.Id) + randomModifier % 10000000));
             if (isRigged != -1)
                 await ReplyAsync(embed:
