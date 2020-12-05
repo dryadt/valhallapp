@@ -12,9 +12,16 @@ namespace valhallappweb
     public static class PublicFunction
     {
         public static readonly ulong botId = 779648566057762826;
-        public static readonly ulong artChannelId = 482894390570909706;
-        public static readonly ulong artTalkChannelId = 561322620931538944;
+        public static readonly ulong galleryId = 482894390570909706;
+        public static readonly ulong galleryTalkId = 561322620931538944;
         public static readonly ulong serverId = 482631363233710106;
+
+        /* GENERAL COMMANDS */
+        public static void MessageChannel(DiscordSocketClient client, string messageContent, ulong channelId)
+        {
+            var channel = client.GetChannel(channelId) as IMessageChannel;
+            channel.SendMessageAsync(messageContent);
+        }
 
 
         /*COMMANDS FOR COMMANDS HANDLERS*/
@@ -60,7 +67,7 @@ namespace valhallappweb
             Console.WriteLine($"url to post {url}");
             var embed = new EmbedBuilder();
             embed.WithAuthor(username, userURL, $"{url}")
-                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{artChannelId}/{messageId})\n{description}")
+                .WithDescription($"[<@{userId}> posted:](https://discord.com/channels/{serverId}/{galleryId}/{messageId})\n{description}")
                 .WithColor(Color.Purple)
                 .WithImageUrl(url)
                 .Build();

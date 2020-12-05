@@ -14,19 +14,22 @@ namespace valhallappweb
         public ReactionHandler(DiscordSocketClient _client)
         {
             this._client = _client;
+            galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
+            galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
         }
 
-        readonly DiscordSocketClient _client;
-
+        private readonly DiscordSocketClient _client;
+        private readonly ITextChannel galleryTalkChannel;
+        private readonly ITextChannel galleryChannel;
 
         /*----------------------------*/
-        /*  MESSAGE REACTION HANDLER   */
+        /*  MESSAGE REACTION HANDLER  */
         /*----------------------------*/
 
         public async Task HandleReactionClearAsync(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel)
         {
-            if (artChannelId == channel.Id) UpdateBotMessage(message.Id);
-            if (artTalkChannelId == channel.Id) AddreactionToArt(message.Id);
+            if (galleryId == channel.Id) UpdateBotMessage(message.Id);
+            if (galleryTalkId == channel.Id) AddreactionToGallery(message.Id);
             await Task.Delay(0); // remove asap, it's just to remove a warning that makes me anxious
         }
 
@@ -38,16 +41,14 @@ namespace valhallappweb
         }
 
         // chat -> gallery reaction transfert
-        private async void AddreactionToArt(ulong messageId)
+        private async void AddreactionToGallery(ulong messageId)
         {
-            ITextChannel artChannel = (ITextChannel)_client.GetChannel(artChannelId);
-            ITextChannel artTalkChannel = (ITextChannel)_client.GetChannel(artTalkChannelId);
             // verify neither of the channel aren't null
-            if (artChannel is null || artTalkChannel is null) return;
-            if (!(artChannel is ITextChannel) || !(artTalkChannel is ITextChannel)) return;
+            if (galleryChannel is null || galleryTalkChannel is null) return;
+            if (!(galleryChannel is ITextChannel) || !(galleryTalkChannel is ITextChannel)) return;
             // get original message
             IMessage message;
-            message = await artTalkChannel.GetMessageAsync(messageId);
+            message = await galleryTalkChannel.GetMessageAsync(messageId);
             // get message ID
             var reactionList = message.Reactions;
             if (message.Embeds.Count == 0) return;
@@ -58,7 +59,7 @@ namespace valhallappweb
             oldDescription = oldDescription.Remove(0, GetUntilOrEmpty(oldDescription, '/').Length + 1);
             ulong newMessageId = Convert.ToUInt64(oldDescription);
             // get original message
-            IMessage originalMessage = await artChannel.GetMessageAsync(newMessageId);
+            IMessage originalMessage = await galleryChannel.GetMessageAsync(newMessageId);
             //  edit the message
             IUserMessage userMessageToEdit = originalMessage as IUserMessage;
             // react with the emote if it's not on the message already
@@ -85,18 +86,18 @@ namespace valhallappweb
         private async void UpdateBotMessage(ulong messageId)
         {
             // get message by id and channel id
-            ITextChannel artChannel = (ITextChannel)_client.GetChannel(artChannelId);
-            ITextChannel artTalkChannel = (ITextChannel)_client.GetChannel(artTalkChannelId);
-            if (artTalkChannel is null) return;
-            if (!(artTalkChannel is ITextChannel)) return;
+            ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
+            ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
+            if (galleryTalkChannel is null) return;
+            if (!(galleryTalkChannel is ITextChannel)) return;
             IMessage message;
-            message = await artChannel.GetMessageAsync(messageId);
+            message = await galleryChannel.GetMessageAsync(messageId);
             // get emote list
             if (message == null) return;
             var emoteList = message.Reactions;
-            var messageLinkUrl = $"https://discord.com/channels/{serverId}/{artChannelId}/{messageId}";
+            var messageLinkUrl = $"https://discord.com/channels/{serverId}/{galleryId}/{messageId}";
             // get 100 message around the timeperiod of the original message from the other channel
-            var messageList = await artTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
+            var messageList = await galleryTalkChannel.GetMessagesAsync(messageId, Direction.After, 10).LastOrDefaultAsync();
             IMessage messageToEdit = null;
             foreach (var item in messageList.Reverse())
             {
