@@ -48,8 +48,8 @@ namespace Valhallapp.Modules
         public async Task RandomCommand(string name, ulong randomModifier, int isRigged)
         {
             Console.WriteLine("No param");
-            DisplayCommandLine(name, Context.Message.Author.Username, Context.Channel.Name);
             Random rnd = new Random((int)(Convert.ToUInt64(Context.User.Id) + randomModifier % 10000000));
+            Console.WriteLine("No param2");
             if (isRigged != -1)
                 await ReplyAsync(embed:
                     PostEmbedPercent(Context.User.Username, $"<@{Context.User.Id}>", Context.User.GetAvatarUrl(), rnd.Next(101), name));
@@ -60,9 +60,10 @@ namespace Valhallapp.Modules
 
         public async Task RandomCommand([Remainder] string param, string name, ulong randomModifier, int isRigged)
         {
-            DisplayCommandLine($"{name} with params", Context.Message.Author.Username, Context.Channel.Name);
+            Console.WriteLine($"params");
             Random rnd;
             string userID = param;
+            Console.WriteLine($"{name} with params");
             // userping function
             if (param.Contains("<@"))
             {
