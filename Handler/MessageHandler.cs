@@ -44,20 +44,22 @@ namespace valhallappweb
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
             }
+
+            //handle messages that are in the gallery channel
         }
         private void CheckImageArtChannel(SocketUserMessage message)
         {
+            ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             // if the message isn't in the art channel, return
-            if (message.Channel.Id != artChannelId) return;
+            if (message.Channel.Id != galleryId) return;
             string[] extensionList = { ".mp4", ".mp3", ".png", ".jpeg", ".gif", ".jpg" };
             List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
             // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             // post every attachment as an embed
-            var chnl = _client.GetChannel(artTalkChannelId) as IMessageChannel;
             foreach (var attachment in message.Attachments)
-                chnl.SendMessageAsync(embed:
+                galleryTalkChannel.SendMessageAsync(embed:
                     PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), attachment.Url, message.Id));
             // post every attachment as an embed
             foreach (var url in urlList)
@@ -66,18 +68,10 @@ namespace valhallappweb
                 foreach (var extensionItem in extensionList)
                     if (isEmbedable = url.EndsWith(extensionItem)) break;
                 if (isEmbedable)
-                    chnl.SendMessageAsync(embed:
+                    galleryTalkChannel.SendMessageAsync(embed:
                         PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
-                else MessageChannel($"{message.Author.Username} posted: {url}", artTalkChannelId);
+                else MessageChannel(_client,$"{message.Author.Username} posted: {url}", galleryTalkId);
             };
-        }
-
-        /*SIMPLE REUSABLE COMMANDS */
-        private void MessageChannel(string messageContent, ulong channelId)
-        {
-            Console.WriteLine($"url of image: {messageContent}");
-            var chnl = _client.GetChannel(channelId) as IMessageChannel;
-            chnl.SendMessageAsync(messageContent);
         }
     }
 }

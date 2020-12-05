@@ -14,13 +14,9 @@ namespace valhallappweb
         public ReactionHandler(DiscordSocketClient _client)
         {
             this._client = _client;
-            galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
-            galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
         }
 
         private readonly DiscordSocketClient _client;
-        private readonly ITextChannel galleryTalkChannel;
-        private readonly ITextChannel galleryChannel;
 
         /*----------------------------*/
         /*  MESSAGE REACTION HANDLER  */
@@ -43,6 +39,8 @@ namespace valhallappweb
         // chat -> gallery reaction transfert
         private async void AddreactionToGallery(ulong messageId)
         {
+            ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
+            ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             // verify neither of the channel aren't null
             if (galleryChannel is null || galleryTalkChannel is null) return;
             if (!(galleryChannel is ITextChannel) || !(galleryTalkChannel is ITextChannel)) return;
