@@ -19,7 +19,7 @@ namespace valhallappweb
             this._client = _client;
         }
 
-        internal async Task HandleDeleteAsync(Cacheable<IMessage, ulong> message, ISocketMessageChannel channel)
+        public async Task HandleDeleteAsync(Cacheable<IMessage, ulong> message, ISocketMessageChannel channel)
         {
             if (channel.Id == galleryId) await HandleArtMessageDeletion(message);
         }
@@ -30,7 +30,6 @@ namespace valhallappweb
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (!(galleryTalkChannel is ITextChannel)) return;
             IMessage message = await galleryChannel.GetMessageAsync(messageId.Id);
-            ulong messageLinkUrl = getMessageIDFromEmbed(message.Embeds.First());
             var messageList = await galleryTalkChannel.GetMessagesAsync(message.Id, Direction.After, 10).LastOrDefaultAsync();
             IMessage messageToEdit = null;
             foreach (var item in messageList.Reverse())
@@ -40,7 +39,7 @@ namespace valhallappweb
                 // if no embed return
                 if (item.Embeds.Count == 0) continue;
                 //test if the embed contains 
-                if (item.Embeds.First().Description.Contains(messageLinkUrl.ToString()))
+                if (item.Embeds.First().Description.Contains(messageId.Id.ToString()))
                 {
                     messageToEdit = item;
                     break;

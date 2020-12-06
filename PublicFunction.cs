@@ -23,14 +23,13 @@ namespace valhallappweb
             channel.SendMessageAsync(messageContent);
         }
 
-        public static ulong getMessageIDFromEmbed(IEmbed embed)
+        public static ulong GetMessageIDFromEmbed(IEmbed embed)
         {
             string messageID = GetAllUrlFromString(embed.Description).First();
             messageID = messageID.Remove(0, 29);
             messageID = messageID.Remove(0, GetUntilOrEmpty(messageID, '/').Length + 1);
             messageID = messageID.Remove(0, GetUntilOrEmpty(messageID, '/').Length + 1);
             return Convert.ToUInt64(messageID);
-
         }
 
 
