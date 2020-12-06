@@ -27,7 +27,7 @@ namespace valhallappweb
         private async Task HandleGalleryEdit(SocketMessage socketMessage, ISocketMessageChannel galleryChannel)
         {
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
-            Console.WriteLine($"{socketMessage.Content}");
+            Console.WriteLine($"Content: {socketMessage.Content}");
             if (!(galleryTalkChannel is ITextChannel)|| !(galleryChannel is ITextChannel)) return;
             var messageList = await galleryTalkChannel.GetMessagesAsync(socketMessage.Id, Direction.After, 10).LastOrDefaultAsync();
             IMessage messageToEdit = null;

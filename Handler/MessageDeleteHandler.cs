@@ -27,7 +27,7 @@ namespace valhallappweb
 
         private async Task HandleArtMessageDeletion(Cacheable<IMessage, ulong> messageId)
         {
-            Console.WriteLine($"{messageId}");
+            Console.WriteLine($"Content: {messageId}");
             ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (!(galleryTalkChannel is ITextChannel)) return;
