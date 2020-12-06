@@ -88,8 +88,8 @@ namespace valhallappweb
             _client.ReactionRemoved += reactionHandler.HandleReactionAsync;
             _client.ReactionsCleared += reactionHandler.HandleReactionClearAsync;
             _client.MessageReceived += messageHandler.HandleCommandAsync;
-            //_client.MessageDeleted += deleteHandler.HandleDeleteAsync;
-            //_client.MessageUpdated += editedHandler.HandleEditAsync;
+            _client.MessageDeleted += deleteHandler.HandleDeleteAsync;
+            _client.MessageUpdated += editedHandler.HandleEditAsync;
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
     }
