@@ -27,7 +27,7 @@ namespace valhallappweb
         {
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (!(galleryTalkChannel is ITextChannel)|| !(galleryChannel is ITextChannel)) return;
-            var messageList = await galleryTalkChannel.GetMessagesAsync(socketMessage.Id, Direction.After, 10).LastOrDefaultAsync();
+            var messageList = await galleryTalkChannel.GetMessagesAsync(message.Id, Direction.After, 10).LastOrDefaultAsync();
             // get all media urls of the message
             var UrlList = GetAllUrlFromString(socketMessage.Content);
             foreach (var attachment in socketMessage.Attachments) UrlList.Add(attachment.Url);
@@ -40,6 +40,7 @@ namespace valhallappweb
                     embed: PostEmbedText(socketMessage.Author.Username, socketMessage.Author.GetAvatarUrl(), "Deleted message content:", socketMessage.Content));
                 return;
             }
+            IMessage originalMessage = await galleryChannel.GetMessageAsync(socketMessage.Id);
             foreach (var item in messageList.Reverse())
             {
                 // only tests message with the bot
@@ -50,18 +51,15 @@ namespace valhallappweb
                 if (item.Embeds.First().Description.Contains(socketMessage.Id.ToString()))
                 {
                     IUserMessage userMessageToEdit = item as IUserMessage;
-                    await userMessageToEdit.ModifyAsync(editMessage => editMessage.Embed = EditEmbed(socketMessage, userMessageToEdit));
+                    await userMessageToEdit.ModifyAsync(editMessage => editMessage.Embed = EditEmbed(originalMessage, userMessageToEdit));
                 }
             }
         }
 
-        private Embed EditEmbed(SocketMessage socketMessage, IUserMessage userMessageToEdit)
+        private Embed EditEmbed(IMessage originalMessage, IUserMessage userMessageToEdit)
         {
-
-            ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
-            string cleanDescription = Regex.Replace(socketMessage.Content, @"http[^\s]+", "");
-            IMessage originalMessage = (IMessage)galleryChannel.GetMessageAsync(socketMessage.Id);
-            Console.WriteLine($"Number of reaction {originalMessage.Reactions.Count} {originalMessage.Content}");
+            string cleanDescription = Regex.Replace(originalMessage.Content, @"http[^\s]+", "");
+            Console.WriteLine($"Number of reaction {originalMessage.Reactions.Count}");
             foreach (var emoteItem in originalMessage.Reactions)
             {
                 // For basic Emojis
@@ -80,12 +78,12 @@ namespace valhallappweb
                 }
             }
             return PostEmbedImage(
-                socketMessage.Author.Username,
-                socketMessage.Author.Id,
+                originalMessage.Author.Username,
+                originalMessage.Author.Id,
                 cleanDescription,
-                socketMessage.Author.GetAvatarUrl(),
+                originalMessage.Author.GetAvatarUrl(),
                 userMessageToEdit.Embeds.First().Image.Value.Url,
-                socketMessage.Id);
+                originalMessage.Id);
         }
     }
 }
