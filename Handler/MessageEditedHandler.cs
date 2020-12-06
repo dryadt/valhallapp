@@ -57,10 +57,29 @@ namespace valhallappweb
 
         private Embed EditEmbed(SocketMessage socketMessage, IUserMessage userMessageToEdit)
         {
+
+            string cleanDescription = Regex.Replace(socketMessage.Content, @"http[^\s]+", "");
+            foreach (var emoteItem in socketMessage.Reactions)
+            {
+                // For basic Emojis
+                if (emoteItem.Key is Emoji)
+                {
+                    cleanDescription += $"\n{emoteItem.Key}x{emoteItem.Value.ReactionCount} ";
+                }
+                //for Custom Emojis.
+                else
+                {
+                    Emote customeEmoji = (Emote)emoteItem.Key;
+                    if (customeEmoji.Animated)
+                        cleanDescription += $"\n<a:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
+                    else
+                        cleanDescription += $"\n<:{emoteItem.Key.Name}:{customeEmoji.Id}> x {emoteItem.Value.ReactionCount}";
+                }
+            }
             return PostEmbedImage(
                 socketMessage.Author.Username,
                 socketMessage.Author.Id,
-                socketMessage.Content,
+                cleanDescription,
                 socketMessage.Author.GetAvatarUrl(),
                 userMessageToEdit.Embeds.First().Image.Value.Url,
                 socketMessage.Id);
