@@ -67,7 +67,7 @@ namespace valhallappweb
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             // if the message isn't in the art channel, return
             if (message.Channel.Id != galleryId) return;
-            string[] extensionList = { ".mp4", ".mp3", ".png", ".jpeg", ".gif", ".jpg" };
+            string[] extensionList = { ".png", ".jpeg", ".gif", ".jpg" };
             List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
             // if the message has no attachments and no url
