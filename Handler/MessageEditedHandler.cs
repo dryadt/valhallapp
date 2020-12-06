@@ -59,6 +59,7 @@ namespace valhallappweb
         {
 
             string cleanDescription = Regex.Replace(socketMessage.Content, @"http[^\s]+", "");
+            Console.WriteLine($"Number of reaction {socketMessage.Reactions.Count}");
             foreach (var emoteItem in socketMessage.Reactions)
             {
                 // For basic Emojis
