@@ -21,7 +21,7 @@ namespace valhallappweb
         public async Task HandleEditAsync(Cacheable<IMessage, ulong> message, SocketMessage socketMessage, ISocketMessageChannel channel)
         {
             Console.WriteLine($"edited message in channel {channel.Id} with message id {message.Id}");
-            if (message.Id == galleryId) await HandleGalleryEdit(socketMessage,channel);
+            if (channel.Id == galleryId) await HandleGalleryEdit(socketMessage,channel);
         }
 
         private async Task HandleGalleryEdit(SocketMessage socketMessage, ISocketMessageChannel galleryChannel)
