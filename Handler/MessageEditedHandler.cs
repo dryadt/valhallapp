@@ -20,12 +20,14 @@ namespace valhallappweb
 
         public async Task HandleEditAsync(Cacheable<IMessage, ulong> message, SocketMessage socketMessage, ISocketMessageChannel channel)
         {
+            Console.WriteLine($"edited message in channel {channel.Id} with message id {message.Id}");
             if (message.Id == galleryId) await HandleGalleryEdit(socketMessage,channel);
         }
 
         private async Task HandleGalleryEdit(SocketMessage socketMessage, ISocketMessageChannel galleryChannel)
         {
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
+            Console.WriteLine($"{socketMessage.Content}");
             if (!(galleryTalkChannel is ITextChannel)|| !(galleryChannel is ITextChannel)) return;
             var messageList = await galleryTalkChannel.GetMessagesAsync(socketMessage.Id, Direction.After, 10).LastOrDefaultAsync();
             IMessage messageToEdit = null;

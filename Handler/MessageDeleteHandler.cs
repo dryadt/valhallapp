@@ -21,11 +21,13 @@ namespace valhallappweb
 
         public async Task HandleDeleteAsync(Cacheable<IMessage, ulong> message, ISocketMessageChannel channel)
         {
+            Console.WriteLine($"delete message in channel {channel.Id} with message id {message.Id}");
             if (channel.Id == galleryId) await HandleArtMessageDeletion(message);
         }
 
         private async Task HandleArtMessageDeletion(Cacheable<IMessage, ulong> messageId)
         {
+            Console.WriteLine($"{messageId}");
             ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (!(galleryTalkChannel is ITextChannel)) return;
