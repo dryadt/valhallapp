@@ -20,10 +20,10 @@ namespace valhallappweb
 
         public async Task HandleEditAsync(Cacheable<IMessage, ulong> message, SocketMessage socketMessage, ISocketMessageChannel channel)
         {
-            if (channel.Id == galleryId) await HandleGalleryEdit(socketMessage,channel);
+            if (channel.Id == galleryId) await HandleGalleryEdit(socketMessage, channel, message);
         }
 
-        private async Task HandleGalleryEdit(SocketMessage socketMessage, ISocketMessageChannel galleryChannel)
+        private async Task HandleGalleryEdit(SocketMessage socketMessage, ISocketMessageChannel galleryChannel, Cacheable<IMessage, ulong> message)
         {
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (!(galleryTalkChannel is ITextChannel)|| !(galleryChannel is ITextChannel)) return;
@@ -58,9 +58,11 @@ namespace valhallappweb
         private Embed EditEmbed(SocketMessage socketMessage, IUserMessage userMessageToEdit)
         {
 
+            ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
             string cleanDescription = Regex.Replace(socketMessage.Content, @"http[^\s]+", "");
-            Console.WriteLine($"Number of reaction {socketMessage.Reactions.Count}");
-            foreach (var emoteItem in socketMessage.Reactions)
+            IMessage originalMessage = (IMessage)galleryChannel.GetMessageAsync(socketMessage.Id);
+            Console.WriteLine($"Number of reaction {originalMessage.Reactions.Count} {originalMessage.Content}");
+            foreach (var emoteItem in originalMessage.Reactions)
             {
                 // For basic Emojis
                 if (emoteItem.Key is Emoji)
