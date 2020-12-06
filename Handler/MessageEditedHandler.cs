@@ -28,7 +28,18 @@ namespace valhallappweb
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (!(galleryTalkChannel is ITextChannel)|| !(galleryChannel is ITextChannel)) return;
             var messageList = await galleryTalkChannel.GetMessagesAsync(socketMessage.Id, Direction.After, 10).LastOrDefaultAsync();
-            IMessage messageToEdit = null;
+            // get all media urls of the message
+            var UrlList = GetAllUrlFromString(socketMessage.Content);
+            foreach (var attachment in socketMessage.Attachments) UrlList.Add(attachment.Url);
+            // Delete the message if it's null
+            if (UrlList.Count==0)
+            {
+                await socketMessage.DeleteAsync();
+                await galleryTalkChannel.SendMessageAsync(
+                    $"{socketMessage.Author.Username} do not edit messages so it doesn't return any media!",
+                    embed: PostEmbedText(socketMessage.Author.Username, socketMessage.Author.GetAvatarUrl(), "Deleted message content:", socketMessage.Content));
+                return;
+            }
             foreach (var item in messageList.Reverse())
             {
                 // only tests message with the bot
@@ -38,20 +49,21 @@ namespace valhallappweb
                 //test if the embed contains 
                 if (item.Embeds.First().Description.Contains(socketMessage.Id.ToString()))
                 {
-                    messageToEdit = item;
-                    break;
+                    IUserMessage userMessageToEdit = item as IUserMessage;
+                    await userMessageToEdit.ModifyAsync(editMessage => editMessage.Embed = EditEmbed(socketMessage, userMessageToEdit));
                 }
             }
-            //  if no message fits returns
-            if (messageToEdit == null) return;
-            //  edit the message
-            IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
-            await userMessageToEdit.ModifyAsync(editMessage=>editMessage.Embed=EditEmbed(socketMessage, userMessageToEdit));
         }
 
         private Embed EditEmbed(SocketMessage socketMessage, IUserMessage userMessageToEdit)
         {
-            return PostEmbedImage(socketMessage.Author.Username, socketMessage.Author.Id, socketMessage.Content,socketMessage.Author.GetAvatarUrl(), userMessageToEdit.Embeds.First().Image.Value.Url,socketMessage.Id);
+            return PostEmbedImage(
+                socketMessage.Author.Username,
+                socketMessage.Author.Id,
+                socketMessage.Content,
+                socketMessage.Author.GetAvatarUrl(),
+                userMessageToEdit.Embeds.First().Image.Value.Url,
+                socketMessage.Id);
         }
     }
 }

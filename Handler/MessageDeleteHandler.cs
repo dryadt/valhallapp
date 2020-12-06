@@ -29,7 +29,6 @@ namespace valhallappweb
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             if (!(galleryTalkChannel is ITextChannel)) return;
             var messageList = await galleryTalkChannel.GetMessagesAsync(messageId.Id, Direction.After, 10).LastOrDefaultAsync();
-            IMessage messageToEdit = null;
             foreach (var item in messageList.Reverse())
             {
                 // only tests message with the bot
@@ -39,15 +38,11 @@ namespace valhallappweb
                 //test if the embed contains 
                 if (item.Embeds.First().Description.Contains(messageId.Id.ToString()))
                 {
-                    messageToEdit = item;
+                    IUserMessage userMessageToDelete = item as IUserMessage;
+                    await userMessageToDelete.DeleteAsync();
                     break;
                 }
             }
-            //  if no message fits returns
-            if (messageToEdit == null) return;
-            //  edit the message
-            IUserMessage userMessageToEdit = messageToEdit as IUserMessage;
-            await userMessageToEdit.DeleteAsync();
         }
     }
 }

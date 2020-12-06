@@ -56,7 +56,7 @@ namespace valhallappweb
             if ((message.Attachments.Count > 0) || (GetAllUrlFromString(message.Content).Count > 0)) return;
             Embed embedMessage = PostEmbedText(message.Author.Username, message.Author.GetAvatarUrl(), "Deleted message content:", message.Content);
             galleryTalkChannel.SendMessageAsync(
-            $"<@{message.Author.Id}> No posting in the gallery <#{message.Channel.Id}>"
+            $"{message.Author.Username} No posting in the gallery <#{message.Channel.Id}>"
             ,embed: embedMessage
             );
             galleryChannel.DeleteMessageAsync(message);
