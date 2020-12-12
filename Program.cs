@@ -90,7 +90,8 @@ namespace valhallappweb
             _client.MessageReceived += messageHandler.HandleCommandAsync;
             _client.MessageDeleted += deleteHandler.HandleDeleteAsync;
             _client.MessageUpdated += editedHandler.HandleEditAsync;
-            await _client.SetGameAsync("Valhalla", "https://cdn.discordapp.com/icons/482631363233710106/30ba4ea763063d386248ac9493838776.jpg",ActivityType.CustomStatus);
+            await _client.SetGameAsync("");
+            await _client.SetGameAsync("Valhalla", "https://cdn.discordapp.com/icons/482631363233710106/30ba4ea763063d386248ac9493838776.jpg", ActivityType.CustomStatus);
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
     }
