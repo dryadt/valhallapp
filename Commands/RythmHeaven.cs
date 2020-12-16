@@ -8,6 +8,12 @@ namespace Valhallapp.Modules
 {
     public class RythmHeaven : ModuleBase<SocketCommandContext>
     {
+        [Command("fine")]
+        public async Task Fine()
+        {
+            DisplayCommandLine("fine", Context.Message.Author.Username, Context.Channel.Name);
+            await ReplyAsync("I guess you're my little PogChamp.\nCome here~");
+        }
         [Command("Oh! You go big guy!")]
         public async Task BigGuy()
         {
