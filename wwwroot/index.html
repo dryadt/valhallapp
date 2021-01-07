@@ -80,6 +80,9 @@
             setInterval(generateImage, 1000);
         }
 
+        var explIndex;
+        const maxExplIndex = imageUrl.length;
+
         function generateImage() {
             if (isPageLoaded == false) return
             var x = document.createElement("IMG");
@@ -97,12 +100,12 @@
             //right click
             x.addEventListener('contextmenu', function (ev) {
                 console.log(ev);
-                ev.target.setAttribute("src", `asset/expl${explIndex}.gif`); //use explosion gif
+                ev.target.setAttribute("src", `expl${explIndex}.gif`); //use explosion gif
                 if (explIndex == maxExplIndex) //check if it is the last one
                     explIndex = 0; //if yes, set back to 0
                 else
                     explIndex++; //else increment
-                //requires expl1.gif, expl2.gif, expl3.gif, expl4.gif, expl5.gif and expl6.gif in same folder as html as is, can also use an array of explosion gif urls 
+                //requires expl1.gif, expl2.gif, expl3.gif, expl4.gif, expl5.gif and expl6.gif in same folder as html as is, can also use an array of explosion gif urls
                 //also requires a variable explIndex to be declared with the other vars (same level as art array) and a const maxExplIndex that is the same as the length
                 //if using an array, could be changed for arr.length instead
                 setTimeout(() => x.remove(), 1000); //changed ev.remove() to () => x.remove()
