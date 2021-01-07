@@ -80,7 +80,7 @@
             setInterval(generateImage, 1000);
         }
 
-        var explIndex;
+        var explIndex = 0;
         const maxExplIndex = imageUrl.length;
 
         function generateImage() {
@@ -100,7 +100,7 @@
             //right click
             x.addEventListener('contextmenu', function (ev) {
                 console.log(ev);
-                ev.target.setAttribute("src", `expl${explIndex}.gif`); //use explosion gif
+                ev.target.setAttribute("src", `asset/expl${explIndex}.gif`); //use explosion gif
                 if (explIndex == maxExplIndex) //check if it is the last one
                     explIndex = 0; //if yes, set back to 0
                 else
