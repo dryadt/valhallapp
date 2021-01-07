@@ -97,12 +97,19 @@
             //right click
             x.addEventListener('contextmenu', function (ev) {
                 console.log(ev);
-                ev.target.setAttribute("src", "https://i.gyazo.com/744f273507c54b2a0a8b0518113c4479.gif")
-                setTimeout(ev.target.setAttribute("src", ""), 1000)
+                ev.target.setAttribute("src", `asset/expl${explIndex}.gif`); //use explosion gif
+                if (explIndex == maxExplIndex) //check if it is the last one
+                    explIndex = 0; //if yes, set back to 0
+                else
+                    explIndex++; //else increment
+                //requires expl1.gif, expl2.gif, expl3.gif, expl4.gif, expl5.gif and expl6.gif in same folder as html as is, can also use an array of explosion gif urls 
+                //also requires a variable explIndex to be declared with the other vars (same level as art array) and a const maxExplIndex that is the same as the length
+                //if using an array, could be changed for arr.length instead
+                setTimeout(() => x.remove(), 1000); //changed ev.remove() to () => x.remove()
                 return false;
             }, { once: true });
             document.body.appendChild(x);
-            setTimeout(x.remove, 20000);
+            setTimeout(() => x.remove(), 20000); //same thing here as above
         }
 
         // removes rightclick
