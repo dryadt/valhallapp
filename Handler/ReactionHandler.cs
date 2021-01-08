@@ -64,7 +64,15 @@ namespace valhallappweb
             foreach (var reaction in reactionList)
             {
                 Console.WriteLine($"Emote to add: {reaction.Key}");
-                await userMessageToEdit.AddReactionAsync(reaction.Key);
+                try
+                {
+                    await userMessageToEdit.AddReactionAsync(reaction.Key);
+                }
+                catch (Exception error)
+                {
+                    Console.WriteLine(error.Source);
+                    throw;
+                }
             }
             // remove the react if it's on the message and not in the reaction list
             foreach (var reaction in userMessageToEdit.Reactions)
