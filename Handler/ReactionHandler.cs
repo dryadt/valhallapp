@@ -71,7 +71,6 @@ namespace valhallappweb
                 catch (Exception error)
                 {
                     Console.WriteLine(error.Source);
-                    throw;
                 }
             }
             // remove the react if it's on the message and not in the reaction list
