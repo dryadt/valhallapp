@@ -36,7 +36,7 @@ namespace valhallappweb
             // if the message is from bot then ignore
             if (message.Author.IsBot) return;
             // does something with message
-            CheckImageArtChannel(message);
+            await CheckImageArtChannelAsync(message);
             // command prompt
             int argPos = 0;
             if (message.HasStringPrefix("&", ref argPos))
@@ -62,7 +62,7 @@ namespace valhallappweb
             galleryChannel.DeleteMessageAsync(message);
         }
 
-        private void CheckImageArtChannel(SocketUserMessage message)
+        private async Task CheckImageArtChannelAsync(SocketUserMessage message)
         {
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
             // if the message isn't in the art channel, return
@@ -74,7 +74,7 @@ namespace valhallappweb
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
             // post every attachment as an embed
             foreach (var attachment in message.Attachments)
-                galleryTalkChannel.SendMessageAsync(embed:
+                await galleryTalkChannel.SendMessageAsync(embed:
                     PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), attachment.Url, message.Id));
             // post every attachment as an embed
             foreach (var url in urlList)
@@ -83,9 +83,9 @@ namespace valhallappweb
                 foreach (var extensionItem in extensionList)
                     if (isEmbedable = url.EndsWith(extensionItem)) break;
                 if (isEmbedable)
-                    galleryTalkChannel.SendMessageAsync(embed:
+                    await galleryTalkChannel.SendMessageAsync(embed:
                         PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
-                else MessageChannel(_client,$"{message.Author.Username} posted: {url}", galleryTalkId);
+                else await MessageChannel(_client, $"{message.Author.Username} posted: {url}", galleryTalkId);
             };
         }
     }

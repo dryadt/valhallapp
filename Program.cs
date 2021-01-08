@@ -14,6 +14,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using valhallappweb.Handler;
 
 namespace valhallappweb
 {
@@ -58,7 +59,7 @@ namespace valhallappweb
             _client.Log += Client_Log;
 
             // Command init
-            await RegisterCommandsAsync();
+            RegisterCommandsAsync();
 
             // Bot Authentification init
             var token = Environment.GetEnvironmentVariable("TOKEN");
@@ -66,6 +67,10 @@ namespace valhallappweb
 
             // Start Discord bot
             await _client.StartAsync();
+
+            await _client.SetStatusAsync(UserStatus.DoNotDisturb);
+            await _client.SetGameAsync("Valhalla 3.0", "https://cdn.discordapp.com/emojis/750294190067286047.png?v=1", ActivityType.CustomStatus);
+            await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
             await Task.Delay(-1);
         }
@@ -78,21 +83,22 @@ namespace valhallappweb
         }
 
         // Command init
-        public async Task RegisterCommandsAsync()
+        public void RegisterCommandsAsync()
         {
             ReactionHandler reactionHandler = new ReactionHandler(_client);
+            FiregatorHandler firegatorHandler = new FiregatorHandler(_client);
             MessageEditedHandler editedHandler = new MessageEditedHandler(_client);
             MessageDeleteHandler deleteHandler = new MessageDeleteHandler(_client);
             MessageHandler messageHandler = new MessageHandler(_client, _commands,_services);
+            FireGatorTracker FireGator = new FireGatorTracker();
             _client.ReactionAdded += reactionHandler.HandleReactionAsync;
             _client.ReactionRemoved += reactionHandler.HandleReactionAsync;
             _client.ReactionsCleared += reactionHandler.HandleReactionClearAsync;
             _client.MessageReceived += messageHandler.HandleCommandAsync;
             _client.MessageDeleted += deleteHandler.HandleDeleteAsync;
             _client.MessageUpdated += editedHandler.HandleEditAsync;
-            await _client.SetStatusAsync(UserStatus.DoNotDisturb);
-            await _client.SetGameAsync("Valhalla 2.0", "https://cdn.discordapp.com/emojis/750294190067286047.png?v=1", ActivityType.CustomStatus);
-            await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
+            FireGator.Start();
+            FireGator.OnThursday += firegatorHandler.HandleFiregatorAsync;
         }
     }
 }

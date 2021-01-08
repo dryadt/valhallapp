@@ -14,13 +14,14 @@ namespace valhallappweb
         public static readonly ulong botId = 779648566057762826;
         public static readonly ulong galleryId = 482894390570909706;
         public static readonly ulong galleryTalkId = 561322620931538944;
+        public static readonly ulong memeId = 561322787080503302;
         public static readonly ulong serverId = 482631363233710106;
 
         /* GENERAL COMMANDS */
-        public static void MessageChannel(DiscordSocketClient client, string messageContent, ulong channelId)
+        public static async Task MessageChannel(DiscordSocketClient client, string messageContent, ulong channelId)
         {
             var channel = client.GetChannel(channelId) as IMessageChannel;
-            channel.SendMessageAsync(messageContent);
+            await channel.SendMessageAsync(messageContent);
         }
 
         public static ulong GetMessageIDFromEmbed(IEmbed embed)
