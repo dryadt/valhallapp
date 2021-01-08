@@ -63,9 +63,6 @@ namespace valhallappweb
             // react with the emote if it's not on the message already
             foreach (var reaction in reactionList)
             {
-                // skip the sent message if it's already on the message
-                if (userMessageToEdit.Reactions.ContainsKey(reaction.Key)) continue;
-                // react with the emote if it's not on the message already
                 Console.WriteLine($"Emote to add: {reaction.Key}");
                 await userMessageToEdit.AddReactionAsync(reaction.Key);
             }
