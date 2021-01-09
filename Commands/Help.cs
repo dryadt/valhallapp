@@ -43,7 +43,7 @@ namespace Valhallapp.Modules
                 .AddField($"{prefix}astral", "A.")
                 .AddField($"{prefix}costro", "Gay stag.")
                 .AddField($"{prefix}hi", "He likes guys")
-                .AddField($"{prefix}Oh! You go big guy!\n" + $"{prefix}Pose for the fans!\n" + $"{prefix}Wubbadubadub is that true?", "Do i need to say anything about the GOTY?")
+                .AddField($"{prefix}dikidikidikidesu ka ?\n" + $"{prefix}Oh! You go big guy!\n" +  $"{prefix}Pose for the fans!\n" + $"{prefix}Wubbadubadub is that true?", "Do i need to say anything about the GOTY?")
                 .AddField($"{prefix}starless", "Mega Bi stag.")
                 .WithFooter(footer => footer.Text = "Page 1 out of 1.")
                 .WithColor(Color.Blue)
