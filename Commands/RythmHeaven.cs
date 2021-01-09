@@ -32,5 +32,11 @@ namespace Valhallapp.Modules
             DisplayCommandLine("Wubbadubadub", Context.Message.Author.Username, Context.Channel.Name);
             await ReplyAsync("Yes.");
         }
+        [Command("dikidikidikidesu ka?")]
+        public async Task Dikidikidesu()
+        {
+            DisplayCommandLine("dikidikidikidesu ka?", Context.Message.Author.Username, Context.Channel.Name);
+            await ReplyAsync("え。");
+        }
     }
 }
