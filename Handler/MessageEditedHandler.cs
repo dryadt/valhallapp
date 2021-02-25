@@ -49,7 +49,7 @@ namespace valhallappweb
                 if (item.Content.Contains(socketMessage.Id.ToString()))
                 {
                     IUserMessage userMessageToEdit = item as IUserMessage;
-                    string messageStringContent = Regex.Replace(userMessageToEdit.Content, @"http[^\s]+", "");
+                    string messageStringContent = Regex.Replace(socketMessage.Content, @"http[^\s]+", "");
                     string croppedString = messageStringContent.Substring(messageStringContent.Length - 25);
                     string messageContent = $"{croppedString}\nUrl link:{GetAllUrlFromString(socketMessage.Content).First()}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
                     await userMessageToEdit.ModifyAsync(editMessage => editMessage.Content= messageContent);
