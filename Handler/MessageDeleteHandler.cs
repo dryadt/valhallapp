@@ -33,6 +33,13 @@ namespace valhallappweb
             {
                 // only tests message with the bot
                 if (item.Author.IsBot == false) continue;
+                //if no url in message return
+                if (item.Content.Contains(messageId.Id.ToString()))
+                {
+                    IUserMessage userMessageToDelete = item as IUserMessage;
+                    await userMessageToDelete.DeleteAsync();
+                    break;
+                }
                 // if no embed return
                 if (item.Embeds.Count == 0) continue;
                 //test if the embed contains 

@@ -25,7 +25,9 @@ namespace valhallappweb
         static void Main(string[] args)
         {
             Console.WriteLine("Valhalla application start");
+            //starts the discord bot
             Task.Run(() => new Program().RunBotAsync().GetAwaiter().GetResult());
+            //starts the website
             CreateWebHostBuilder(args).Build().Run();
         }
 
@@ -68,7 +70,7 @@ namespace valhallappweb
             // Start Discord bot
             await _client.StartAsync();
 
-            await _client.SetStatusAsync(UserStatus.DoNotDisturb);
+            await _client.SetStatusAsync(UserStatus.Idle);
             await _client.SetGameAsync("Valhalla 3.0", "https://cdn.discordapp.com/emojis/750294190067286047.png?v=1", ActivityType.CustomStatus);
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
