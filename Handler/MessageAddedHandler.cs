@@ -100,7 +100,8 @@ namespace valhallappweb
             {
                 if (message.Content.Contains("||"))
                 {
-                    string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link: ||{url} ||\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                    string messageString = message.Content.Replace("|", "");
+                    string messageContent = $"{message.Author.Username} posted: {Regex.Replace(messageString, @"http[^\s]+", "")}\nUrl link: ||{url} ||\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
                     await MessageChannel(_client, messageContent, galleryTalkId);
                 }
                 else
