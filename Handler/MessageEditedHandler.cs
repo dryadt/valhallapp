@@ -29,7 +29,9 @@ namespace valhallappweb
             if (!(galleryTalkChannel is ITextChannel)|| !(galleryChannel is ITextChannel)) return;
             var messageList = await galleryTalkChannel.GetMessagesAsync(message.Id, Direction.After, 10).LastOrDefaultAsync();
             // get all media urls of the message
-            var UrlList = GetAllUrlFromString(socketMessage.Content);
+            List<string> UrlList = new List<string>();
+            if (socketMessage.Content != null)
+                UrlList = GetAllUrlFromString(socketMessage.Content);
             foreach (var attachment in socketMessage.Attachments) UrlList.Add(attachment.Url);
             // Delete the message if it's null
             if (UrlList.Count==0)
