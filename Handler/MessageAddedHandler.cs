@@ -37,8 +37,6 @@ namespace valhallappweb
             if (message.Author.IsBot) return;
             // if the message is in the art channel 
             if (message.Channel.Id == galleryId) await CheckImageArtChannelAsync(message);
-            //handle messages that are in the gallery channel
-            if (message.Channel.Id == galleryId) HandleGalleryMessage(message);
             // command prompt
             int argPos = 0;
             if (message.HasStringPrefix(prefix, ref argPos))
@@ -48,23 +46,25 @@ namespace valhallappweb
             }
         }
 
-        private void HandleGalleryMessage(SocketUserMessage message)
-        {
-            ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
-            ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
-            // if the messsage doesn't contain any media
-            if ((message.Attachments.Count > 0) || (GetAllUrlFromString(message.Content).Count > 0)) return;
-            Embed embedMessage = PostEmbedText(message.Author.Username, message.Author.GetAvatarUrl(), "Deleted message content:", message.Content);
-            galleryTalkChannel.SendMessageAsync(
-            $"{message.Author.Username} No posting in the gallery <#{message.Channel.Id}>"
-            ,embed: embedMessage
-            );
-            galleryChannel.DeleteMessageAsync(message);
-        }
-
         private async Task CheckImageArtChannelAsync(SocketUserMessage message)
         {
+            //init channels
+            ITextChannel galleryChannel = (ITextChannel)_client.GetChannel(galleryId);
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
+
+            // Delete if message is empty
+            if ((message.Attachments.Count == 0) && (GetAllUrlFromString(message.Content).Count == 0))
+            {
+                Embed embedMessage = PostEmbedText(message.Author.Username, message.Author.GetAvatarUrl(), "Deleted message content:", message.Content);
+                await galleryTalkChannel.SendMessageAsync(
+                $"{message.Author.Username} No posting in the gallery <#{message.Channel.Id}>"
+                , embed: embedMessage
+                );
+                await galleryChannel.DeleteMessageAsync(message);
+                return;
+            }
+
+            // Post if message has image
             string[] extensionList = { ".png", ".jpeg", ".gif", ".jpg" };
             List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
