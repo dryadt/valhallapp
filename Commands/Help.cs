@@ -14,7 +14,6 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("help", Context.Message.Author.Username, Context.Channel.Name);
             var embed = new EmbedBuilder();
-            string prefix = "&";
             embed.WithTitle("Commands list:")
                 .WithAuthor(Context.Client.CurrentUser)
                 .AddField($"{prefix}femboy", "Display the seeded femboy percentage rating of the a user. Can accept one paramater.")
@@ -37,7 +36,6 @@ namespace Valhallapp.Modules
         {
             DisplayCommandLine("Help meme", Context.Message.Author.Username, Context.Channel.Name);
             var embed = new EmbedBuilder();
-            string prefix = "&";
             embed.WithTitle("Meme commands list:")
                 .WithAuthor(Context.Client.CurrentUser)
                 .AddField($"{prefix}astral", "A.")

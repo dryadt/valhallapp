@@ -36,12 +36,12 @@ namespace valhallappweb
             // if the message is from bot then ignore
             if (message.Author.IsBot) return;
             // if the message is in the art channel 
-            if (message.Channel.Id != galleryId) await CheckImageArtChannelAsync(message);
+            if (message.Channel.Id == galleryId) await CheckImageArtChannelAsync(message);
             //handle messages that are in the gallery channel
             if (message.Channel.Id == galleryId) HandleGalleryMessage(message);
             // command prompt
             int argPos = 0;
-            if (message.HasStringPrefix("&", ref argPos))
+            if (message.HasStringPrefix(prefix, ref argPos))
             {
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);

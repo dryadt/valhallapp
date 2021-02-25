@@ -16,6 +16,7 @@ namespace valhallappweb
         public static readonly ulong galleryTalkId = 561322620931538944;
         public static readonly ulong memeId = 561322787080503302;
         public static readonly ulong serverId = 482631363233710106;
+        public static readonly string prefix = "&";
 
         /* GENERAL COMMANDS */
         public static async Task MessageChannel(DiscordSocketClient client, string messageContent, ulong channelId)
