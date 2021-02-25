@@ -73,7 +73,7 @@ namespace valhallappweb
             // post every attachment as an embed
             foreach (var attachment in message.Attachments)
             {
-                if (message.Content.Contains("||"))
+                if (attachment.IsSpoiler())
                 {
                     string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link: ||{attachment.Url} ||\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
                     await MessageChannel(_client, messageContent, galleryTalkId);
