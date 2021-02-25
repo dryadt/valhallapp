@@ -17,7 +17,7 @@ namespace valhallappweb.Handler
         {
             Cancel();
             cancellation = new CancellationTokenSource();
-            isThursday = DateTime.Now.DayOfWeek == DayOfWeek.Thursday;
+            isThursday = ((DateTime.Now.DayOfWeek == DayOfWeek.Thursday) && (DateTime.Now.Hour == 12));
             _ = CheckForTheHolidays(cancellation.Token);
         }
 
@@ -32,9 +32,9 @@ namespace valhallappweb.Handler
             {
                 if (isThursday)
                 {
-                    isThursday = DateTime.Now.DayOfWeek == DayOfWeek.Thursday;
+                    isThursday = ((DateTime.Now.DayOfWeek == DayOfWeek.Thursday) && (DateTime.Now.Hour == 12));
                 }
-                else if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
+                else if ((DateTime.Now.DayOfWeek == DayOfWeek.Thursday)&&(DateTime.Now.Hour==12))
                 {
                     isThursday = true;
                     if (OnThursday != null)

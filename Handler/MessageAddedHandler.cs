@@ -35,8 +35,10 @@ namespace valhallappweb
 
             // if the message is from bot then ignore
             if (message.Author.IsBot) return;
-            // does something with message
-            await CheckImageArtChannelAsync(message);
+            // if the message is in the art channel 
+            if (message.Channel.Id != galleryId) await CheckImageArtChannelAsync(message);
+            //handle messages that are in the gallery channel
+            if (message.Channel.Id == galleryId) HandleGalleryMessage(message);
             // command prompt
             int argPos = 0;
             if (message.HasStringPrefix("&", ref argPos))
@@ -44,8 +46,6 @@ namespace valhallappweb
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
             }
-            //handle messages that are in the gallery channel
-            if (message.Channel.Id == galleryId) HandleGalleryMessage(message);
         }
 
         private void HandleGalleryMessage(SocketUserMessage message)
@@ -65,8 +65,6 @@ namespace valhallappweb
         private async Task CheckImageArtChannelAsync(SocketUserMessage message)
         {
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
-            // if the message isn't in the art channel, return
-            if (message.Channel.Id != galleryId) return;
             string[] extensionList = { ".png", ".jpeg", ".gif", ".jpg" };
             List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
