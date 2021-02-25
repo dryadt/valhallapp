@@ -98,7 +98,7 @@ namespace valhallappweb
         public static List<string> GetAllUrlFromString(string stringToAnalyse)
         {
             List<string> strList = new List<string>();
-            var linkParser = new Regex(@"\b(?:https?://)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var linkParser = new Regex(@"\b(?:\|?\|?https?://)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (Match m in linkParser.Matches(stringToAnalyse))
             {
                 strList.Add(m.ToString());
