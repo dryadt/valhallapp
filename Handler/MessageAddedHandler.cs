@@ -73,31 +73,52 @@ namespace valhallappweb
             // post every attachment as an embed
             foreach (var attachment in message.Attachments)
             {
-                bool isEmbedable = false;
-                foreach (var extensionItem in extensionList)
-                    if (isEmbedable = attachment.Url.EndsWith(extensionItem)) break;
-                if (isEmbedable)
-                    await galleryTalkChannel.SendMessageAsync(embed:
-                    PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), attachment.Url, message.Id));
+                if (message.Content.Contains("||"))
+                {
+                    string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link: ||{attachment.Url} ||\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                    await MessageChannel(_client, messageContent, galleryTalkId);
+                }
                 else
                 {
-                    string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link:{attachment.Url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
-                    await MessageChannel(_client, messageContent, galleryTalkId);
+                    bool isEmbedable = false;
+                    foreach (var extensionItem in extensionList)
+                        if (isEmbedable = attachment.Url.EndsWith(extensionItem)) break;
+                    // if the attachment is an image
+                    if (isEmbedable)
+                        await galleryTalkChannel.SendMessageAsync(embed:
+                        PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), attachment.Url, message.Id));
+                    // if it's something else (like a video)
+                    else
+                    {
+                        string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link:{attachment.Url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                        await MessageChannel(_client, messageContent, galleryTalkId);
+                    }
                 }
             }
             // post every attachment as an embed
             foreach (var url in urlList)
             {
-                bool isEmbedable = false;
-                foreach (var extensionItem in extensionList)
-                    if (isEmbedable = url.EndsWith(extensionItem)) break;
-                if (isEmbedable)
-                    await galleryTalkChannel.SendMessageAsync(embed:
-                        PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
+                if (message.Content.Contains("||"))
+                {
+                    string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link: ||{url} ||\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                    await MessageChannel(_client, messageContent, galleryTalkId);
+                }
                 else
                 {
-                    string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link:{url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
-                    await MessageChannel(_client, messageContent, galleryTalkId);
+
+                    bool isEmbedable = false;
+                    foreach (var extensionItem in extensionList)
+                        if (isEmbedable = url.EndsWith(extensionItem)) break;
+                    // if the attachment is an image
+                    if (isEmbedable)
+                        await galleryTalkChannel.SendMessageAsync(embed:
+                            PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
+                    // if it's something else (like a video)
+                    else
+                    {
+                        string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link:{url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                        await MessageChannel(_client, messageContent, galleryTalkId);
+                    }
                 }
             };
         }
