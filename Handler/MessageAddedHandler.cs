@@ -83,8 +83,11 @@ namespace valhallappweb
                 if (isEmbedable)
                     await galleryTalkChannel.SendMessageAsync(embed:
                         PostEmbedImage(message.Author.Username, message.Author.Id, Regex.Replace(message.Content, @"http[^\s]+", ""), message.Author.GetAvatarUrl(), url, message.Id));
-                else 
-                    await MessageChannel(_client, $"{message.Author.Username} posted:{Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link:{url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}", galleryTalkId);
+                else
+                {
+                    string messageContent = $"{message.Author.Username} posted:{Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link:{url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                    await MessageChannel(_client, messageContent, galleryTalkId);
+                }
             };
         }
     }

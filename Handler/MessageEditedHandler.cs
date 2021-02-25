@@ -45,6 +45,14 @@ namespace valhallappweb
             {
                 // only tests message with the bot
                 if (item.Author.IsBot == false) continue;
+                //if no url in message return
+                if (item.Content.Contains(socketMessage.Id.ToString()))
+                {
+                    IUserMessage userMessageToEdit = item as IUserMessage;
+                    string messageContent = $"{socketMessage.Author.Username} posted:{Regex.Replace(socketMessage.Content, @"http[^\s]+", "")}\nUrl link:{GetAllUrlFromString(socketMessage.Content).First()}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                    await userMessageToEdit.ModifyAsync(editMessage => editMessage.Content= messageContent);
+                    break;
+                }
                 // if no embed return
                 if (item.Embeds.Count == 0) continue;
                 //test if the embed contains 
