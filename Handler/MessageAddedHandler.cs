@@ -10,9 +10,9 @@ using static valhallappweb.PublicFunction;
 
 namespace valhallappweb
 {
-    public class MessageHandler
+    public class MessageAddedHandler
     {
-        public MessageHandler(DiscordSocketClient _client, CommandService _commands, IServiceProvider _services)
+        public MessageAddedHandler(DiscordSocketClient _client, CommandService _commands, IServiceProvider _services)
         {
             this._client = _client;
             this._commands = _commands;

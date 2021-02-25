@@ -89,7 +89,7 @@ namespace valhallappweb
             FiregatorHandler firegatorHandler = new FiregatorHandler(_client);
             MessageEditedHandler editedHandler = new MessageEditedHandler(_client);
             MessageDeleteHandler deleteHandler = new MessageDeleteHandler(_client);
-            MessageHandler messageHandler = new MessageHandler(_client, _commands,_services);
+            MessageAddedHandler messageHandler = new MessageAddedHandler(_client, _commands,_services);
             FireGatorTracker FireGator = new FireGatorTracker();
             _client.ReactionAdded += reactionHandler.HandleReactionAsync;
             _client.ReactionRemoved += reactionHandler.HandleReactionAsync;

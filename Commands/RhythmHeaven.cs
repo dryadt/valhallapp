@@ -6,7 +6,7 @@ using static valhallappweb.PublicFunction;
 
 namespace Valhallapp.Modules
 {
-    public class RythmHeaven : ModuleBase<SocketCommandContext>
+    public class RhythmHeaven : ModuleBase<SocketCommandContext>
     {
         [Command("fine")]
         public async Task Fine()
