@@ -117,7 +117,7 @@ namespace valhallappweb
                     // if it's something else (like a video)
                     else
                     {
-                        string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link:{url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
+                        string messageContent = $"{message.Author.Username} posted: {Regex.Replace(message.Content, @"http[^\s]+", "")}\nUrl link: {url}\nDiscord link: https://discord.com/channels/{serverId}/{galleryId}/{message.Id}";
                         await MessageChannel(_client, messageContent, galleryTalkId);
                     }
                 }
