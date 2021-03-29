@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using valhallappweb.Handler;
 
 namespace valhallappweb
@@ -64,7 +58,7 @@ namespace valhallappweb
             RegisterCommandsAsync();
 
             // Bot Authentification init
-            var token = Environment.GetEnvironmentVariable("TOKEN");
+            var token = "ODE4MTAyNjcxODAxMzE5NDM0.YETLfA.yFrDFFKKp_LVJLiY6BfpTWypufg";
             await _client.LoginAsync(TokenType.Bot, token);
 
             // Start Discord bot
@@ -73,7 +67,6 @@ namespace valhallappweb
             await _client.SetStatusAsync(UserStatus.Idle);
             await _client.SetGameAsync("Valhalla 3.0", "https://cdn.discordapp.com/emojis/750294190067286047.png?v=1", ActivityType.CustomStatus);
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
-
             await Task.Delay(-1);
         }
 

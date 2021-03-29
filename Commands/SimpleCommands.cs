@@ -7,7 +7,6 @@ namespace Valhallapp.Modules
 {
     public class SimpleCommands : ModuleBase<SocketCommandContext>
     {
-        public SimpleCommands () { }
 
         [Command("github")]
         public async Task Github()
