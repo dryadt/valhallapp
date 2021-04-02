@@ -38,6 +38,7 @@ namespace valhallappweb
             {
 
                 Console.WriteLine($"deleted {socketMessage.Attachments.Count} attachment and {UrlList.Count} URLs");
+                Console.WriteLine($"deleted {socketMessage.Content}");
                 await socketMessage.DeleteAsync();
                 await galleryTalkChannel.SendMessageAsync(
                     $"{socketMessage.Author.Username} do not edit messages so it doesn't return any media!",
