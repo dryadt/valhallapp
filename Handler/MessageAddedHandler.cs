@@ -53,8 +53,10 @@ namespace valhallappweb
             ITextChannel galleryTalkChannel = (ITextChannel)_client.GetChannel(galleryTalkId);
 
             // Delete if message is empty
+
             if ((message.Attachments.Count == 0) && (GetAllUrlFromString(message.Content).Count == 0))
             {
+                Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
                 Embed embedMessage = PostEmbedText(message.Author.Username, message.Author.GetAvatarUrl(), "Deleted message content:", message.Content);
                 await galleryTalkChannel.SendMessageAsync(
                 $"{message.Author.Username} No posting in the gallery <#{message.Channel.Id}>"
