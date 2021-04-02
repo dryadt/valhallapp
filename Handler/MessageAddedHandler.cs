@@ -54,9 +54,10 @@ namespace valhallappweb
 
             // Delete if message is empty
 
-            if ((message.Attachments.Count == 0) && (GetAllUrlFromString(message.Content).Count == 0))
+            List<string> urlList = GetAllUrlFromString(message.Content);
+            if ((message.Attachments.Count == 0) && (urlList.Count == 0))
             {
-                Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
+                Console.WriteLine($"deleted {message.Attachments.Count} attachment and {urlList.Count} URLs");
                 Embed embedMessage = PostEmbedText(message.Author.Username, message.Author.GetAvatarUrl(), "Deleted message content:", message.Content);
                 await galleryTalkChannel.SendMessageAsync(
                 $"{message.Author.Username} No posting in the gallery <#{message.Channel.Id}>"
@@ -68,7 +69,6 @@ namespace valhallappweb
 
             // Post if message has image
             string[] extensionList = { ".png", ".jpeg", ".gif", ".jpg" };
-            List<string> urlList = GetAllUrlFromString(message.Content);
             Console.WriteLine($"{message.Attachments.Count} attachment and {urlList.Count} URLs");
             // if the message has no attachments and no url
             if ((message.Attachments.Count == 0 && urlList.Count == 0)) return;
