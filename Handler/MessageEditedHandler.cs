@@ -34,7 +34,7 @@ namespace valhallappweb
                 UrlList = GetAllUrlFromString(socketMessage.Content);
             foreach (var attachment in socketMessage.Attachments) UrlList.Add(attachment.Url);
             // Delete the message if it's null
-            if (UrlList.Count==0)
+            if ((UrlList.Count == 0)&&(socketMessage.Content!=""))
             {
 
                 Console.WriteLine($"deleted {socketMessage.Attachments.Count} attachment and {UrlList.Count} URLs");
