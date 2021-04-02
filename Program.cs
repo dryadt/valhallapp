@@ -58,7 +58,7 @@ namespace valhallappweb
             RegisterCommandsAsync();
 
             // Bot Authentification init
-            var token = "ODE4MTAyNjcxODAxMzE5NDM0.YETLfA.yFrDFFKKp_LVJLiY6BfpTWypufg";
+            var token = Environment.GetEnvironmentVariable("TOKEN");
             await _client.LoginAsync(TokenType.Bot, token);
 
             // Start Discord bot
