@@ -36,6 +36,8 @@ namespace valhallappweb
             // Delete the message if it's null
             if (UrlList.Count==0)
             {
+
+                Console.WriteLine($"deleted {socketMessage.Attachments.Count} attachment and {UrlList.Count} URLs");
                 await socketMessage.DeleteAsync();
                 await galleryTalkChannel.SendMessageAsync(
                     $"{socketMessage.Author.Username} do not edit messages so it doesn't return any media!",
