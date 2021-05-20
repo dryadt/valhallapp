@@ -70,6 +70,17 @@ body {
 }
 
 /* Caption of Modal Image */
+#copy {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+/* Caption of Modal Image */
 #caption {
     margin: auto;
     display: block;
