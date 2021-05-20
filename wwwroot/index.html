@@ -15,7 +15,7 @@
     </div>
     <script type="text/javascript">
         function clickModalImage() {
-            console.log("test " + modalImg);
+            console.log("test " + selectedArt);
         }
         // Get the modal
         var modal = document.getElementById("myModal");
@@ -50,20 +50,20 @@
             //{ credit: 0, url: 'url' },
         ]
 
-                let artistList = [
-                    "Art by: <a href='https://twitter.com/'></a>",
-                    "Art by: <a href='https://twitter.com/RockAddictGlum'>Glum</a>",
-                    "Art by: <a href='https://twitter.com/Spaztiqe'>Spaz</a>",
-                    "Art by: Meg",
-                    "Art by: Mewdusa",
-                    "Art by: Ollie",
-                    "Art by: <a href='https://twitter.com/Cukier49'>Cukier</a>",
-                    "Art by: <a href='https://twitter.com/JumpMere'>Mere</a>",
-                    "Art by: InfernalBraxia",
-                    "Art by: Blight",
-                    "Art by: Aurora",
-                    "Art by: <a href='https://twitter.com/Kadus_UwU/media'>Kadus</a>",
-                ]
+        let artistList = [
+            "Art by: <a href='https://twitter.com/'></a>",
+            "Art by: <a href='https://twitter.com/RockAddictGlum'>Glum</a>",
+            "Art by: <a href='https://twitter.com/Spaztiqe'>Spaz</a>",
+            "Art by: Meg",
+            "Art by: Mewdusa",
+            "Art by: Ollie",
+            "Art by: <a href='https://twitter.com/Cukier49'>Cukier</a>",
+            "Art by: <a href='https://twitter.com/JumpMere'>Mere</a>",
+            "Art by: InfernalBraxia",
+            "Art by: Blight",
+            "Art by: Aurora",
+            "Art by: <a href='https://twitter.com/Kadus_UwU/media'>Kadus</a>",
+        ]
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
@@ -85,6 +85,7 @@
 
         var explIndex = 0;
         const maxExplIndex = 19;
+        var selectedArt = 0;
 
         function generateImage() {
             if (isPageLoaded == false) return
@@ -99,6 +100,7 @@
                 modal.style.display = "block";
                 modalImg.src = this.src;
                 captionText.innerHTML = artistList[imageUrl[randomImageID].credit];
+                selectedArt = randomImageID;
             }
             //right click
             x.addEventListener('contextmenu', function (ev) {
