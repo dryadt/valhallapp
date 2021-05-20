@@ -10,21 +10,17 @@
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
-        <span id="bviu11" style="cursor: pointer;">
-            <a href="img01" download>
-                <img class="modal-content" id="img01" style="font-size:200%;">
-            </a>
-        </span>
-        <span id="copy" style="cursor: pointer;" onclick="clickCopyPath()">
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+        <span id="copy" onclick="clickCopyPath()">
             Get Image Url to clipboard
         </span>
-         <div id="caption"></div>
     </div>
     <script type="text/javascript">
         function clickCopyPath() {
             var text = imageUrl[selectedArt].url;
             navigator.clipboard.writeText(text).then(function () {
-                console.log('Async: Copying to clipboard was successful!' + imageUrl[selectedArt].url);
+                console.log('Async: Copying to clipboard was successful! ' + imageUrl[selectedArt].url);
             }, function (err) {
                 console.error('Async: Could not copy text: ' + imageUrl[selectedArt].url, err);
             });

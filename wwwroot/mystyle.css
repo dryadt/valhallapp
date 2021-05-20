@@ -69,8 +69,14 @@ body {
     max-width: 80vw;
 }
 
+#img01 {
+    font-size: 200%;
+    cursor: pointer;
+}
+
 /* Caption of Modal Image */
 #copy {
+    cursor: pointer;
     margin: auto;
     display: block;
     width: 80%;
