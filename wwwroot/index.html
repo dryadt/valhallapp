@@ -10,7 +10,7 @@
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
+        <img class="modal-content" id="img01" onclick="clickImage()">
         <div id="caption"></div>
         <span id="copy" onclick="clickCopyPath()">
             Get Image Url to clipboard
@@ -24,6 +24,12 @@
             }, function (err) {
                 console.error('Async: Could not copy text: ' + imageUrl[selectedArt].url, err);
             });
+        }
+        function clickImage() {
+            window.open(
+                imageUrl[selectedArt].url),
+                '_blank' // <- This is what makes it open in a new window.
+            );
         }
         // Get the modal
         var modal = document.getElementById("myModal");
