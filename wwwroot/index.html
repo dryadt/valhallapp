@@ -11,10 +11,15 @@
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
         <span id="bviu11" style="cursor: pointer;">
-            <img class="modal-content" id="img01" style="font-size:200%;" onclick="clickModalImage()">
+            <a href="img01" download="Starless.png">
+                <img class="modal-content" id="img01" style="font-size:200%;">
+            </a>
+        </span>
+        <span style="cursor: pointer;" onclick="clickModalImage()">
+            Get Image Url to clipboard
         </span>
         <div id="caption"></div>
-</div>
+    </div>
     <script type="text/javascript">
         function clickModalImage() {
             console.log("test " + imageUrl[selectedArt].url);
