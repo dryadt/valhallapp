@@ -1,9 +1,11 @@
 ﻿/*background css*/
 
 html {
-    background: url("https://cdn.discordapp.com/attachments/779648962415296513/843542654721589248/Starless.png") no-repeat center center fixed;
-    background-size: cover;
     font-family: Arial;
+}
+body {
+    background-image: url("https://cdn.discordapp.com/attachments/779648962415296513/843542654721589248/Starless.png");
+    background-size:cover;
 }
 
 /*image dropdown css animation*/
