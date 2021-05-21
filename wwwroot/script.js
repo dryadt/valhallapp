@@ -18,26 +18,20 @@ const maxExplIndex = 19;
 
 var selectedArt = 0;
 let imageUrl = [];
-
 let artistList = [];
-
-// function
 
 let ajaxRequest = new XMLHttpRequest();
 ajaxRequest.onreadystatechange = function () { //the callback for the ajax request
     if (this.readyState == 4 && this.status == 200) { //basically if the response is OK
-        imageUrl = JSON.parse(this.response); //this.response should contain the json if everything went well, continue from there
+        result = JSON.parse(this.response); //this.response should contain the json if everything went well, continue from there
+        imageUrl = result.imageUrl;
+        artistList = result.artistList;
     }
 }
 ajaxRequest.open("GET", "https://valhallapp.herokuapp.com/imageUrl.json");
 ajaxRequest.send();
-ajaxRequest.onreadystatechange = function () { //the callback for the ajax request
-    if (this.readyState == 4 && this.status == 200) { //basically if the response is OK
-        artistList = JSON.parse(this.response); //this.response should contain the json if everything went well, continue from there
-    }
-}
-ajaxRequest.open("GET", "https://valhallapp.herokuapp.com/artistList.json");
-ajaxRequest.send();
+
+// function
 
 function clickCopyPath() {
     var text = imageUrl[selectedArt].url;
