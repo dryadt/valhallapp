@@ -17,8 +17,8 @@ const maxExplIndex = 19;
 // artSelection
 
 var selectedArt = 0;
+const fs = require('fs');
 let imageUrl = JSON.parse(fs.readFileSync("imageUrl.json"));
-
 let artistList = JSON.parse(fs.readFileSync("artistList.json"));
 
 // function
