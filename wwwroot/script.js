@@ -33,6 +33,7 @@ ajaxRequest.send();
 
 // function
 
+// copy selected art url into clipboard
 function clickCopyPath() {
     var text = imageUrl[selectedArt].url;
     navigator.clipboard.writeText(text).then(function () {
@@ -41,6 +42,8 @@ function clickCopyPath() {
         console.error('Async: Could not copy text: ' + imageUrl[selectedArt].url, err);
     });
 }
+
+// pop up new page
 function clickImage() {
     window.open(
         imageUrl[selectedArt].url,
@@ -48,15 +51,19 @@ function clickImage() {
     );
 }
 
-// When the user clicks on <span> (x), close the modal
+// When the user clicks on <span> (x) or presses escape, close the modal
 span.onclick = function () {
     modal.style.display = "none";
 }
+
 document.addEventListener('keyup', function (e) {
     if (e.keyCode == 27) {
         modal.style.display = "none";
     }
 });
+function clearModal() {
+    modal.style.display = "none";
+}
 //-- js image dropdown --
 window.onload = initCommand;
 function initCommand() {
